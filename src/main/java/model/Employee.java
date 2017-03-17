@@ -1,0 +1,223 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package model;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author USER
+ */
+public class Employee {
+    private int empNo;
+    private String empName;
+    private String idCardNo;
+    private String gender;
+    private String telNo;
+    private double specPay;
+    private int empTypeNo;
+    private int empPosNo;
+    private int branchNo;
+
+    public int getEmpNo() {
+        return empNo;
+    }
+
+    public void setEmpNo(int empNo) {
+        this.empNo = empNo;
+    }
+
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
+
+    public String getIdCardNo() {
+        return idCardNo;
+    }
+
+    public void setIdCardNo(String idCardNo) {
+        this.idCardNo = idCardNo;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getTelNo() {
+        return telNo;
+    }
+
+    public void setTelNo(String telNo) {
+        this.telNo = telNo;
+    }
+
+    public double getSpecPay() {
+        return specPay;
+    }
+
+    public void setSpecPay(double specPay) {
+        this.specPay = specPay;
+    }
+
+    public int getEmpTypeNo() {
+        return empTypeNo;
+    }
+
+    public void setEmpTypeNo(int empTypeNo) {
+        this.empTypeNo = empTypeNo;
+    }
+
+    public int getEmpPosNo() {
+        return empPosNo;
+    }
+
+    public void setEmpPosNo(int empPosNo) {
+        this.empPosNo = empPosNo;
+    }
+
+    public int getBranchNo() {
+        return branchNo;
+    }
+
+    public void setBranchNo(int branchNo) {
+        this.branchNo = branchNo;
+    }
+
+    
+    
+    public static Employee getEmployee(int empNo){
+        Employee e = null;
+        try{
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "SELECT * FROM Employee WHERE empNo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,empNo);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                e = new Employee();
+                orm(rs,e);
+            }
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return e;
+    }
+    
+    public static List<Employee> getAllEmp(int branchNo){
+        List<Employee> employees = null;
+        try{
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "SELECT * FROM Employee WHERE branchNo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, branchNo);
+            ResultSet rs = ps.executeQuery();
+            employees = new ArrayList<Employee>();
+            while(rs.next()){
+                Employee e = new Employee();
+                orm(rs,e);
+                employees.add(e);
+            }
+            con.close();
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return employees;
+    }
+    
+    public boolean addEmp(){
+        boolean success = false;
+        try{
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "INSERT INTO Employee(empName,idCardNo,gender,telNo,specPay,empTypeNO,positionNo,branchNo) "
+                    + " VALUES(?,?,?,?,?,?,?,?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, empName);
+            ps.setString(2, idCardNo);
+            ps.setString(3, gender);
+            ps.setString(4, telNo);
+            ps.setDouble(5, specPay);
+            ps.setInt(6, empTypeNo);
+            ps.setInt(7, empPosNo);
+            ps.setInt(8, branchNo);
+            int i = ps.executeUpdate();
+            if(i > 0){
+                success = true;
+            }
+            con.close();
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return success;
+    }
+    
+    public boolean editEmp(){
+        boolean success = false;
+        try{
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "UPDATE Employee SET empName = ?,idCardNo = ?,gender = ?,telNo = ?,specPay = ?,empTypeNo = ?,empPosNo = ? WHERE empNo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, empName);
+            ps.setString(2, idCardNo);
+            ps.setString(3, gender);
+            ps.setString(4, telNo);
+            ps.setDouble(5, specPay);
+            ps.setInt(6, empTypeNo);
+            ps.setInt(7, empPosNo);
+            ps.setInt(8, empNo);
+            int i = ps.executeUpdate();
+            if(i > 0){
+                success = true;
+            }
+            con.close();
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return success;
+    }
+    
+    public static boolean delEmp(int empNo){
+        boolean success = false;
+        try{
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "DELETE FROM Employee WHERE empNo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, empNo);
+            int i = ps.executeUpdate();
+            if(i > 0){
+                success = true;
+            }
+            con.close();
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return success;
+    }
+    
+    private static void orm(ResultSet rs,Employee e) throws SQLException{
+        e.setEmpTypeNo(rs.getInt("empTypeNo"));
+        e.setEmpName(rs.getString("empName"));
+        e.setEmpNo(rs.getInt("empNo"));
+        e.setEmpPosNo(rs.getInt("positionNo"));
+        e.setBranchNo(rs.getInt("branchNo"));
+        e.setGender(rs.getString("gender"));
+        e.setIdCardNo(rs.getString("idCardNo"));
+        e.setSpecPay(rs.getDouble("specPay"));
+        e.setTelNo(rs.getString("telNo"));
+    }
+}
