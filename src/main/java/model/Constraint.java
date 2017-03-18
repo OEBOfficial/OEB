@@ -5,18 +5,25 @@
  */
 package model;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 
 /**
  *
  * @author USER
  */
-public class Constraint {
+public class Constraint{
     private int empTypeNo;
     private int positionNo;
     private double hoursPerDay;
@@ -52,6 +59,26 @@ public class Constraint {
 
     public void setPay(double pay) {
         this.pay = pay;
+    }
+    
+    public static JsonArray getAllConJson(int positionNo){
+        JsonArrayBuilder JAB = Json.createArrayBuilder();
+        JsonObjectBuilder JOB = Json.createObjectBuilder();
+        JsonArray JA = null;
+        List<Constraint> constraints = getAllConstraint(positionNo);
+        if(constraints != null){
+            JA = JAB.build();
+            for(int i = 0 ; i < constraints.size() ; i++){
+                JsonObject jo = JOB
+                        .add("empTypeNo", constraints.get(i).getEmpTypeNo())
+                        .add("hoursPerDay", constraints.get(i).getHoursPerDay())
+                        .add("pay", constraints.get(i).getPay())
+                        .build();
+                JAB.add(jo);
+            }
+            JA = JAB.build();
+        }
+        return JA;
     }
     
     public boolean addConstraint(){
@@ -119,7 +146,7 @@ public class Constraint {
         List<Constraint> constraints = null;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "SELECT * FROM Constraint WHERE positionNo = ?";
+            String sql = "SELECT * FROM `Constraint`  WHERE positionNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, positionNo);
             ResultSet rs = ps.executeQuery();

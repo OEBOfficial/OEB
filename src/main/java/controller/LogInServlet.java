@@ -48,7 +48,11 @@ public class LogInServlet extends HttpServlet {
         String target = "/login.jsp";
         HttpSession hs = request.getSession(false);
         Cookie cookies[] = request.getCookies();
-        String username = ActorManagement.chkCookie(cookies);
+        String username = null;
+        
+        if(cookies != null){
+            username = ActorManagement.chkCookie(cookies);
+        }
         RestaurantOwner ro = null;       
         boolean pass = false;
         
@@ -58,7 +62,9 @@ public class LogInServlet extends HttpServlet {
             if(ro != null){
                 pass = true;
             }
-        }else if(username != null){
+        }
+        
+        if(username != null){
             System.out.println("user not null");
             ro = RestaurantOwner.signInForCookie(username);
             hs = request.getSession();
@@ -68,6 +74,7 @@ public class LogInServlet extends HttpServlet {
         if(pass){
             System.out.println("IN PASS");
             hs.setAttribute("restowner", ro);
+            hs.setAttribute("branch", Branch.getBranchByOwner(ro.getRestOwnerNo()));
             response.sendRedirect("ToEmpServlet");
         }else{
             System.out.println("IN NOT PASS");

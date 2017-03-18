@@ -11,6 +11,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import static model.Employee.getEmployee;
 
 /**
  *
@@ -62,6 +68,20 @@ public class EmployeePosition {
             System.out.println(ex);
         }
         return ep;
+    }
+    
+    public static JsonObject getEmpPosJson(int positionNo){
+        JsonObjectBuilder JOB = Json.createObjectBuilder();
+        EmployeePosition ep = getEmpPos(positionNo);
+        JsonObject empJO = null;
+        if(ep != null){
+            empJO = JOB
+                .add("positionName",ep.getPositionName())
+                .add("positionNo", ep.getPositionNo())
+                .add("branchNo", ep.getBranchNo())
+                .build();
+        }
+        return empJO;
     }
     
     public static List<EmployeePosition> getAllEmpPos(int branchNo){

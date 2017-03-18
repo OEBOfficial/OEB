@@ -41,7 +41,7 @@ public class EditEmpServlet extends HttpServlet {
         e.setEmpNo(empNo);
         e.setEmpName(empName);
         e.setEmpNo(empTypeNo);
-        e.setEmpPosNo(empTypeNo);
+        e.setPositionNo(empTypeNo);
         e.setEmpTypeNo(empTypeNo);
         e.setGender(gender);
         e.setIdCardNo(idCardNo);

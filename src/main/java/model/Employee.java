@@ -11,6 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 /**
  *
@@ -24,8 +27,10 @@ public class Employee {
     private String telNo;
     private double specPay;
     private int empTypeNo;
-    private int empPosNo;
+    private int positionNo;
     private int branchNo;
+    private String empTypeName;
+    private String positionName;
 
     public int getEmpNo() {
         return empNo;
@@ -83,13 +88,31 @@ public class Employee {
         this.empTypeNo = empTypeNo;
     }
 
-    public int getEmpPosNo() {
-        return empPosNo;
+    public int getPositionNo() {
+        return positionNo;
     }
 
-    public void setEmpPosNo(int empPosNo) {
-        this.empPosNo = empPosNo;
+    public void setPositionNo(int positionNo) {
+        this.positionNo = positionNo;
     }
+
+    public String getEmpTypeName() {
+        return empTypeName;
+    }
+
+    public void setEmpTypeName(String empTypeName) {
+        this.empTypeName = empTypeName;
+    }
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
+
+    
 
     public int getBranchNo() {
         return branchNo;
@@ -105,7 +128,9 @@ public class Employee {
         Employee e = null;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "SELECT * FROM Employee WHERE empNo = ?";
+            String sql = "SELECT * FROM Employee e JOIN EmployeePosition ep ON e.positionNo = ep.positionNo "
+                    + " JOIN EmploymentType et ON e.empTypeNo = et.empTypeNo "
+                    + " WHERE e.empNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1,empNo);
             ResultSet rs = ps.executeQuery();
@@ -119,11 +144,35 @@ public class Employee {
         return e;
     }
     
+    public static JsonObject getEmployeeJson(int empNo){
+        JsonObjectBuilder empBuilder = Json.createObjectBuilder();
+        Employee e = getEmployee(empNo);
+        JsonObject empJO = null;
+        if(e != null){
+            empJO = empBuilder
+                .add("empNo",e.getEmpNo())
+                .add("empName", e.getEmpName())
+                .add("branchNo", e.getBranchNo())
+                .add("positionName", e.getPositionName())
+                .add("positionNo", e.getPositionNo())
+                .add("empTypeName", e.getEmpTypeName())
+                .add("empTypeNo", e.getEmpTypeNo())
+                .add("gender", e.getGender())
+                .add("idCardNo", e.getIdCardNo())
+                .add("specPay", e.getSpecPay())
+                .add("telNo", e.getTelNo())
+                .build();
+        }
+        return empJO;
+    }
+    
     public static List<Employee> getAllEmp(int branchNo){
         List<Employee> employees = null;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "SELECT * FROM Employee WHERE branchNo = ?";
+            String sql = "SELECT * FROM Employee e JOIN EmployeePosition ep ON e.positionNo = ep.positionNo "
+                    + " JOIN EmploymentType et ON e.empTypeNo = et.empTypeNo "
+                    + " WHERE e.branchNo = ? ORDER BY e.empName";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, branchNo);
             ResultSet rs = ps.executeQuery();
@@ -153,7 +202,7 @@ public class Employee {
             ps.setString(4, telNo);
             ps.setDouble(5, specPay);
             ps.setInt(6, empTypeNo);
-            ps.setInt(7, empPosNo);
+            ps.setInt(7, positionNo);
             ps.setInt(8, branchNo);
             int i = ps.executeUpdate();
             if(i > 0){
@@ -170,7 +219,7 @@ public class Employee {
         boolean success = false;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "UPDATE Employee SET empName = ?,idCardNo = ?,gender = ?,telNo = ?,specPay = ?,empTypeNo = ?,empPosNo = ? WHERE empNo = ?";
+            String sql = "UPDATE Employee SET empName = ?,idCardNo = ?,gender = ?,telNo = ?,specPay = ?,empTypeNo = ?,positionNo = ? WHERE empNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, empName);
             ps.setString(2, idCardNo);
@@ -178,7 +227,7 @@ public class Employee {
             ps.setString(4, telNo);
             ps.setDouble(5, specPay);
             ps.setInt(6, empTypeNo);
-            ps.setInt(7, empPosNo);
+            ps.setInt(7, positionNo);
             ps.setInt(8, empNo);
             int i = ps.executeUpdate();
             if(i > 0){
@@ -213,11 +262,15 @@ public class Employee {
         e.setEmpTypeNo(rs.getInt("empTypeNo"));
         e.setEmpName(rs.getString("empName"));
         e.setEmpNo(rs.getInt("empNo"));
-        e.setEmpPosNo(rs.getInt("positionNo"));
+        e.setPositionNo(rs.getInt("positionNo"));
         e.setBranchNo(rs.getInt("branchNo"));
         e.setGender(rs.getString("gender"));
         e.setIdCardNo(rs.getString("idCardNo"));
         e.setSpecPay(rs.getDouble("specPay"));
         e.setTelNo(rs.getString("telNo"));
+        e.setEmpTypeName(rs.getString("empTypeName"));
+        e.setPositionName(rs.getString("positionName"));
     }
+    
+    
 }

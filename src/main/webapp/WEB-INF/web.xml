@@ -44,6 +44,18 @@
         <servlet-name>EditConstraintServlet</servlet-name>
         <servlet-class>controller.EditConstraintServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DelEmpAjaxServlet</servlet-name>
+        <servlet-class>ajaxcontroller.DelEmpAjaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SetEmpPosAjaxServlet</servlet-name>
+        <servlet-class>ajaxcontroller.SetEmpPosAjaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DelEmpPosAjaxServlet</servlet-name>
+        <servlet-class>ajaxcontroller.DelEmpPosAjaxServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LogInServlet</servlet-name>
         <url-pattern>/LogInServlet</url-pattern>
@@ -87,6 +99,18 @@
     <servlet-mapping>
         <servlet-name>EditConstraintServlet</servlet-name>
         <url-pattern>/EditConstraintServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DelEmpAjaxServlet</servlet-name>
+        <url-pattern>/DelEmpAjaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SetEmpPosAjaxServlet</servlet-name>
+        <url-pattern>/SetEmpPosAjaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DelEmpPosAjaxServlet</servlet-name>
+        <url-pattern>/DelEmpPosAjaxServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

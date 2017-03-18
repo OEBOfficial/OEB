@@ -39,7 +39,7 @@ public class AddEmpServlet extends HttpServlet {
         e.setBranchNo(branchNo);
         e.setEmpName(empName);
         e.setEmpNo(empTypeNo);
-        e.setEmpPosNo(empTypeNo);
+        e.setPositionNo(empTypeNo);
         e.setEmpTypeNo(empTypeNo);
         e.setGender(gender);
         e.setIdCardNo(idCardNo);
