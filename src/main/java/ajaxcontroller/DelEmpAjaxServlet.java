@@ -20,7 +20,7 @@ import model.Employee;
 public class DelEmpAjaxServlet extends HttpServlet {
     
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int empNo = Integer.parseInt(request.getParameter("empno"));
         Employee.delEmp(empNo);

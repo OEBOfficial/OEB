@@ -44,7 +44,6 @@ public class LogOutServlet extends HttpServlet {
             hs.invalidate();
         }
         
-        System.out.println("HS : "+hs);
         response.sendRedirect(target);
     }
 

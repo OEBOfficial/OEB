@@ -44,7 +44,6 @@ public class RestaurantOwner {
     }
     
     public static RestaurantOwner getRestaurantOwner(int restOwnerNo){
-        System.out.println("IN GETRESTAURANTOWNER");
         RestaurantOwner ro = null;
         try{
             Connection con = ConnectionBuilder.getConnection();
@@ -64,7 +63,6 @@ public class RestaurantOwner {
     }
     
     public static RestaurantOwner logIn(String username,String password){
-        System.out.println("IN LOGIN");
         RestaurantOwner ro = null;
         try{
             Connection con = ConnectionBuilder.getConnection();
@@ -86,7 +84,6 @@ public class RestaurantOwner {
     }
     
     private static void orm(ResultSet rs,RestaurantOwner ro) throws SQLException, SQLException, SQLException, SQLException, SQLException {
-        System.out.println("RESOWN ORM");
         ro.setRestOwnerNo(rs.getInt("restOwnerNo"));
         ro.setRestUserName(rs.getString("restUserName"));
     }

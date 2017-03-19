@@ -14,6 +14,7 @@ import java.util.List;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -25,7 +26,7 @@ public class Employee {
     private String idCardNo;
     private String gender;
     private String telNo;
-    private double specPay;
+    private Double specPay;
     private int empTypeNo;
     private int positionNo;
     private int branchNo;
@@ -72,11 +73,11 @@ public class Employee {
         this.telNo = telNo;
     }
 
-    public double getSpecPay() {
+    public Double getSpecPay() {
         return specPay;
     }
 
-    public void setSpecPay(double specPay) {
+    public void setSpecPay(Double specPay) {
         this.specPay = specPay;
     }
 
@@ -159,7 +160,7 @@ public class Employee {
                 .add("empTypeNo", e.getEmpTypeNo())
                 .add("gender", e.getGender())
                 .add("idCardNo", e.getIdCardNo())
-                .add("specPay", e.getSpecPay())
+                .add("specPay", ""+e.getSpecPay())
                 .add("telNo", e.getTelNo())
                 .build();
         }
@@ -266,10 +267,18 @@ public class Employee {
         e.setBranchNo(rs.getInt("branchNo"));
         e.setGender(rs.getString("gender"));
         e.setIdCardNo(rs.getString("idCardNo"));
-        e.setSpecPay(rs.getDouble("specPay"));
+        if(rs.getObject("specPay") == null){
+            e.setSpecPay(null);
+        }else{
+            e.setSpecPay(rs.getDouble("specPay"));
+        }
         e.setTelNo(rs.getString("telNo"));
         e.setEmpTypeName(rs.getString("empTypeName"));
         e.setPositionName(rs.getString("positionName"));
+    }
+    
+    public static void print(HttpServletRequest request){
+        System.out.println(request.getParameter("empName"));
     }
     
     

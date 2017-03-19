@@ -41,7 +41,6 @@ public class ActorManagement {
         for(int i = 0; i < cookies.length ;i++){
             Cookie c = cookies[i];
             if(c.getName().equals("restowner")){
-                System.out.println("mee cookie ja");
                 value = c.getValue();
                 return value;
             }

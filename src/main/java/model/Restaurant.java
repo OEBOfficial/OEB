@@ -35,7 +35,6 @@ public class Restaurant {
     }
     
     public static Restaurant getRestaurant(int restNo){
-        System.out.println("IN GETRESTAURANT");
         Restaurant r = null;
         try{
             Connection con = ConnectionBuilder.getConnection();

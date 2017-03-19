@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -51,6 +53,26 @@ public class EmploymentType {
             System.out.println(ex);
         }
         return et;
+    }
+    
+    public static List<EmploymentType> getAllEmpType(){
+        List<EmploymentType> empTypes = null;
+        try{
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "SELECT * FROM EmploymentType";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            empTypes = new ArrayList<EmploymentType>();
+            while(rs.next()){
+                EmploymentType et = new EmploymentType();
+                orm(rs,et);
+                empTypes.add(et);
+            }
+            con.close();
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return empTypes;
     }
     
     private static void orm(ResultSet rs,EmploymentType et) throws SQLException{

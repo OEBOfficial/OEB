@@ -109,7 +109,6 @@ public class Branch {
     }
     
     private static void orm(ResultSet rs,Branch b) throws SQLException{
-        System.out.println("IN ORM BRANCH");
         b.setBranchDesc(rs.getString("branchDesc"));
         b.setBranchName(rs.getString("branchName"));
         b.setBranchNo(rs.getInt("branchNo"));

@@ -44,7 +44,6 @@ public class LogInServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("IN DO GET");
         String target = "/login.jsp";
         HttpSession hs = request.getSession(false);
         Cookie cookies[] = request.getCookies();
@@ -57,7 +56,6 @@ public class LogInServlet extends HttpServlet {
         boolean pass = false;
         
         if(hs != null){
-            System.out.println("hs not null");
             ro = (RestaurantOwner)hs.getAttribute("restowner");
             if(ro != null){
                 pass = true;
@@ -65,19 +63,16 @@ public class LogInServlet extends HttpServlet {
         }
         
         if(username != null){
-            System.out.println("user not null");
             ro = RestaurantOwner.signInForCookie(username);
             hs = request.getSession();
             pass = true;
         }
         
         if(pass){
-            System.out.println("IN PASS");
             hs.setAttribute("restowner", ro);
             hs.setAttribute("branch", Branch.getBranchByOwner(ro.getRestOwnerNo()));
             response.sendRedirect("ToEmpServlet");
         }else{
-            System.out.println("IN NOT PASS");
             getServletContext().getRequestDispatcher(target).forward(request, response);
         }
     }
@@ -93,7 +88,6 @@ public class LogInServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("IN DO POST");
         String target = "/login.jsp";
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -115,7 +109,6 @@ public class LogInServlet extends HttpServlet {
                 Cookie c = new Cookie("restowner",ro.getRestUserName());
                 c.setMaxAge(Integer.MAX_VALUE);
                 response.addCookie(c);
-                System.out.println("COOKIE WAS SETTTTTTTTTTTTTt");
             }
             response.sendRedirect("ToEmpServlet");
         }

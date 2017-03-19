@@ -1,3 +1,4 @@
+C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\ajaxcontroller\DelEmpPosAjaxServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\model\Address.java
 C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\model\Constraint.java
 C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\ajaxcontroller\SetEmpAjaxServlet.java
@@ -9,10 +10,12 @@ C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\model\Connecti
 C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\model\Employee.java
 C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\controller\EditEmpPosServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\controller\ToEmpPosServlet.java
+C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\ajaxcontroller\SetEmpPosAjaxServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\model\Branch.java
 C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\controller\AddEmpPosServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\model\RestaurantOwner.java
 C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\controller\LogOutServlet.java
+C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\ajaxcontroller\DelEmpAjaxServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\controller\ToEmpServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\controller\EditConstraintServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEBProject\src\main\java\model\Restaurant.java
