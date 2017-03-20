@@ -41,9 +41,8 @@ public class EditEmpServlet extends HttpServlet {
         int positionNo = Integer.parseInt(request.getParameter("empPos"));
         e.setEmpNo(empNo);
         e.setEmpName(empName);
-        e.setEmpNo(empTypeNo);
-        e.setPositionNo(empTypeNo);
         e.setEmpTypeNo(empTypeNo);
+        e.setPositionNo(positionNo);
         e.setGender(gender);
         e.setIdCardNo(idCardNo);
         e.setTelNo(telNo);

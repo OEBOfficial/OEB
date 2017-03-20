@@ -226,7 +226,11 @@ public class Employee {
             ps.setString(2, idCardNo);
             ps.setString(3, gender);
             ps.setString(4, telNo);
-            ps.setDouble(5, specPay);
+            if(specPay != null){
+                ps.setDouble(5, specPay);
+            }else{
+                ps.setObject(5, null);
+            }
             ps.setInt(6, empTypeNo);
             ps.setInt(7, positionNo);
             ps.setInt(8, empNo);
@@ -275,5 +279,10 @@ public class Employee {
         e.setTelNo(rs.getString("telNo"));
         e.setEmpTypeName(rs.getString("empTypeName"));
         e.setPositionName(rs.getString("positionName"));
-    }    
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" + "empNo=" + empNo + ", empName=" + empName + ", idCardNo=" + idCardNo + ", gender=" + gender + ", telNo=" + telNo + ", specPay=" + specPay + ", empTypeNo=" + empTypeNo + ", positionNo=" + positionNo + ", branchNo=" + branchNo + ", empTypeName=" + empTypeName + ", positionName=" + positionName + '}';
+    }
 }

@@ -39,8 +39,7 @@ public class LogInServlet extends HttpServlet {
                 hs = request.getSession();
                 pass = true;
             }
-        }
-        if (hs != null) {
+        }else if (hs != null) {
             ro = (RestaurantOwner) hs.getAttribute("restowner");
             if (ro != null) {
                 pass = true;
