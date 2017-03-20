@@ -56,6 +56,10 @@
         <servlet-name>DelEmpPosAjaxServlet</servlet-name>
         <servlet-class>ajaxcontroller.DelEmpPosAjaxServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ForTestThaiLanguage</servlet-name>
+        <servlet-class>controller.ForTestThaiLanguage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LogInServlet</servlet-name>
         <url-pattern>/LogInServlet</url-pattern>

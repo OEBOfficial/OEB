@@ -15,7 +15,7 @@ import java.sql.DriverManager;
 public class ConnectionBuilder {
     public static Connection getConnection(){
         Connection con = null;
-        String url = "jdbc:mysql://iambighead.com:3306/OEB";
+        String url = "jdbc:mysql://iambighead.com:3306/OEB?characterEncoding=UTF-8";
         String username = "OrderEatBill";
         String password = "oebproject2017";
         try{

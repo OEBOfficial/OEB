@@ -275,11 +275,5 @@ public class Employee {
         e.setTelNo(rs.getString("telNo"));
         e.setEmpTypeName(rs.getString("empTypeName"));
         e.setPositionName(rs.getString("positionName"));
-    }
-    
-    public static void print(HttpServletRequest request){
-        System.out.println(request.getParameter("empName"));
-    }
-    
-    
+    }    
 }
