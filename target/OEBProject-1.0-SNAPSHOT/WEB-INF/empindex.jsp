@@ -105,6 +105,7 @@
                         <!-- /menu footer buttons -->
                     </div>
                 </div>
+
                 <!-- top navigation -->
                 <div class="top_nav">
                     <div class="nav_menu">
@@ -256,76 +257,79 @@
                                         </div>
                                         <!-- ส่วนเนื้อหาของ Modal -->
                                         <div class="modal-body">
-                                            <form class="form-horizontal form-label-left input_mask">
+                                            <form class="form-horizontal form-label-left input_mask" action="AddEmpServlet" method="post">
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <input type="text" class="form-control has-feedback-left" name="empName" placeholder="ชื่อ - นามสกุล">
-                                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-md-6 col-sm-6 col-xs-12 btn-group has-feedback">
-                                                        <div id="gender" class="btn-group" data-toggle="buttons">
-                                                            <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                                <input type="radio" name="gender" value="male"> &nbsp; ชาย &nbsp;
-                                                            </label>
-                                                            <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                                <input type="radio" name="gender" value="female"> หญิง
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <input type="text" class="form-control" id="inputSuccess5" placeholder="เบอร์โทรศัพท์มือถือ">
-                                                    <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <input type="text" class="form-control" id="inputSuccess3" placeholder="รหัสประจำตัวประชาชน">
+                                                    <input type="text" class="form-control" name="empName" placeholder="ชื่อ - นามสกุล">
                                                     <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 btn-group has-feedback">
-                                                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button" disabled> Employment Type <span class="caret"></span> </button>
-                                                            <ul class="dropdown-menu" name="empType">
-                                                                <li><a href="#">ชั่วโมง</a>
-                                                                </li>
-                                                                <li><a href="#">วัน</a>
-                                                                </li>
-                                                                <li><a href="#">เดือน</a>
-                                                                </li>
-                                                            </ul>
+                                                <div class="form-group">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                        <div class="form-group">    
+                                                            <div id="gender" class="btn-group" data-toggle="buttons">
+                                                                <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                                    <input type="radio" name="gender" value="male"> &nbsp; ชาย &nbsp;
+                                                                </label>
+                                                                <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                                    <input type="radio" name="gender" value="female"> หญิง
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 btn-group has-feedback">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-default" type="button" id="1">Full - Time</button>
-                                                        <button class="btn btn-default" type="button" id="2">Part - Time</button>
-                                                        <button class="btn btn-default" type="button" id="3">Training</button>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                        <input type="text" class="form-control" name="telNo" placeholder="เบอร์โทรศัพท์มือถือ">
+                                                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" >
+                                                        <select name="empPos" class="form-control" required>
+                                                            <c:forEach items="${empPos}" var="ep">
+                                                                <option value="${ep.positionNo}">${ep.positionName}</option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                        <div class="btn-group" data-toggle="buttons">
+                                                            <label class="btn btn-default" id="1" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                                <input type="radio"> Part-Time
+                                                            </label>
+                                                            <label class="btn btn-default"  id="2" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                                <input type="radio"> Full - Time
+                                                            </label>
+                                                            <label class="btn btn-default"  id="3" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                                <input type="radio"> Training
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" >
+                                                        <select id="empType" class="form-control" disabled>
+                                                            <option value="hourly">รายชั่วโมง</option>
+                                                            <option value="daily">รายวัน</option>
+                                                            <option value="monthly">รายเดือน</option>
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                        <div class="btn-group" data-toggle="buttons">
+                                                            <label class="btn btn-default" id="addgeneral" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                                <input type="radio"> จ่ายตามตำแหน่ง
+                                                            </label>
+                                                            <label class="btn btn-default" id="addspecial" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                                <input type="radio"> จ่ายรายคน
+                                                            </label>
+
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                        <input type="text" class="form-control" id="addspecpay" placeholder="ค่าจ้าง" name="specPay" disabled>
+                                                        <span class="fa fa-usd form-control-feedback right" aria-hidden="true"></span>
                                                     </div>
                                                 </div>
-                                                
-                                                
-                                                <div class="col-md-6 col-sm-6 col-xs-12 btn-group has-feedback">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-default" type="button" id="addgeneral">จ่ายตามตำแหน่ง</button>
-                                                        <button class="btn btn-default" type="button" id="addspecial">จ่ายรายคน</button>
-                                                    </div>
-                                                </div>
-                                                
-                                                
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <input type="text" class="form-control" id="addspecpay" placeholder="ค่าจ้าง">
-                                                    <span class="fa fa-usd form-control-feedback right" aria-hidden="true"></span>
-                                                </div>
-
-
-
-
-
-
-
-
-                                                
-                                                
-                                                
-                                                
-                                                
                                                 <div class="modal-footer">
                                                     <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
@@ -334,116 +338,200 @@
                                                     </div>
                                                 </div>
                                             </form>
+
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- /Modal Content (ADD EMP)-->
-                            <!-- Modal Content (EDIT EMP)-->
-                            <div class="modal fade" id="editEmp" role="dialog">
-                                <div class="modal-dialog">
-                                    <!-- เนือหาของ Modal ทั้งหมด -->
-                                    <div class="modal-content">
-                                        <!-- ส่วนหัวของ Modal -->
-                                        <div class="modal-header">
-                                            <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">แก้ไข้ข้อมูล</h4>
-                                        </div>
-                                        <!-- ส่วนเนื้อหาของ Modal -->
-                                        <div class="modal-body">
-                                            <form class="form-horizontal form-label-left input_mask">
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="First Name">
-                                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <input type="text" class="form-control" id="inputSuccess3" placeholder="Last Name">
-                                                    <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <input type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email">
-                                                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <input type="text" class="form-control" id="inputSuccess5" placeholder="Phone">
-                                                    <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Default Input</label>
-                                                    <div class="col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" class="form-control" placeholder="Default Input">
+                                <!-- /Modal Content (ADD EMP)-->
+                                <!-- Modal Content (EDIT EMP)-->
+                                <div class="modal fade" id="editEmp" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- เนือหาของ Modal ทั้งหมด -->
+                                        <div class="modal-content">
+                                            <!-- ส่วนหัวของ Modal -->
+                                            <div class="modal-header">
+                                                <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">แก้ไข้ข้อมูล</h4>
+                                            </div>
+                                            <!-- ส่วนเนื้อหาของ Modal -->
+                                            <div class="modal-body">
+                                                <form class="form-horizontal form-label-left input_mask">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                        <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="First Name">
+                                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Disabled Input </label>
-                                                    <div class="col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" class="form-control" disabled="disabled" placeholder="Disabled Input">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                        <input type="text" class="form-control" id="inputSuccess3" placeholder="Last Name">
+                                                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Read-Only Input</label>
-                                                    <div class="col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                        <input type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email">
+                                                        <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-9 col-sm-9 col-xs-12">
-                                                        <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                        <input type="text" class="form-control" id="inputSuccess5" placeholder="Phone">
+                                                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                        <button type="submit" class="btn btn-success">บันทึกการเปลี่ยนแปลง</button>
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Default Input</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" class="form-control" placeholder="Default Input">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </form>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Disabled Input </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" class="form-control" disabled="disabled" placeholder="Disabled Input">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Read-Only Input</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
+                                                        </label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                            <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+                                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                                            <button type="submit" class="btn btn-success">บันทึกการเปลี่ยนแปลง</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- /Modal Content (EDIT EMP)-->
+                                <!-- footer content -->
+                                <!--                                <footer>
+                                                                    <div class="pull-right">
+                                                                        Order Eat Bill by SIT KMUTT.
+                                                                    </div>
+                                                                    <div class="clearfix"></div>
+                                                                </footer>-->
+                                <!-- /footer content -->
                             </div>
-                            <!-- /Modal Content (EDIT EMP)-->
-                            <!-- footer content -->
-                            <footer>
-                                <div class="pull-right">
-                                    Order Eat Bill by SIT KMUTT.
-                                </div>
-                                <div class="clearfix"></div>
-                            </footer>
-                            <!-- /footer content -->
                         </div>
                     </div>
-                    <!-- jQuery -->
-                    <script src="../vendors/jquery/dist/jquery.min.js"></script>
-                    <!-- Bootstrap -->
-                    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-                    <!-- FastClick -->
-                    <script src="../vendors/fastclick/lib/fastclick.js"></script>
-                    <!-- NProgress -->
-                    <script src="../vendors/nprogress/nprogress.js"></script>
-                    <!-- iCheck -->
-                    <script src="../vendors/iCheck/icheck.min.js"></script>
-                    <!-- Datatables -->
-                    <script src="../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-                    <script src="../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-                    <script src="../vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-                    <script src="../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-                    <script src="../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-                    <script src="../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-                    <script src="../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-                    <script src="../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-                    <script src="../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-                    <script src="../vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-                    <script src="../vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-                    <script src="../vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-                    <script src="../vendors/jszip/dist/jszip.min.js"></script>
-                    <script src="../vendors/pdfmake/build/pdfmake.min.js"></script>
-                    <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
-                    <!-- Custom Theme Scripts -->
-                    <script src="../build/js/custom.min.js"></script>
-                    </body>
-                    </html>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery -->
+        <script src="../vendors/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- FastClick -->
+        <script src="../vendors/fastclick/lib/fastclick.js"></script>
+        <!-- NProgress -->
+        <script src="../vendors/nprogress/nprogress.js"></script>
+        <!-- iCheck -->
+        <script src="../vendors/iCheck/icheck.min.js"></script>
+        <!-- Datatables -->
+        <script src="../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="../vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+        <script src="../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+        <script src="../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+        <script src="../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+        <script src="../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+        <script src="../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+        <script src="../vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="../vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+        <script src="../vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+        <script src="../vendors/jszip/dist/jszip.min.js"></script>
+        <script src="../vendors/pdfmake/build/pdfmake.min.js"></script>
+        <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
+        <!-- Custom Theme Scripts -->
+        <script src="../build/js/custom.min.js"></script>
+
+        <script>
+            $("#1").click(function(){
+                $("#empType").attr("disabled",false);
+                $("#empType option:nth-child(1)").val('1');
+                $("#empType option:nth-child(2)").val('2');
+                $("#empType option:nth-child(3)").val('3');
+            });
+            $("#2").click(function(){
+                $("#empType").attr("disabled",false);
+                $("#empType option:nth-child(1)").val('4');
+                $("#empType option:nth-child(2)").val('5');
+                $("#empType option:nth-child(3)").val('6');
+            });
+            $("#3").click(function(){
+                $("#empType").attr("disabled",false);
+                $("#empType option:nth-child(1)").val('7');
+                $("#empType option:nth-child(2)").val('8');
+                $("#empType option:nth-child(3)").val('9');
+            });
+            
+            $("#addspecial").click(function () {
+                $("#addspecpay").attr('disabled', false);
+            });
+
+            $("#addgeneral").click(function () {
+                $("#addspecpay").val('');
+                $("#addspecpay").attr('disabled', true);
+            });
+
+            $("#special").click(function () {
+                $("#specpay").attr('disabled', false);
+            });
+
+            $("#general").click(function () {
+                $("#specpay").val('');
+                $("#specpay").attr('disabled', true);
+            });
+
+            function editEmp(empNo) {
+                $.ajax({
+                    type: "POST",
+                    url: "SetEmpAjaxServlet",
+                    dataType: "json",
+                    data: "empno=" + encodeURIComponent(empNo),
+                    success: function (json) {
+                        $("#editSubmit").val(json.empNo);
+                        $("#name").val(json.empName);
+                        $("#idcard").val(json.idCardNo);
+                        if (json.gender == 'M') {
+                            $("#gender-m").click();
+                        } else {
+                            $("#gender-f").click();
+                        }
+                        $("#telno").val(json.telNo);
+                        $("#empType").val(json.empTypeNo);
+                        $("#empPos").val(json.positionNo);
+                        if (json.specPay == "null") {
+                            $("#general").click();
+                            $("#specpay").val('');
+                        } else {
+                            $("#special").click();
+                            $("#specpay").val(json.specPay);
+                        }
+                    }
+                });
+            }
+
+            function delEmp(empNo) {
+                $.ajax({
+                    type: "Post",
+                    url: "DelEmpAjaxServlet",
+                    dataType: "text",
+                    data: "empno=" + encodeURIComponent(empNo),
+                    success: function (result) {
+                        $("#tr" + empNo).remove();
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
