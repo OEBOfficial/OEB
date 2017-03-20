@@ -3,6 +3,7 @@
     Created on : Mar 17, 2017, 10:25:35 PM
     Author     : USER
 --%>
+<%@page import="java.sql.Timestamp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,6 +14,13 @@
         
     </head>
     <body>
+        <%
+            HttpSession hs = request.getSession();
+            Timestamp ts1 = new Timestamp(Long.parseLong(""+hs.getAttribute("time-in")));
+            Timestamp ts2 = new Timestamp(System.currentTimeMillis());
+            System.out.println(ts1);
+            System.out.println(ts2);
+        %>
         <table>
             <tr>
                 <td>ชื่อพนักงาน</td>
@@ -41,6 +49,7 @@
             </c:forEach>
         </table>
         <div style="border:1px solid black;">
+            <center>อันนี้เป็น Pop-up สำหรับแก้ไข</center>
             <form action="EditEmpServlet" method="POST">
                 empName : <input type="text" id="name" name="empName" required><br>
                 idCardNo : <input type="text" id="idcard" name="idCardNo" required><br>
@@ -69,10 +78,48 @@
             </form>
         </div>
         
+        <div style="border:1px solid black;">
+            <center>อันนี้เป็นฟอร์มสำหรับเพิ่มข้อมูล</center>
+            <form action="AddEmpServlet" method="POST">
+                empName : <input type="text"  name="empName" required><br>
+                idCardNo : <input type="text" name="idCardNo" required><br>
+                ชาย <input type="radio" value="M" name="gender" required> 
+                หญิง <input type="radio" value="F" name="gender" required><br>
+                telNo : <input type="text" name="telNo" required><br>
+                positionName : 
+                <select name="empPos">
+                    <c:forEach items="${empPos}" var="ep">
+                        <option value="${ep.positionNo}">${ep.positionName}</option>
+                    </c:forEach>
+                </select>
+                <br>
+                empTypeName : 
+                <select name="empType">
+                    <c:forEach items="${empTypes}" var="et">
+                        <option value="${et.empTypeNo}">${et.empTypeName}</option>
+                    </c:forEach>
+                </select>
+                <br>
+                specPay : 
+                จ่ายตามตำแหน่ง <input type="radio" id="addgeneral" value="1" name="c-specPay" required> 
+                จ่ายพิเศษ <input type="radio" id="addspecial" value="2" name="c-specPay" required> 
+                <input type="number" id="addspecpay" name="specPay" disabled><br>
+                <button>submit</button>
+            </form>
+        </div>
+        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>
+            $("#addspecial").click(function(){
+                $("#addspecpay").attr('disabled',false);
+            });
             
-            $('#special').click(function() {
+            $("#addgeneral").click(function(){
+                $("#addspecpay").val('');
+                $("#addspecpay").attr('disabled',true);
+            });
+            
+            $("#special").click(function() {
                 $("#specpay").attr('disabled',false);
              });
              

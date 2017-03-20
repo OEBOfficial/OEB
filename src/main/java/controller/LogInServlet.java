@@ -37,6 +37,7 @@ public class LogInServlet extends HttpServlet {
             if (username != null) {
                 ro = RestaurantOwner.signInForCookie(username);
                 hs = request.getSession();
+                hs.setAttribute("restowner", ro);
                 pass = true;
             }
         }else if (hs != null) {
@@ -47,8 +48,9 @@ public class LogInServlet extends HttpServlet {
         }
         
         if (pass) {
-            hs.setAttribute("restowner", ro);
-            hs.setAttribute("branch", Branch.getBranchByOwner(ro.getRestOwnerNo()));
+//            hs.setAttribute("branch", Branch.getBranchByOwner(ro.getRestOwnerNo()));
+//          set time in
+            hs.setAttribute("time-in", System.currentTimeMillis());
             response.sendRedirect("ToEmpServlet");
             return;
         } else {
@@ -67,7 +69,6 @@ public class LogInServlet extends HttpServlet {
         RestaurantOwner ro = RestaurantOwner.logIn(username, password);
         if (ro == null) {
             request.setAttribute("msg", "Log-in not pass");
-            request.setAttribute("username", username);
             if (rememberme != null) {
                 request.setAttribute("rememberme", "checked");
             }
@@ -75,7 +76,7 @@ public class LogInServlet extends HttpServlet {
         } else {
             HttpSession hs = request.getSession(true);
             hs.setAttribute("restowner", ro);
-            hs.setAttribute("branch", Branch.getBranchByOwner(ro.getRestOwnerNo()));
+            hs.setAttribute("time-in", System.currentTimeMillis());
             if (rememberme != null) {
                 Cookie c = new Cookie("restowner", ro.getRestUserName());
                 c.setMaxAge(Integer.MAX_VALUE);

@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Branch;
 import model.EmployeePosition;
+import model.RestaurantOwner;
 
 /**
  *
@@ -28,10 +28,10 @@ public class AddEmpPosServlet extends HttpServlet {
         String target = "ToEmpPosServlet";
         String positionName = request.getParameter("positionname");
         HttpSession hs = request.getSession();
-        Branch b = (Branch)hs.getAttribute("branch");
+        RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
         EmployeePosition pe = new EmployeePosition();
         pe.setPositionName(positionName);
-        pe.setBranchNo(b.getBranchNo());
+        pe.setBranchNo(ro.getBranchNo());
         pe.addEmpPosName();
         response.sendRedirect(target);
     }

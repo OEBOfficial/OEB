@@ -16,6 +16,7 @@ import model.Branch;
 import model.Employee;
 import model.EmployeePosition;
 import model.EmploymentType;
+import model.RestaurantOwner;
 
 /**
  *
@@ -30,13 +31,14 @@ public class ToEmpServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String target = "/WEB-INF/empindex.jsp";
         HttpSession hs = request.getSession();
-        Branch b = (Branch)hs.getAttribute("branch");
-        List<Employee> employees = Employee.getAllEmp(b.getBranchNo());
+        RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
+        List<Employee> employees = Employee.getAllEmp(ro.getBranchNo());
         request.setAttribute("employees", employees);
         List<EmploymentType> empTypes = EmploymentType.getAllEmpType();
         request.setAttribute("empTypes", empTypes);
-        List<EmployeePosition> empPos = EmployeePosition.getAllEmpPos(b.getBranchNo());
+        List<EmployeePosition> empPos = EmployeePosition.getAllEmpPos(ro.getBranchNo());
         request.setAttribute("empPos", empPos);
+        hs.setAttribute("time-out", System.currentTimeMillis());
         
         getServletContext().getRequestDispatcher(target).forward(request, response);
     }

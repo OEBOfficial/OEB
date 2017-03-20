@@ -6,14 +6,13 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Branch;
 import model.Employee;
+import model.RestaurantOwner;
 
 /**
  *
@@ -22,28 +21,29 @@ import model.Employee;
 public class AddEmpServlet extends HttpServlet {
 
     @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String target = "ToEmpServlet";
         HttpSession hs = request.getSession();
+        RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
+        int branchNo = ro.getBranchNo();
+        Employee e = new Employee();
         String empName = request.getParameter("empName");
         String idCardNo = request.getParameter("idCardNo");
         String gender = request.getParameter("gender");
         String telNo = request.getParameter("telNo");
-        double specPay = Double.parseDouble(request.getParameter("specPay"));
-        int empTypeNo = Integer.parseInt(request.getParameter("empTypeNo"));
-        int positionNo = Integer.parseInt(request.getParameter("positionNo"));
-        Branch b = (Branch)hs.getAttribute("branch");
-        int branchNo = b.getBranchNo();
-        Employee e = new Employee();
+        if(request.getParameter("specPay") != null){
+            double specPay = Double.parseDouble(request.getParameter("specPay"));
+            e.setSpecPay(specPay);
+        }
+        int empTypeNo = Integer.parseInt(request.getParameter("empType"));
+        int positionNo = Integer.parseInt(request.getParameter("empPos"));
         e.setBranchNo(branchNo);
         e.setEmpName(empName);
-        e.setEmpNo(empTypeNo);
-        e.setPositionNo(empTypeNo);
+        e.setPositionNo(positionNo);
         e.setEmpTypeNo(empTypeNo);
         e.setGender(gender);
         e.setIdCardNo(idCardNo);
-        e.setSpecPay(specPay);
         e.setTelNo(telNo);
         e.addEmp();
         response.sendRedirect(target);

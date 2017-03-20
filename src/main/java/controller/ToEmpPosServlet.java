@@ -6,15 +6,14 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Branch;
 import model.EmployeePosition;
+import model.RestaurantOwner;
 
 /**
  *
@@ -36,8 +35,8 @@ public class ToEmpPosServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String target = "/WEB-INF/empposindex.jsp";
         HttpSession hs = request.getSession();
-        Branch b = (Branch)hs.getAttribute("branch");
-        List<EmployeePosition> employeepositions = EmployeePosition.getAllEmpPos(b.getBranchNo());
+        RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
+        List<EmployeePosition> employeepositions = EmployeePosition.getAllEmpPos(ro.getBranchNo());
         request.setAttribute("employeepositions", employeepositions);
         
         getServletContext().getRequestDispatcher(target).forward(request, response);

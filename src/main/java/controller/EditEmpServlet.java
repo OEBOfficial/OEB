@@ -6,14 +6,13 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Branch;
 import model.Employee;
+import model.RestaurantOwner;
 
 /**
  *
@@ -25,7 +24,7 @@ public class EditEmpServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String target = "ToEmpServlet";
         HttpSession hs = request.getSession();
-        Branch b = (Branch)hs.getAttribute("branch");
+        RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
         Employee e = new Employee();
         String empName = request.getParameter("empName");
         String idCardNo = request.getParameter("idCardNo");
@@ -46,7 +45,7 @@ public class EditEmpServlet extends HttpServlet {
         e.setGender(gender);
         e.setIdCardNo(idCardNo);
         e.setTelNo(telNo);
-        e.setBranchNo(b.getBranchNo());
+        e.setBranchNo(ro.getBranchNo());
         e.editEmp();
         response.sendRedirect(target);
         return;

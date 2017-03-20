@@ -18,6 +18,15 @@ public class RestaurantOwner {
     private int restOwnerNo;
     private String restUserName;
     private String restPassword;
+    private int branchNo;
+
+    public int getBranchNo() {
+        return branchNo;
+    }
+
+    public void setBranchNo(int branchNo) {
+        this.branchNo = branchNo;
+    }
 
     public int getRestOwnerNo() {
         return restOwnerNo;
@@ -66,7 +75,9 @@ public class RestaurantOwner {
         RestaurantOwner ro = null;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "SELECT * FROM RestaurantOwner WHERE LOWER(restUserName) = ?";
+            String sql = "SELECT * FROM RestaurantOwner ro "
+                    + " JOIN Branch b ON ro.restOwnerNo = b.restOwnerNo "
+                    + " WHERE LOWER(restUserName) = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, username.toLowerCase());
             ResultSet rs = ps.executeQuery();
@@ -86,13 +97,16 @@ public class RestaurantOwner {
     private static void orm(ResultSet rs,RestaurantOwner ro) throws SQLException, SQLException, SQLException, SQLException, SQLException {
         ro.setRestOwnerNo(rs.getInt("restOwnerNo"));
         ro.setRestUserName(rs.getString("restUserName"));
+        ro.setBranchNo(rs.getInt("branchNo"));
     }
     
     public static RestaurantOwner signInForCookie(String cookieVal){
         RestaurantOwner ro = null;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "SELECT * FROM RestaurantOwner WHERE LOWER(restUserName) = ?";
+            String sql = "SELECT * FROM RestaurantOwner ro"
+                    + " JOIN Branch b ON ro.restOwnerNo = b.restOwnerNo "
+                    + " WHERE LOWER(restUserName) = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, cookieVal.toLowerCase());
             ResultSet rs = ps.executeQuery();
