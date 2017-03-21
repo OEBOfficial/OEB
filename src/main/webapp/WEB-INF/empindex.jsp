@@ -267,10 +267,10 @@
                                                         <div class="form-group">    
                                                             <div id="gender" class="btn-group" data-toggle="buttons">
                                                                 <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                                    <input type="radio" name="gender" value="male"> &nbsp; ชาย &nbsp;
+                                                                    <input type="radio" name="gender" value="M"> &nbsp; ชาย &nbsp;
                                                                 </label>
                                                                 <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                                    <input type="radio" name="gender" value="female"> หญิง
+                                                                    <input type="radio" name="gender" value="F"> หญิง
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -304,7 +304,7 @@
                                                     </div>
 
                                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" >
-                                                        <select id="empType" class="form-control" disabled>
+                                                        <select id="empType" name="empType" class="form-control" disabled>
                                                             <option value="hourly">รายชั่วโมง</option>
                                                             <option value="daily">รายวัน</option>
                                                             <option value="monthly">รายเดือน</option>
