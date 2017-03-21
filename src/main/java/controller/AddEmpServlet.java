@@ -43,7 +43,6 @@ public class AddEmpServlet extends HttpServlet {
         e.setPositionNo(positionNo);
         e.setEmpTypeNo(empTypeNo);
         e.setGender(gender);
-        e.setIdCardNo(idCardNo);
         e.setTelNo(telNo);
         e.addEmp();
         response.sendRedirect(target);

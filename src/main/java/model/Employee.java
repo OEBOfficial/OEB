@@ -14,7 +14,6 @@ import java.util.List;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -23,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 public class Employee {
     private int empNo;
     private String empName;
-    private String idCardNo;
     private String gender;
     private String telNo;
     private Double specPay;
@@ -47,14 +45,6 @@ public class Employee {
 
     public void setEmpName(String empName) {
         this.empName = empName;
-    }
-
-    public String getIdCardNo() {
-        return idCardNo;
-    }
-
-    public void setIdCardNo(String idCardNo) {
-        this.idCardNo = idCardNo;
     }
 
     public String getGender() {
@@ -159,7 +149,6 @@ public class Employee {
                 .add("empTypeName", e.getEmpTypeName())
                 .add("empTypeNo", e.getEmpTypeNo())
                 .add("gender", e.getGender())
-                .add("idCardNo", e.getIdCardNo())
                 .add("specPay", ""+e.getSpecPay())
                 .add("telNo", e.getTelNo())
                 .build();
@@ -194,21 +183,20 @@ public class Employee {
         boolean success = false;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "INSERT INTO Employee(empName,idCardNo,gender,telNo,specPay,empTypeNO,positionNo,branchNo) "
-                    + " VALUES(?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO Employee(empName,gender,telNo,specPay,empTypeNO,positionNo,branchNo) "
+                    + " VALUES(?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, empName);
-            ps.setString(2, idCardNo);
-            ps.setString(3, gender);
-            ps.setString(4, telNo);
+            ps.setString(2, gender);
+            ps.setString(3, telNo);
             if(specPay != null){
-                ps.setDouble(5, specPay);
+                ps.setDouble(4, specPay);
             }else{
-                ps.setObject(5, null);
+                ps.setObject(4, null);
             }
-            ps.setInt(6, empTypeNo);
-            ps.setInt(7, positionNo);
-            ps.setInt(8, branchNo);
+            ps.setInt(5, empTypeNo);
+            ps.setInt(6, positionNo);
+            ps.setInt(7, branchNo);
             int i = ps.executeUpdate();
             if(i > 0){
                 success = true;
@@ -224,20 +212,19 @@ public class Employee {
         boolean success = false;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "UPDATE Employee SET empName = ?,idCardNo = ?,gender = ?,telNo = ?,specPay = ?,empTypeNo = ?,positionNo = ? WHERE empNo = ?";
+            String sql = "UPDATE Employee SET empName = ?,gender = ?,telNo = ?,specPay = ?,empTypeNo = ?,positionNo = ? WHERE empNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, empName);
-            ps.setString(2, idCardNo);
-            ps.setString(3, gender);
-            ps.setString(4, telNo);
+            ps.setString(2, gender);
+            ps.setString(3, telNo);
             if(specPay != null){
-                ps.setDouble(5, specPay);
+                ps.setDouble(4, specPay);
             }else{
-                ps.setObject(5, null);
+                ps.setObject(4, null);
             }
-            ps.setInt(6, empTypeNo);
-            ps.setInt(7, positionNo);
-            ps.setInt(8, empNo);
+            ps.setInt(5, empTypeNo);
+            ps.setInt(6, positionNo);
+            ps.setInt(7, empNo);
             int i = ps.executeUpdate();
             if(i > 0){
                 success = true;
@@ -274,7 +261,6 @@ public class Employee {
         e.setPositionNo(rs.getInt("positionNo"));
         e.setBranchNo(rs.getInt("branchNo"));
         e.setGender(rs.getString("gender"));
-        e.setIdCardNo(rs.getString("idCardNo"));
         if(rs.getObject("specPay") == null){
             e.setSpecPay(null);
         }else{
@@ -287,6 +273,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" + "empNo=" + empNo + ", empName=" + empName + ", idCardNo=" + idCardNo + ", gender=" + gender + ", telNo=" + telNo + ", specPay=" + specPay + ", empTypeNo=" + empTypeNo + ", positionNo=" + positionNo + ", branchNo=" + branchNo + ", empTypeName=" + empTypeName + ", positionName=" + positionName + '}';
+        return "Employee{" + "empNo=" + empNo + ", empName=" + empName + ", gender=" + gender + ", telNo=" + telNo + ", specPay=" + specPay + ", empTypeNo=" + empTypeNo + ", positionNo=" + positionNo + ", branchNo=" + branchNo + ", empTypeName=" + empTypeName + ", positionName=" + positionName + '}';
     }
 }
