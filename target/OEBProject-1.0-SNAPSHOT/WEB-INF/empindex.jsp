@@ -356,7 +356,6 @@
                                                                     $("#empType option:nth-child(2)").val('8');
                                                                     $("#empType option:nth-child(3)").val('9');
                                                                 });
-
                                                                 $("#e1").click(function () {
                                                                     $("#eempType").attr("disabled", false);
                                                                     $("#eempType option:nth-child(1)").val('1');
@@ -409,17 +408,18 @@
                                                                                 $("#gender-f").click();
                                                                             }
                                                                             $("#telno").val(json.telNo);
+                                                                            $("#empPos").val(json.positionNo);
                                                                             $("#empType").val(json.empTypeNo);
-                                                                            var positionNo = json.positionNo;
-                                                                            if (positionNo <= 3) {
+                                                                            var empTypeNo = json.empTypeNo;
+                                                                            if (empTypeNo <= 3) {
                                                                                 $("#e1").click();
-                                                                                $("#eempPos").val(positionNo);
-                                                                            } else if (positionNo <= 6) {
+                                                                                $("#eempType").val(empTypeNo);
+                                                                            } else if (empTypeNo <= 6) {
                                                                                 $("#e2").click();
-                                                                                $("#eempPos").val(3 + positionNo);
+                                                                                $("#eempType").val(empTypeNo);
                                                                             } else {
                                                                                 $("#e3").click();
-                                                                                $("#eempPos").val(6 + positionNo);
+                                                                                $("#eempType").val(empTypeNo);
                                                                             }
                                                                             if (json.specPay == "null") {
                                                                                 $("#general").click();
