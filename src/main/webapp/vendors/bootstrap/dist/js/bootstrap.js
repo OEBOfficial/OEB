@@ -627,7 +627,7 @@ if (typeof jQuery === 'undefined') {
 
   Collapse.prototype.hide = function () {
     if (this.transitioning || !this.$element.hasClass('in')) return
-
+    
     var startEvent = $.Event('hide.bs.collapse')
     this.$element.trigger(startEvent)
     if (startEvent.isDefaultPrevented()) return
