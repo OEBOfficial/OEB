@@ -12,6 +12,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 /**
  *
@@ -163,6 +168,57 @@ public class WorkingHistory {
             System.out.println(ex);
         }
         return workhist;
+    }
+    
+    public static List<WorkingHistory> getAllWorkHistByEmp(int empNo){        
+        List<WorkingHistory> workHist = null;
+        try{
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "SELECT * FROM WorkingHistory wh "
+                    + " JOIN Employee e ON e.empNo = wh.empNo "
+                    + " WHERE wh.empNo = ? AND wh.toTime IS NOT NULL "
+                    + " ORDER BY wh.fromDate DESC,wh.toTime DESC";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, empNo);
+            ResultSet rs = ps.executeQuery();
+            workHist = new LinkedList<WorkingHistory>();
+            while(rs.next()){
+                WorkingHistory wh = new WorkingHistory();
+                orm(rs,wh);
+                workHist.add(wh);                
+            }
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return workHist;
+    }
+    
+    public static JsonArray getAllWorkHistByEmpJson(int empNo){
+        List<WorkingHistory> workHist = getAllWorkHistByEmp(empNo);
+        JsonObjectBuilder workBuilder = Json.createObjectBuilder();
+        JsonArrayBuilder JAB = Json.createArrayBuilder();
+        JsonArray JA = null;
+        if(workHist != null){
+            JA = JAB.build();
+            for(int i = 0 ; i < workHist.size() ; i++){
+                JsonObject jo = workBuilder
+                        .add("workNo", workHist.get(i).getWorkNo())
+                        .add("fromTime", workHist.get(i).getFromTime())
+                        .add("toTime", workHist.get(i).getToTime())
+                        .add("fromDate", ""+workHist.get(i).getFromDate())
+                        .add("toDate", ""+workHist.get(i).getToDate())
+                        .add("empTypeName", workHist.get(i).getEmpTypeName())
+                        .add("positionName", workHist.get(i).getPositionName())
+                        .add("workingPay", workHist.get(i).getWorkingPay())
+                        .add("empNo", workHist.get(i).getEmpNo())
+                        .add("empName", workHist.get(i).getEmpName())
+                        .add("branchNo", workHist.get(i).getBranchNo())
+                        .build();
+                JAB.add(jo);
+            }
+            JA = JAB.build();
+        }
+        return JA;
     }
     
     private static void orm(ResultSet rs,WorkingHistory wh) throws SQLException{

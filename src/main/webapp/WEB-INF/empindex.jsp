@@ -67,7 +67,7 @@
                                                     <th style="width:20%;">ชื่อ</th>
                                                     <th style="width:20%;">ตำแหน่ง</th>
                                                     <th style="width:20%;">ประเภท</th>
-                                                    <th style="width:20%;">ค่าจ้าง</th>
+                                                    <th style="width:20%;">ค่าจ้างต่อหน่วยเวลา</th>
                                                     <th style="width:20%;">ตัวเลือก</th>
                                                 </tr>
                                             </thead>

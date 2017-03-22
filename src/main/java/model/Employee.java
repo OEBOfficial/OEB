@@ -30,7 +30,18 @@ public class Employee {
     private int branchNo;
     private String empTypeName;
     private String positionName;
+    private Double SUMPAY;
 
+    public Double getSUMPAY() {
+        return SUMPAY;
+    }
+
+    public void setSUMPAY(Double SUMPAY) {
+        this.SUMPAY = SUMPAY;
+    }
+
+    
+    
     public int getEmpNo() {
         return empNo;
     }
@@ -252,6 +263,34 @@ public class Employee {
             System.out.println(ex);
         }
         return success;
+    }
+    
+    public static List<Employee> getEmpPaid(int branchNo){
+        List<Employee> employees = null;
+        try{
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "SELECT SUM(wh.workingPay) AS SUMPAY ,e.*,et.*,ep.* FROM Employee e "
+                    + " JOIN EmployeePosition ep ON e.positionNo = ep.positionNo "
+                    + " JOIN EmploymentType et ON e.empTypeNo = et.empTypeNo "
+                    + " JOIN WorkingHistory wh ON e.empNo = wh.empNo "
+                    + " WHERE e.branchNo = ? "
+                    + " GROUP BY wh.empNo"
+                    + " ORDER BY e.empName ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, branchNo);
+            ResultSet rs = ps.executeQuery();
+            employees = new ArrayList<Employee>();
+            while(rs.next()){
+                Employee e = new Employee();
+                orm(rs,e);
+                e.setSUMPAY(rs.getDouble("SUMPAY"));
+                employees.add(e);
+            }
+            con.close();
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return employees;
     }
     
     private static void orm(ResultSet rs,Employee e) throws SQLException{

@@ -68,6 +68,14 @@
         <servlet-name>FilterWorkByDateServlet</servlet-name>
         <servlet-class>controller.FilterWorkByDateServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ToEmpPaidServlet</servlet-name>
+        <servlet-class>controller.ToEmpPaidServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SetEmpPaidServlet</servlet-name>
+        <servlet-class>ajaxcontroller.SetEmpPaidServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LogInServlet</servlet-name>
         <url-pattern>/LogInServlet</url-pattern>
@@ -131,6 +139,14 @@
     <servlet-mapping>
         <servlet-name>FilterWorkByDateServlet</servlet-name>
         <url-pattern>/FilterWorkByDateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToEmpPaidServlet</servlet-name>
+        <url-pattern>/ToEmpPaidServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SetEmpPaidServlet</servlet-name>
+        <url-pattern>/SetEmpPaidServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
