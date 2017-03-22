@@ -64,6 +64,10 @@
         <servlet-name>ToWorkHistServlet</servlet-name>
         <servlet-class>controller.ToWorkHistServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FilterWorkByDateServlet</servlet-name>
+        <servlet-class>controller.FilterWorkByDateServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LogInServlet</servlet-name>
         <url-pattern>/LogInServlet</url-pattern>
@@ -123,6 +127,10 @@
     <servlet-mapping>
         <servlet-name>ToWorkHistServlet</servlet-name>
         <url-pattern>/ToWorkHistServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterWorkByDateServlet</servlet-name>
+        <url-pattern>/FilterWorkByDateServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -141,6 +141,30 @@ public class WorkingHistory {
         return workhist;
     }
     
+    public static List<WorkingHistory> filterWorkByDate(String fromDate,String toDate){
+        List<WorkingHistory> workhist = null;
+        try{
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "SELECT * FROM WorkingHistory wh "
+                    + " JOIN Employee e ON e.empNo = wh.empNo "
+                    + " WHERE wh.fromDate BETWEEN ? AND ? AND wh.toTime IS NOT NULL "
+                    + " ORDER BY wh.fromDate DESC,wh.toTime DESC";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, fromDate);
+            ps.setString(2, toDate);
+            ResultSet rs = ps.executeQuery();
+            workhist = new LinkedList<WorkingHistory>();
+            while(rs.next()){
+                WorkingHistory wh = new WorkingHistory();
+                orm(rs,wh);
+                workhist.add(wh);                
+            }
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return workhist;
+    }
+    
     private static void orm(ResultSet rs,WorkingHistory wh) throws SQLException{
         wh.setBranchNo(rs.getInt("workNo"));
         wh.setEmpName(rs.getString("empName"));

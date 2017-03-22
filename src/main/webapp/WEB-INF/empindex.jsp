@@ -64,20 +64,20 @@
                                         <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th style="font-size:1vw;width:20%;">ชื่อ</th>
-                                                    <th style="font-size:1vw;width:20%;">ตำแหน่ง</th>
-                                                    <th style="font-size:1vw;width:20%;">ประเภท</th>
-                                                    <th style="font-size:1vw;width:20%;">ค่าจ้าง</th>
-                                                    <th style="font-size:1vw;width:20%;">ตัวเลือก</th>
+                                                    <th style="width:20%;">ชื่อ</th>
+                                                    <th style="width:20%;">ตำแหน่ง</th>
+                                                    <th style="width:20%;">ประเภท</th>
+                                                    <th style="width:20%;">ค่าจ้าง</th>
+                                                    <th style="width:20%;">ตัวเลือก</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <c:forEach items="${employees}" var="e" varStatus="vs">
                                                     <tr id="tr${e.empNo}">
-                                                        <td style="font-size:1vw;">${e.empName}</td>
-                                                        <td style="font-size:1vw;">${e.positionName}</td>
-                                                        <td style="font-size:1vw;">${e.empTypeName}</td>
-                                                        <td style="font-size:1vw;">${e.specPay!=null?e.specPay:'จ่ายตามตำแหน่ง'}</td>
+                                                        <td style="">${e.empName}</td>
+                                                        <td style="">${e.positionName}</td>
+                                                        <td style="">${e.empTypeName}</td>
+                                                        <td style="">${e.specPay!=null?e.specPay:'จ่ายตามตำแหน่ง'}</td>
                                                         <td>
                                                             <a onclick="editEmp(${e.empNo})" href="javascript:void(0)" data-toggle="modal" data-target="#editEmpBtn" style="font-size:20px;"><i class="fa fa-edit"></i> </a> 
                                                             <a onclick="delEmp(${e.empNo}, '${e.empName}')" href="javascript:void(0)"><i class="fa fa-trash" style="font-size:20px;"></i></a>

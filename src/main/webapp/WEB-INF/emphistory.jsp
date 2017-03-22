@@ -64,13 +64,14 @@
                                         <div class="x_content">
                                             <div class="col-md-2 col-md-offset-4">เลือกวันที่ต้องการแสดง</div>
                                             <div class="col-md-3">                                    
-                                                <form class="form-horizontal">
+                                                <form class="form-horizontal" action="FilterWorkByDateServlet" method="POST">
                                                     <fieldset>
                                                         <div class="control-group">
                                                             <div class="controls">
                                                                 <div class="input-prepend input-group">
                                                                     <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                                    <input type="text" style="width: 190px" name="reservation" id="reservation" class="form-control datepicker"  />
+                                                                    <input type="text" style="width: 190px" name="date" id="reservation" class="form-control datepicker"  />
+                                                                    <input type="submit">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -78,10 +79,10 @@
                                                 </form>
 
                                             </div>
-<!--                                            <div class="col-md-3">
-                                                <input type="checkbox" name="clockin"> เวลาเข้างาน 
-                                                <input type="checkbox" name="clockout"> เวลาออกงาน
-                                            </div>-->
+                                            <!--                                            <div class="col-md-3">
+                                                                                            <input type="checkbox" name="clockin"> เวลาเข้างาน 
+                                                                                            <input type="checkbox" name="clockout"> เวลาออกงาน
+                                                                                        </div>-->
                                             <table id="datatable" class="table table-striped table-bordered">
                                                 <!-- <div id="datatable_filter" class="dataTables_filter"> -->
 
@@ -89,11 +90,11 @@
                                                 <!-- </div> -->
                                                 <thead>
                                                     <tr>
-                                                        <th>วัน/เดือน/ปี</th>
-                                                        <th>ชื่อ</th>
-                                                        <th>เวลาเข้างาน</th>
-                                                        <th>เวลาออกงาน</th>
-                                                        <th>ชั่วโมงงาน</th>
+                                                        <th style="width:20%">วัน/เดือน/ปี</th>
+                                                        <th style="width:20%">ชื่อ</th>
+                                                        <th style="width:20%">เวลาเข้างาน</th>
+                                                        <th style="width:20%">เวลาออกงาน</th>
+                                                        <th style="width:20%">ชั่วโมงงาน</th>
 
                                                     </tr>
                                                 </thead>
