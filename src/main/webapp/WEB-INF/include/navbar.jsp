@@ -2,7 +2,10 @@
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            <a href="empindex.html" class="site_title"><i class="fa fa-hand-o-right"></i> <span>Order Eat Bill</span></a>
+            <a href="LogInServlet" class="site_title">
+                <img src="images/OEB_LOGO.png" style="width:50px;margin-right:5px;" alt="...">
+                <span>Order Eat Bill</span>
+            </a>
         </div>
         <div class="clearfix"></div>
         <!-- menu profile quick info -->
@@ -11,7 +14,7 @@
                 <img src="images/img.jpg" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
-                <span>Welcome,</span>
+                <span>ยินดีต้อนรับ,</span>
                 <h2>${restowner.restUserName}</h2>
             </div>
         </div>
@@ -24,9 +27,9 @@
                     <li>
                         <a id="emptab"><i class="fa fa-user"></i> จัดการพนักงาน <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a id="empdata" href="javascript:void(0)">ข้อมูลพนักงาน</a></li>
+                            <li><a id="empdata" href="${target=='empdata'?'javascript:void(0)':'ToEmpServlet'}">ข้อมูลพนักงาน</a></li>
                             <li><a href="index4.html">ตำแหน่งพนักงาน</a></li>
-                            <li><a href="index2.html">ประวัติการทำงาน</a></li>
+                            <li><a id="workhist" href="${target=='workhist'?'javascript:void(0)':'ToWorkHistServlet'}">ประวัติการทำงาน</a></li>
                             <li><a href="index3.html">จ่ายเงินพนักงาน</a></li>
                         </ul>
                     </li>

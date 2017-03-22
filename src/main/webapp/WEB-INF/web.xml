@@ -60,6 +60,10 @@
         <servlet-name>ForTestThaiLanguage</servlet-name>
         <servlet-class>controller.ForTestThaiLanguage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ToWorkHistServlet</servlet-name>
+        <servlet-class>controller.ToWorkHistServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LogInServlet</servlet-name>
         <url-pattern>/LogInServlet</url-pattern>
@@ -115,6 +119,10 @@
     <servlet-mapping>
         <servlet-name>DelEmpPosAjaxServlet</servlet-name>
         <url-pattern>/DelEmpPosAjaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToWorkHistServlet</servlet-name>
+        <url-pattern>/ToWorkHistServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

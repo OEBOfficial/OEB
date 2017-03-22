@@ -38,7 +38,7 @@ public class ToEmpServlet extends HttpServlet {
         request.setAttribute("empTypes", empTypes);
         List<EmployeePosition> empPos = EmployeePosition.getAllEmpPos(ro.getBranchNo());
         request.setAttribute("empPos", empPos);
-        hs.setAttribute("time-out", System.currentTimeMillis());
+        request.setAttribute("target","empdata");
         
         getServletContext().getRequestDispatcher(target).forward(request, response);
     }

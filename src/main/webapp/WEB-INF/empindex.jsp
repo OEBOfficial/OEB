@@ -17,7 +17,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>พนักงานทั้งหมด</title>
+        <title>จัดการพนักงาน</title>
         <!-- Bootstrap -->
         <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -80,7 +80,7 @@
                                                         <td style="font-size:1vw;">${e.specPay!=null?e.specPay:'จ่ายตามตำแหน่ง'}</td>
                                                         <td>
                                                             <a onclick="editEmp(${e.empNo})" href="javascript:void(0)" data-toggle="modal" data-target="#editEmpBtn" style="font-size:20px;"><i class="fa fa-edit"></i> </a> 
-                                                            <a onclick="delEmp(${e.empNo})" href="javascript:void(0)"><i class="fa fa-trash" style="font-size:20px;"></i></a>
+                                                            <a onclick="delEmp(${e.empNo}, '${e.empName}')" href="javascript:void(0)"><i class="fa fa-trash" style="font-size:20px;"></i></a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -287,15 +287,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- /Modal Content (EDIT EMP)-->
-                            <!-- footer content -->
-                            <!--                                <footer>
-                                                                <div class="pull-right">
-                                                                    Order Eat Bill by SIT KMUTT.
-                                                                </div>
-                                                                <div class="clearfix"></div>
-                                                            </footer>-->
-                            <!-- /footer content -->
                         </div>
                     </div>
                 </div>
@@ -331,131 +322,6 @@
     <script src="../vendors/sweetalert/sweetalert.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
-
-    <script>
-
-                                                                $(document).ready(function () {
-                                                                    $("#emptab").click();
-                                                                    $("#empdata").click();
-                                                                });
-                                                                $("#1").click(function () {
-                                                                    $("#empType").attr("disabled", false);
-                                                                    $("#empType option:nth-child(1)").val('1');
-                                                                    $("#empType option:nth-child(2)").val('2');
-                                                                    $("#empType option:nth-child(3)").val('3');
-                                                                });
-                                                                $("#2").click(function () {
-                                                                    $("#empType").attr("disabled", false);
-                                                                    $("#empType option:nth-child(1)").val('4');
-                                                                    $("#empType option:nth-child(2)").val('5');
-                                                                    $("#empType option:nth-child(3)").val('6');
-                                                                });
-                                                                $("#3").click(function () {
-                                                                    $("#empType").attr("disabled", false);
-                                                                    $("#empType option:nth-child(1)").val('7');
-                                                                    $("#empType option:nth-child(2)").val('8');
-                                                                    $("#empType option:nth-child(3)").val('9');
-                                                                });
-                                                                $("#e1").click(function () {
-                                                                    $("#eempType").attr("disabled", false);
-                                                                    $("#eempType option:nth-child(1)").val('1');
-                                                                    $("#eempType option:nth-child(2)").val('2');
-                                                                    $("#eempType option:nth-child(3)").val('3');
-                                                                });
-                                                                $("#e2").click(function () {
-                                                                    $("#eempType").attr("disabled", false);
-                                                                    $("#eempType option:nth-child(1)").val('4');
-                                                                    $("#eempType option:nth-child(2)").val('5');
-                                                                    $("#eempType option:nth-child(3)").val('6');
-                                                                });
-                                                                $("#e3").click(function () {
-                                                                    $("#eempType").attr("disabled", false);
-                                                                    $("#eempType option:nth-child(1)").val('7');
-                                                                    $("#eempType option:nth-child(2)").val('8');
-                                                                    $("#eempType option:nth-child(3)").val('9');
-                                                                });
-
-                                                                $("#addspecial").click(function () {
-                                                                    $("#addspecpay").attr('disabled', false);
-                                                                });
-
-                                                                $("#addgeneral").click(function () {
-                                                                    $("#addspecpay").val('');
-                                                                    $("#addspecpay").attr('disabled', true);
-                                                                });
-
-                                                                $("#special").parent().click(function () {
-                                                                    $("#specpay").attr('disabled', false);
-                                                                });
-
-                                                                $("#general").parent().click(function () {
-                                                                    $("#specpay").val('');
-                                                                    $("#specpay").attr('disabled', true);
-                                                                });
-
-                                                                function editEmp(empNo) {
-                                                                    $.ajax({
-                                                                        type: "POST",
-                                                                        url: "SetEmpAjaxServlet",
-                                                                        dataType: "json",
-                                                                        data: "empno=" + encodeURIComponent(empNo),
-                                                                        success: function (json) {
-                                                                            $("#editSubmit").val(json.empNo);
-                                                                            $("#name").val(json.empName);
-                                                                            if (json.gender == 'M') {
-                                                                                $("#gender-m").click();
-                                                                            } else {
-                                                                                $("#gender-f").click();
-                                                                            }
-                                                                            $("#telno").val(json.telNo);
-                                                                            $("#empPos").val(json.positionNo);
-                                                                            $("#empType").val(json.empTypeNo);
-                                                                            var empTypeNo = json.empTypeNo;
-                                                                            if (empTypeNo <= 3) {
-                                                                                $("#e1").click();
-                                                                                $("#eempType").val(empTypeNo);
-                                                                            } else if (empTypeNo <= 6) {
-                                                                                $("#e2").click();
-                                                                                $("#eempType").val(empTypeNo);
-                                                                            } else {
-                                                                                $("#e3").click();
-                                                                                $("#eempType").val(empTypeNo);
-                                                                            }
-                                                                            if (json.specPay == "null") {
-                                                                                $("#general").click();
-                                                                                $("#specpay").val('');
-                                                                            } else {
-                                                                                $("#special").click();
-                                                                                $("#specpay").val(json.specPay);
-                                                                            }
-                                                                        }
-                                                                    });
-                                                                }
-
-                                                                function delEmp(empNo) {
-                                                                    swal({
-                                                                        title: "คุณมั่นใจว่าจะลบใช่หรือไม่ ?",
-                                                                        text: "คุณจะไม่สามารถกู้ข้อมูลพนักงานกลับมาได้อีก!",
-                                                                        type: "warning",
-                                                                        showCancelButton: true,
-                                                                        confirmButtonColor: "#DD6B55",
-                                                                        cancelButtonText: "ยกเลิก",
-                                                                        confirmButtonText: "ใช่, ฉันต้องการลบ",
-                                                                        closeOnConfirm: false
-                                                                    },
-                                                                            function () {
-                                                                                $.ajax({
-                                                                                    type: "Post",
-                                                                                    url: "DelEmpAjaxServlet",
-                                                                                    dataType: "text",
-                                                                                    data: "empno=" + encodeURIComponent(empNo),
-                                                                                    success: function (result) {
-                                                                                        swal("เรียบร้อย", "ข้อมูลพนักงานถูกลบแล้ว", "success");
-                                                                                        $("#datatable").DataTable().row("#tr" + empNo).remove().draw();
-                                                                                    }
-                                                                                });
-                                                                            });
-                                                                }
-    </script>
+    <script src="../handmade/empindex.js"></script>
 </body>
 </html>
