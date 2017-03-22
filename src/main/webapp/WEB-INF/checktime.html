@@ -1,0 +1,276 @@
+<%-- 
+Document   : empindex
+Created on : Mar 17, 2017, 10:25:35 PM
+Author     : USER
+--%>
+<%@page import="java.util.List"%>
+<%@page import="model.EmployeePosition" %>
+<%@page import="model.Employee" %>
+<%@page import="model.EmploymentType" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>เช็คเวลาเข้าทำงาน</title>
+        <!-- Bootstrap -->
+        <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <!-- NProgress -->
+        <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+        <!-- iCheck -->
+        <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+        <!-- Datatables -->
+        <link href="../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <link href="../vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+        <link href="../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+        <link href="../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+        <link href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+        <!-- Custom Theme Style -->
+        <link href="../build/css/custom.min.css" rel="stylesheet">
+        <!-- <link href="../vendors/sweetalert/sweetalert.css" rel="stylesheet"> -->        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+
+    </head>
+    <body class="nav-md">
+        <style>
+            .modal-body-test {
+                position: relative;
+                overflow-y: auto;
+                width: 1000px;
+                right: 30%
+            }
+        </style>
+        <div class="container body">
+            <div class="main_container">
+                <jsp:include page="/WEB-INF/include/navbar.jsp" />
+                <!-- page content -->
+                <div class="right_col" role="main">
+                    <div class="">
+                        <div class="page-title">
+                            <div class="title_right">
+                                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h4>เช็คเวลาเข้าทำงาน</h4>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+                                        <table id="datatable" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="font-size:1vw;width:20%;">ชื่อ</th>
+                                                    <th style="font-size:1vw;width:20%;">สถานะเข้างาน</th>
+                                                    <th style="font-size:1vw;width:20%;">เวลา</th>                                                    
+                                                    <th style="font-size:1vw;width:20%;">ตัวเลือก</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <c:forEach items="${employees}" var="e" varStatus="vs">
+                                                <tr id="tr${e.empNo}">
+                                                    <td style="font-size:1vw;">${e.empName}</td>
+                                                    <td style="font-size:1vw;"></td>
+                                                    <td style="font-size:1vw;"></td>
+                                                    <td>
+                                                        <button type="submit" class="btn btn-success" data-toggle="modal"  data-target="#clockIn" onclick="clockIn('Ning')">เข้างาน</button>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery -->
+        <script src="../vendors/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- FastClick -->
+        <script src="../vendors/fastclick/lib/fastclick.js"></script>
+        <!-- NProgress -->
+        <script src="../vendors/nprogress/nprogress.js"></script>
+        <!-- iCheck -->
+        <script src="../vendors/iCheck/icheck.min.js"></script>
+        <!-- Datatables -->
+        <script src="../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="../vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+        <script src="../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+        <script src="../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+        <script src="../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+        <script src="../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+        <script src="../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+        <script src="../vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="../vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+        <script src="../vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+        <script src="../vendors/jszip/dist/jszip.min.js"></script>
+        <script src="../vendors/pdfmake/build/pdfmake.min.js"></script>
+        <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+        <!-- <script src="../vendors/sweetalert/sweetalert.min.js"></script> -->    
+        <!-- Custom Theme Scripts -->
+        <script src="../build/js/custom.min.js"></script>
+
+        <script>
+
+                                                            $(document).ready(function () {
+                                                                $("#emptab").click();
+                                                                $("#empdata").click();
+                                                            });
+                                                            $("#1").click(function () {
+                                                                $("#empType").attr("disabled", false);
+                                                                $("#empType option:nth-child(1)").val('1');
+                                                                $("#empType option:nth-child(2)").val('2');
+                                                                $("#empType option:nth-child(3)").val('3');
+                                                            });
+                                                            $("#2").click(function () {
+                                                                $("#empType").attr("disabled", false);
+                                                                $("#empType option:nth-child(1)").val('4');
+                                                                $("#empType option:nth-child(2)").val('5');
+                                                                $("#empType option:nth-child(3)").val('6');
+                                                            });
+                                                            $("#3").click(function () {
+                                                                $("#empType").attr("disabled", false);
+                                                                $("#empType option:nth-child(1)").val('7');
+                                                                $("#empType option:nth-child(2)").val('8');
+                                                                $("#empType option:nth-child(3)").val('9');
+                                                            });
+                                                            $("#e1").click(function () {
+                                                                $("#eempType").attr("disabled", false);
+                                                                $("#eempType option:nth-child(1)").val('1');
+                                                                $("#eempType option:nth-child(2)").val('2');
+                                                                $("#eempType option:nth-child(3)").val('3');
+                                                            });
+                                                            $("#e2").click(function () {
+                                                                $("#eempType").attr("disabled", false);
+                                                                $("#eempType option:nth-child(1)").val('4');
+                                                                $("#eempType option:nth-child(2)").val('5');
+                                                                $("#eempType option:nth-child(3)").val('6');
+                                                            });
+                                                            $("#e3").click(function () {
+                                                                $("#eempType").attr("disabled", false);
+                                                                $("#eempType option:nth-child(1)").val('7');
+                                                                $("#eempType option:nth-child(2)").val('8');
+                                                                $("#eempType option:nth-child(3)").val('9');
+                                                            });
+
+                                                            $("#addspecial").click(function () {
+                                                                $("#addspecpay").attr('disabled', false);
+                                                            });
+
+                                                            $("#addgeneral").click(function () {
+                                                                $("#addspecpay").val('');
+                                                                $("#addspecpay").attr('disabled', true);
+                                                            });
+
+                                                            $("#special").parent().click(function () {
+                                                                $("#specpay").attr('disabled', false);
+                                                            });
+
+                                                            $("#general").parent().click(function () {
+                                                                $("#specpay").val('');
+                                                                $("#specpay").attr('disabled', true);
+                                                            });
+
+                                                            function clockIn(empName) {
+                                                                swal({
+                                                                    title: "ต้องการยืนยันการเข้าทำงานหรือไม่?",
+                                                                    text: "คุณ ... ต้องการยืนยันการเข้าทำงานหรือไม่?",
+                                                                    type: "info",
+                                                                    showCancelButton: true,
+                                                                    closeOnConfirm: false,
+                                                                    showLoaderOnConfirm: true,
+                                                                    cancelButtonText: "ยกเลิก",
+                                                                    confirmButtonText: "ยืนยัน"
+                                                                }, function () {
+                                                                    setTimeout(function () {
+                                                                        swal({title: "คุณ .... เข้าทำงานเรียบร้อยแล้ว", confirmButtonText: "ตกลง"});
+                                                                    }, 500);
+                                                                });
+                                                            }
+
+                                                            function editEmp(empNo) {
+                                                                $.ajax({
+                                                                    type: "POST",
+                                                                    url: "SetEmpAjaxServlet",
+                                                                    dataType: "json",
+                                                                    data: "empno=" + encodeURIComponent(empNo),
+                                                                    success: function (json) {
+                                                                        $("#editSubmit").val(json.empNo);
+                                                                        $("#name").val(json.empName);
+                                                                        if (json.gender == 'M') {
+                                                                            $("#gender-m").click();
+                                                                        } else {
+                                                                            $("#gender-f").click();
+                                                                        }
+                                                                        $("#telno").val(json.telNo);
+                                                                        $("#empPos").val(json.positionNo);
+                                                                        $("#empType").val(json.empTypeNo);
+                                                                        var empTypeNo = json.empTypeNo;
+                                                                        if (empTypeNo <= 3) {
+                                                                            $("#e1").click();
+                                                                            $("#eempType").val(empTypeNo);
+                                                                        } else if (empTypeNo <= 6) {
+                                                                            $("#e2").click();
+                                                                            $("#eempType").val(empTypeNo);
+                                                                        } else {
+                                                                            $("#e3").click();
+                                                                            $("#eempType").val(empTypeNo);
+                                                                        }
+                                                                        if (json.specPay == "null") {
+                                                                            $("#general").click();
+                                                                            $("#specpay").val('');
+                                                                        } else {
+                                                                            $("#special").click();
+                                                                            $("#specpay").val(json.specPay);
+                                                                        }
+                                                                    }
+                                                                });
+                                                            }
+
+                                                            function delEmp(empNo) {
+                                                                swal({
+                                                                    title: "คุณมั่นใจว่าจะลบใช่หรือไม่ ?",
+                                                                    text: "คุณจะไม่สามารถกู้ข้อมูลพนักงานกลับมาได้อีก!",
+                                                                    type: "warning",
+                                                                    showCancelButton: true,
+                                                                    confirmButtonColor: "#DD6B55",
+                                                                    cancelButtonText: "ยกเลิก",
+                                                                    confirmButtonText: "ใช่, ฉันต้องการลบ",
+                                                                    closeOnConfirm: false
+                                                                },
+                                                                        function () {
+                                                                            $.ajax({
+                                                                                type: "Post",
+                                                                                url: "DelEmpAjaxServlet",
+                                                                                dataType: "text",
+                                                                                data: "empno=" + encodeURIComponent(empNo),
+                                                                                success: function (result) {
+                                                                                    swal("เรียบร้อย", "ข้อมูลพนักงานถูกลบแล้ว", "success");
+                                                                                    $("#datatable").DataTable().row("#tr" + empNo).remove().draw();
+                                                                                }
+                                                                            });
+                                                                        });
+                                                            }
+        </script>
+    </body>
+</html>
