@@ -1,0 +1,26 @@
+.table-rows {
+	width: 20%;
+}
+
+#reservation {
+	width: 190px;
+}
+
+.modal-body-test {
+    position: relative;
+    overflow-y: auto;
+    width: 1000px;
+    right: 30%
+}
+
+.btn-success {
+	width: 100px;
+}
+
+.fa-edit, .fa-trash{
+	font-size:20px;
+}
+
+.plusemp{
+	font-size:25px;
+}

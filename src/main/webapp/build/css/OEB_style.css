@@ -24,3 +24,11 @@
 .plusemp{
 	font-size:25px;
 }
+
+.btn-default{
+	border-radius: 1px 4px 4px 1px;
+}
+
+/*.controls{
+	height: 30px;
+}*/
