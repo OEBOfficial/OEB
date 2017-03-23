@@ -80,6 +80,14 @@
         <servlet-name>ToEmpCheckServlet</servlet-name>
         <servlet-class>controller.ToEmpCheckServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ClockInAjaxServlet</servlet-name>
+        <servlet-class>ajaxcontroller.ClockInAjaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ClockOutAjaxServlet</servlet-name>
+        <servlet-class>ajaxcontroller.ClockOutAjaxServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LogInServlet</servlet-name>
         <url-pattern>/LogInServlet</url-pattern>
@@ -155,6 +163,14 @@
     <servlet-mapping>
         <servlet-name>ToEmpCheckServlet</servlet-name>
         <url-pattern>/ToEmpCheckServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClockInAjaxServlet</servlet-name>
+        <url-pattern>/ClockInAjaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClockOutAjaxServlet</servlet-name>
+        <url-pattern>/ClockOutAjaxServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
