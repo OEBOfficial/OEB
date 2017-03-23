@@ -25,6 +25,7 @@ public class LogInServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String target = "/login.jsp";
         HttpSession hs = request.getSession(false);
         Cookie cookies[] = request.getCookies();
@@ -48,7 +49,6 @@ public class LogInServlet extends HttpServlet {
         }
         
         if (pass) {
-//            hs.setAttribute("branch", Branch.getBranchByOwner(ro.getRestOwnerNo()));
 //          set time in
             hs.setAttribute("time-in", System.currentTimeMillis());
             response.sendRedirect("ToEmpServlet");
@@ -68,7 +68,8 @@ public class LogInServlet extends HttpServlet {
 
         RestaurantOwner ro = RestaurantOwner.logIn(username, password);
         if (ro == null) {
-            request.setAttribute("msg", "Log-in not pass");
+            request.setAttribute("msg", "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
+            request.setAttribute("username",username);
             if (rememberme != null) {
                 request.setAttribute("rememberme", "checked");
             }

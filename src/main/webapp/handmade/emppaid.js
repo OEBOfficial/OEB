@@ -1,6 +1,6 @@
 function setemppaid(empNo) {
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: "SetEmpPaidServlet",
         dataType: "json",
         data: "empNo=" + encodeURIComponent(empNo),
