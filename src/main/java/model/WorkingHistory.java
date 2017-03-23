@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import javax.json.Json;
@@ -23,6 +24,7 @@ import javax.json.JsonObjectBuilder;
  * @author USER
  */
 public class WorkingHistory {
+
     private int workNo;
     private int fromTime;
     private int toTime;
@@ -42,7 +44,7 @@ public class WorkingHistory {
     public void setEmpName(String empName) {
         this.empName = empName;
     }
-    
+
     public int getWorkNo() {
         return workNo;
     }
@@ -122,10 +124,10 @@ public class WorkingHistory {
     public void setBranchNo(int branchNo) {
         this.branchNo = branchNo;
     }
-    
-    public static List<WorkingHistory> getAllWorkHist(int branchNo){
+
+    public static List<WorkingHistory> getAllWorkHist(int branchNo) {
         List<WorkingHistory> workhist = null;
-        try{
+        try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT * FROM WorkingHistory wh "
                     + " JOIN Employee e ON e.empNo = wh.empNo "
@@ -135,20 +137,46 @@ public class WorkingHistory {
             ps.setInt(1, branchNo);
             ResultSet rs = ps.executeQuery();
             workhist = new LinkedList<WorkingHistory>();
-            while(rs.next()){
+            while (rs.next()) {
                 WorkingHistory wh = new WorkingHistory();
-                orm(rs,wh);
-                workhist.add(wh);                
+                orm(rs, wh);
+                workhist.add(wh);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
         return workhist;
     }
     
-    public static List<WorkingHistory> filterWorkByDate(String fromDate,String toDate){
+    public static List<WorkingHistory> getAllWorkHistWithCheck(int branchNo) {
         List<WorkingHistory> workhist = null;
-        try{
+        try {
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "SELECT * FROM Employee e "
+                    + " LEFT JOIN (SELECT * FROM WorkingHistory WHERE fromDate = ? OR (fromDate = ? AND toDate IS NULL)) as wh ON e.empNo = wh.empNo "
+                    + " WHERE e.branchNo = ? "
+                    + " GROUP BY e.empNo "
+                    + " ORDER BY wh.fromDate DESC,wh.toTime DESC";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setDate(1, new Date(System.currentTimeMillis()));
+            ps.setDate(2, new Date(System.currentTimeMillis() - 1000L * 60L * 60L * 24L));
+            ps.setInt(3, branchNo);
+            ResultSet rs = ps.executeQuery();
+            workhist = new LinkedList<WorkingHistory>();
+            while (rs.next()) {
+                WorkingHistory wh = new WorkingHistory();
+                orm(rs, wh);
+                workhist.add(wh);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return workhist;
+    }
+
+    public static List<WorkingHistory> filterWorkByDate(String fromDate, String toDate) {
+        List<WorkingHistory> workhist = null;
+        try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT * FROM WorkingHistory wh "
                     + " JOIN Employee e ON e.empNo = wh.empNo "
@@ -159,20 +187,20 @@ public class WorkingHistory {
             ps.setString(2, toDate);
             ResultSet rs = ps.executeQuery();
             workhist = new LinkedList<WorkingHistory>();
-            while(rs.next()){
+            while (rs.next()) {
                 WorkingHistory wh = new WorkingHistory();
-                orm(rs,wh);
-                workhist.add(wh);                
+                orm(rs, wh);
+                workhist.add(wh);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
         return workhist;
     }
-    
-    public static List<WorkingHistory> getAllWorkHistByEmp(int empNo){        
+
+    public static List<WorkingHistory> getAllWorkHistByEmp(int empNo) {
         List<WorkingHistory> workHist = null;
-        try{
+        try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT * FROM WorkingHistory wh "
                     + " JOIN Employee e ON e.empNo = wh.empNo "
@@ -182,31 +210,31 @@ public class WorkingHistory {
             ps.setInt(1, empNo);
             ResultSet rs = ps.executeQuery();
             workHist = new LinkedList<WorkingHistory>();
-            while(rs.next()){
+            while (rs.next()) {
                 WorkingHistory wh = new WorkingHistory();
-                orm(rs,wh);
-                workHist.add(wh);                
+                orm(rs, wh);
+                workHist.add(wh);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
         return workHist;
     }
-    
-    public static JsonArray getAllWorkHistByEmpJson(int empNo){
+
+    public static JsonArray getAllWorkHistByEmpJson(int empNo) {
         List<WorkingHistory> workHist = getAllWorkHistByEmp(empNo);
         JsonObjectBuilder workBuilder = Json.createObjectBuilder();
         JsonArrayBuilder JAB = Json.createArrayBuilder();
         JsonArray JA = null;
-        if(workHist != null){
+        if (workHist != null) {
             JA = JAB.build();
-            for(int i = 0 ; i < workHist.size() ; i++){
+            for (int i = 0; i < workHist.size(); i++) {
                 JsonObject jo = workBuilder
                         .add("workNo", workHist.get(i).getWorkNo())
                         .add("fromTime", workHist.get(i).getFromTime())
                         .add("toTime", workHist.get(i).getToTime())
-                        .add("fromDate", ""+workHist.get(i).getFromDate())
-                        .add("toDate", ""+workHist.get(i).getToDate())
+                        .add("fromDate", "" + workHist.get(i).getFromDate())
+                        .add("toDate", "" + workHist.get(i).getToDate())
                         .add("empTypeName", workHist.get(i).getEmpTypeName())
                         .add("positionName", workHist.get(i).getPositionName())
                         .add("workingPay", workHist.get(i).getWorkingPay())
@@ -220,8 +248,8 @@ public class WorkingHistory {
         }
         return JA;
     }
-    
-    private static void orm(ResultSet rs,WorkingHistory wh) throws SQLException{
+
+    private static void orm(ResultSet rs, WorkingHistory wh) throws SQLException {
         wh.setBranchNo(rs.getInt("workNo"));
         wh.setEmpName(rs.getString("empName"));
         wh.setEmpNo(rs.getInt("empNo"));
