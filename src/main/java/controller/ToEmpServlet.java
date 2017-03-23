@@ -12,10 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Branch;
 import model.Employee;
 import model.EmployeePosition;
-import model.EmploymentType;
 import model.RestaurantOwner;
 
 /**
@@ -34,8 +32,6 @@ public class ToEmpServlet extends HttpServlet {
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
         List<Employee> employees = Employee.getAllEmp(ro.getBranchNo());
         request.setAttribute("employees", employees);
-        List<EmploymentType> empTypes = EmploymentType.getAllEmpType();
-        request.setAttribute("empTypes", empTypes);
         List<EmployeePosition> empPos = EmployeePosition.getAllEmpPos(ro.getBranchNo());
         request.setAttribute("empPos", empPos);
         request.setAttribute("target","empdata");

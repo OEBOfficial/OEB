@@ -70,7 +70,7 @@
                                                             <div class="controls">
                                                                 <div class="input-prepend input-group">
                                                                     <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                                    <input type="text" style="width: 190px" name="date" id="reservation" class="form-control datepicker"  />
+                                                                    <input type="text" style="width: 190px" name="date" id="reservation" class="form-control datepicker" value="${daterange}" />
                                                                     <input type="submit">
                                                                 </div>
                                                             </div>
@@ -163,5 +163,10 @@
         <!-- Custom Theme Scripts -->
         <script src="../build/js/custom.min.js"></script>
         <script src="../handmade/emphistory.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#datatable').DataTable().order([0,'desc'],[3,'desc']).draw();
+            });
+        </script>
     </body>
 </html>
