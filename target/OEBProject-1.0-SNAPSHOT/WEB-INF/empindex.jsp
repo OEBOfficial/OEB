@@ -50,10 +50,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="clearfix"></div>
-                        <div class="row">
+                            <div class="clearfix"></div>                   
+                            <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="x_panel">
+                                	<div class="x_title">
+                                	<h4>เช็คเวลาเข้าทำงาน</h4>
+                                    </div>     
                                     <a href="javascript:void(0)" data-toggle="modal" data-target="#addEmp" class="plusemp">
                                         <i class="fa fa-plus-circle"></i> เพิ่มพนักงาน
                                     </a>

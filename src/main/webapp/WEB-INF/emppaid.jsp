@@ -12,7 +12,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>พนักงานทั้งหมด</title>
+        <title>ประวัติการจ่ายเงิน</title>
         <!-- Bootstrap -->
         <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -50,6 +50,9 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="x_panel">
+                                    <div class="x_title">
+                                        <h4>ประวัติการจ่ายเงิน</h4>
+                                    </div>  
                                     <div class="x_content">
                                         <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
@@ -62,17 +65,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach items="${employees}" var="e" varStatus="vs">
-                                                    <tr id="tr${e.empNo}">
-                                                        <td>${e.empName}</td>
-                                                        <td>${e.positionName}</td>
-                                                        <td>${e.empTypeName}</td>
-                                                        <td>${e.SUMPAY}</td>
-                                                        <td>
-                                                            <button type="submit" class="btn btn-success" data-toggle="modal"  data-target="#paidDetail" onclick="setemppaid(${e.empNo})" >รายละเอียด</button>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
+                                            <c:forEach items="${employees}" var="e" varStatus="vs">
+                                                <tr id="tr${e.empNo}">
+                                                    <td>${e.empName}</td>
+                                                    <td>${e.positionName}</td>
+                                                    <td>${e.empTypeName}</td>
+                                                    <td>${e.SUMPAY}</td>
+                                                    <td>
+                                                        <button type="submit" class="btn btn-success" data-toggle="modal"  data-target="#paidDetail" onclick="setemppaid(${e.empNo})" >รายละเอียด</button>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>
@@ -95,25 +98,43 @@
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <th class="rows">วันที่</th>
-                                                        <th class="rows">ชื่อ - นามสกุล</th>
-                                                        <th class="rows">ตำแหน่ง</th>
-                                                        <th class="rows">รูปแบบพนักงาน</th>
-                                                        <th class="rows">จำนวนเงินที่ได้รับ</th>
+                                                        <th class="table-rows">วันที่</th>
+                                                        <th class="table-rows">ชื่อ - นามสกุล</th>
+                                                        <th class="table-rows">ตำแหน่ง</th>
+                                                        <th class="table-rows">รูปแบบพนักงาน</th>
+                                                        <th class="table-rows">จำนวนเงินที่ได้รับ</th>
                                                     </tr>
+
                                                 </thead>
                                                 <tbody id=workhisttable>
-                                                </tbody>
+                                                <!-- <div class="ws-css-table" >
+                                                    <div class="ws-css-table-tr">
+                                                        <div class="ws-css-table-td"></div>
+                                                        <div class="ws-css-table-td"></div>
+                                                        <div class="ws-css-table-td"></div>
+                                                        <div class="ws-css-table-td"></div>
+                                                        <div class="ws-css-table-td">312</div>
+                                                    </div>
+                                                </div>   -->
+                                                	<tr>
+                                                		<td ></td>
+                                                		<td ></td>
+                                                		<td ></td>
+                                                		<td ></td>
+                                                		<td ></td>
+                                                	</tr>                                     
+                                                </tbody>	 
                                             </table>
                                         </div>
                                         <form>
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                                <div class="col-md-4 col-md-offset-8">
+                                                <div class="col-md-3">จำนวนเงินที่เบิกได้ :  บาท</div>
+                                                <div class="col-md-4 col-md-offset-5">
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" placeholder="กรุณาใส่จำนวนเงิน..">
                                                         <span class="input-group-btn">
-                                                            <button class="btn btn-default" type="button">จ่ายเงิน</button>
+                                                            <button class="btn btn-default" type="button" id="css-irow" name="paymoney">จ่ายเงิน</button>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -128,6 +149,10 @@
             </div>
         </div>
     </div>
+
+
+    
+
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
