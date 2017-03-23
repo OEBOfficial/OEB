@@ -35,6 +35,7 @@
         <!-- Custom Theme Style -->
         <link href="../build/css/custom.min.css" rel="stylesheet">
         <link href="../vendors/sweetalert/sweetalert.css" rel="stylesheet">
+        <link rel="stylesheet" href="../build/css/OEB_style.css">
     </head>
     <body class="nav-md">
         <div class="container body">
@@ -53,7 +54,7 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="x_panel">
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#addEmp" style="font-size:25px;">
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#addEmp" class="plusemp">
                                         <i class="fa fa-plus-circle"></i> เพิ่มพนักงาน
                                     </a>
                                     <!--                                    <div class="x_title">
@@ -64,23 +65,23 @@
                                         <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th style="width:20%;">ชื่อ</th>
-                                                    <th style="width:20%;">ตำแหน่ง</th>
-                                                    <th style="width:20%;">ประเภท</th>
-                                                    <th style="width:20%;">ค่าจ้างต่อหน่วยเวลา</th>
-                                                    <th style="width:20%;">ตัวเลือก</th>
+                                                    <th class="table-rows"">ชื่อ</th>
+                                                    <th class="table-rows"ตำแหน่ง</th>
+                                                    <th class="table-rows">ประเภท</th>
+                                                    <th class="table-rows">ค่าจ้างต่อหน่วยเวลา</th>
+                                                    <th class="table-rows">ตัวเลือก</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <c:forEach items="${employees}" var="e" varStatus="vs">
                                                     <tr id="tr${e.empNo}">
-                                                        <td style="">${e.empName}</td>
-                                                        <td style="">${e.positionName}</td>
-                                                        <td style="">${e.empTypeName}</td>
-                                                        <td style="">${e.specPay!=null?e.specPay:'จ่ายตามตำแหน่ง'}</td>
+                                                        <td>${e.empName}</td>
+                                                        <td>${e.positionName}</td>
+                                                        <td>${e.empTypeName}</td>
+                                                        <td>${e.specPay!=null?e.specPay:'จ่ายตามตำแหน่ง'}</td>
                                                         <td>
-                                                            <a onclick="editEmp(${e.empNo})" href="javascript:void(0)" data-toggle="modal" data-target="#editEmpBtn" style="font-size:20px;"><i class="fa fa-edit"></i> </a> 
-                                                            <a onclick="delEmp(${e.empNo}, '${e.empName}')" href="javascript:void(0)"><i class="fa fa-trash" style="font-size:20px;"></i></a>
+                                                            <a onclick="editEmp(${e.empNo})" href="javascript:void(0)" data-toggle="modal" data-target="#editEmpBtn"><i class="fa fa-edit"></i> </a> 
+                                                            <a onclick="delEmp(${e.empNo}, '${e.empName}')" href="javascript:void(0)"><i class="fa fa-trash"></i></a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

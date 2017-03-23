@@ -30,16 +30,10 @@
         <!-- Custom Theme Style -->
         <link href="../build/css/custom.min.css" rel="stylesheet">
         <link href="../vendors/sweetalert/sweetalert.css" rel="stylesheet">
+        <link rel="stylesheet" href="../build/css/OEB_style.css">
+
     </head>
     <body class="nav-md">
-        <style>
-            .modal-body-test {
-                position: relative;
-                overflow-y: auto;
-                width: 1000px;
-                right: 30%
-            }
-        </style>
         <div class="container body">
             <div class="main_container">
                 <jsp:include page="/WEB-INF/include/navbar.jsp" />
@@ -60,20 +54,20 @@
                                         <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th style="width:20%;">ชื่อ</th>
-                                                    <th style="width:20%;">ตำแหน่ง</th>
-                                                    <th style="width:20%;">ประเภท</th>
-                                                    <th style="width:20%;">ค่าจ้างที่คงเหลือเบิกได้</th>
-                                                    <th style="width:20%;">ตัวเลือก</th>
+                                                    <th class="table-rows">ชื่อ</th>
+                                                    <th class="table-rows">ตำแหน่ง</th>
+                                                    <th class="table-rows">ประเภท</th>
+                                                    <th class="table-rows">ค่าจ้างที่คงเหลือเบิกได้</th>
+                                                    <th class="table-rows">ตัวเลือก</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <c:forEach items="${employees}" var="e" varStatus="vs">
                                                     <tr id="tr${e.empNo}">
-                                                        <td style="">${e.empName}</td>
-                                                        <td style="">${e.positionName}</td>
-                                                        <td style="">${e.empTypeName}</td>
-                                                        <td style="">${e.SUMPAY}</td>
+                                                        <td>${e.empName}</td>
+                                                        <td>${e.positionName}</td>
+                                                        <td>${e.empTypeName}</td>
+                                                        <td>${e.SUMPAY}</td>
                                                         <td>
                                                             <button type="submit" class="btn btn-success" data-toggle="modal"  data-target="#paidDetail" onclick="setemppaid(${e.empNo})" >รายละเอียด</button>
                                                         </td>
@@ -101,11 +95,11 @@
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width:20%">วันที่</th>
-                                                        <th style="width:20%">ชื่อ - นามสกุล</th>
-                                                        <th style="width:20%">ตำแหน่ง</th>
-                                                        <th style="width:20%">รูปแบบพนักงาน</th>
-                                                        <th style="width:20%">จำนวนเงินที่ได้รับ</th>
+                                                        <th class="rows">วันที่</th>
+                                                        <th class="rows">ชื่อ - นามสกุล</th>
+                                                        <th class="rows">ตำแหน่ง</th>
+                                                        <th class="rows">รูปแบบพนักงาน</th>
+                                                        <th class="rows">จำนวนเงินที่ได้รับ</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id=workhisttable>
@@ -123,15 +117,11 @@
                                                         </span>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </form>
                                     </div>
-
                                 </div>
                             </div>
-                            <!-- /Modal Content (ADD EMP)-->
-
                         </div>
                     </div>
                 </div>

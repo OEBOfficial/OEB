@@ -37,6 +37,7 @@
         <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
         <!-- Custom Theme Style -->
         <link href="../build/css/custom.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../build/css/OEB_style.css">
     </head>
     <body class="nav-md">
         <div class="container body">
@@ -70,7 +71,7 @@
                                                             <div class="controls">
                                                                 <div class="input-prepend input-group">
                                                                     <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                                    <input type="text" style="width: 190px" name="date" id="reservation" class="form-control datepicker" value="${daterange}" />
+                                                                    <input type="text" name="date" id="reservation" class="form-control datepicker" value="${daterange}" />
                                                                     <input type="submit">
                                                                 </div>
                                                             </div>
@@ -84,17 +85,13 @@
                                                                                             <input type="checkbox" name="clockout"> เวลาออกงาน
                                                                                         </div>-->
                                             <table id="datatable" class="table table-striped table-bordered">
-                                                <!-- <div id="datatable_filter" class="dataTables_filter"> -->
-
-
-                                                <!-- </div> -->
                                                 <thead>
                                                     <tr>
-                                                        <th style="width:20%">วัน/เดือน/ปี</th>
-                                                        <th style="width:20%">ชื่อ</th>
-                                                        <th style="width:20%">เวลาเข้างาน</th>
-                                                        <th style="width:20%">เวลาออกงาน</th>
-                                                        <th style="width:20%">ชั่วโมงงาน</th>
+                                                        <th class="table-rows">วัน/เดือน/ปี</th>
+                                                        <th class="table-rows">ชื่อ</th>
+                                                        <th class="table-rows">เวลาเข้างาน</th>
+                                                        <th class="table-rows">เวลาออกงาน</th>
+                                                        <th class="table-rows">ชั่วโมงงาน</th>
 
                                                     </tr>
                                                 </thead>
