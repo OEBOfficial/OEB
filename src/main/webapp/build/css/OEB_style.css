@@ -13,7 +13,7 @@
     right: 30%
 }
 
-.btn-success {
+.btn-success, .btn-dark{
 	width: 100px;
 }
 
@@ -29,6 +29,24 @@
 	border-radius: 1px 4px 4px 1px;
 }
 
-/*.controls{
-	height: 30px;
-}*/
+/*insert row*/
+
+.ws-css-table-tr { 
+    display: table-row;     
+}
+.ws-css-table-td { 
+    display: table-cell;
+    border:1px solid #000;
+    width: 194px;
+    height:39px;
+    text-align:center;
+  	vertical-align:middle;
+}
+.ws-css-table {
+    display: table;
+}
+
+.col-md-3{
+	text-align: left;
+	font-size: 120%;
+}
