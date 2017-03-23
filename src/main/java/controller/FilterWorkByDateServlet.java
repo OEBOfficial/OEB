@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -30,6 +29,7 @@ public class FilterWorkByDateServlet extends HttpServlet {
         List<WorkingHistory> workhist = WorkingHistory.filterWorkByDate(fromDate, toDate);
         request.setAttribute("target", "workhist");
         request.setAttribute("workhist", workhist);
+        request.setAttribute("daterange", dateRange);
         getServletContext().getRequestDispatcher(target).forward(request, response);
     }
 
