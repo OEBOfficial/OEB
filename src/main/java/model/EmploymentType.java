@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -62,7 +62,7 @@ public class EmploymentType {
             String sql = "SELECT * FROM EmploymentType";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            empTypes = new ArrayList<EmploymentType>();
+            empTypes = new LinkedList<EmploymentType>();
             while(rs.next()){
                 EmploymentType et = new EmploymentType();
                 orm(rs,et);

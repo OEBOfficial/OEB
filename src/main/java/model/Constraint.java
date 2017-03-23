@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -150,7 +150,7 @@ public class Constraint{
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, positionNo);
             ResultSet rs = ps.executeQuery();
-            constraints = new ArrayList<Constraint>();
+            constraints = new LinkedList<Constraint>();
             while(rs.next()){
                 Constraint c = new Constraint();
                 orm(rs,c);

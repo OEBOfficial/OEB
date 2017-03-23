@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -92,7 +92,7 @@ public class EmployeePosition {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1,branchNo);
             ResultSet rs = ps.executeQuery();
-            empPos = new ArrayList<EmployeePosition>();
+            empPos = new LinkedList<EmployeePosition>();
             while(rs.next()){
                 EmployeePosition ep = new EmployeePosition();
                 orm(rs,ep);

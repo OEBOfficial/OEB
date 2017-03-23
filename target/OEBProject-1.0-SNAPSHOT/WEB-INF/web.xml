@@ -76,6 +76,10 @@
         <servlet-name>SetEmpPaidServlet</servlet-name>
         <servlet-class>ajaxcontroller.SetEmpPaidServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ToEmpCheckServlet</servlet-name>
+        <servlet-class>controller.ToEmpCheckServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LogInServlet</servlet-name>
         <url-pattern>/LogInServlet</url-pattern>
@@ -147,6 +151,10 @@
     <servlet-mapping>
         <servlet-name>SetEmpPaidServlet</servlet-name>
         <url-pattern>/SetEmpPaidServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToEmpCheckServlet</servlet-name>
+        <url-pattern>/ToEmpCheckServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
