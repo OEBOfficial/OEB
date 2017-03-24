@@ -72,7 +72,7 @@
                                                     <td>${e.empTypeName}</td>
                                                     <td>${e.SUMPAY}</td>
                                                     <td>
-                                                        <button type="submit" class="btn btn-success" data-toggle="modal"  data-target="#paidDetail" onclick="setemppaid(${e.empNo})" >รายละเอียด</button>
+                                                        <button type="submit" class="btn btn-success" data-toggle="modal"  data-target="#paidDetail" onclick="setemppaid(${e.empNo})">รายละเอียด</button>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -101,35 +101,42 @@
                                                         <th class="table-rows">วันที่</th>
                                                         <th class="table-rows">ชื่อ - นามสกุล</th>
                                                         <th class="table-rows">ตำแหน่ง</th>
-                                                        <th class="table-rows">รูปแบบพนักงาน</th>
+                                                        <th class="table-rows">ประเภทพนักงาน</th>
                                                         <th class="table-rows">จำนวนเงินที่ได้รับ</th>
                                                     </tr>
 
                                                 </thead>
                                                 <tbody id=workhisttable>
-                                                <!-- <div class="ws-css-table" >
-                                                    <div class="ws-css-table-tr">
-                                                        <div class="ws-css-table-td"></div>
-                                                        <div class="ws-css-table-td"></div>
-                                                        <div class="ws-css-table-td"></div>
-                                                        <div class="ws-css-table-td"></div>
-                                                        <div class="ws-css-table-td">312</div>
-                                                    </div>
-                                                </div>   -->
-                                                	<tr>
-                                                		<td ></td>
-                                                		<td ></td>
-                                                		<td ></td>
-                                                		<td ></td>
-                                                		<td ></td>
-                                                	</tr>                                     
+                                                <tr>
+                                                    <td class="body-rows"></td>
+                                                	<td class="body-rows"></td>
+                                                	<td class="body-rows">ควย</td>
+                                                	<td class="body-rows"></td>
+                                                	<td class="body-rows"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="body-rows-receive"></td>
+                                                	<td class="body-rows-receive"></td>
+                                                	<td class="body-rows-receive">ควย</td>
+                                                	<td class="body-rows-receive"></td>
+                                                	<td class="body-rows-receive"></td>
+                                                </tr>   
+                                                <tr>
+                                                	<td class="body-rows-lesshrs"></td>
+                                                	<td class="body-rows-lesshrs"></td>
+                                                	<td class="body-rows-lesshrs">ควย</td>
+                                                	<td class="body-rows-lesshrs"></td>
+                                                	<td class="body-rows-lesshrs"></td>
+                                                </tr>
+                                                
+                                                                                   
                                                 </tbody>	 
                                             </table>
                                         </div>
                                         <form>
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                                <div class="col-md-3">จำนวนเงินที่เบิกได้ :  บาท</div>
+                                                <div class="col-md-3">จำนวนเงินที่เบิกได้:  บาท</div>
                                                 <div class="col-md-4 col-md-offset-5">
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" placeholder="กรุณาใส่จำนวนเงิน..">

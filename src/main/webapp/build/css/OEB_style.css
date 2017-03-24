@@ -1,5 +1,19 @@
 .table-rows {
 	width: 20%;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.body-rows-receive, .body-rows, .body-rows-lesshrs{
+    border:1px solid #ddd;
+}
+
+.body-rows-receive {
+    background-color: #F0FFF0;
+}
+
+.body-rows-lesshrs{
+    background-color: #FFDDDD;
 }
 
 #reservation {
@@ -30,6 +44,9 @@
 }
 
 /*insert row*/
+.ws-css-table {
+    display: table;
+}
 
 .ws-css-table-tr { 
     display: table-row;     
@@ -42,11 +59,9 @@
     text-align:center;
   	vertical-align:middle;
 }
-.ws-css-table {
-    display: table;
-}
 
 .col-md-3{
 	text-align: left;
 	font-size: 120%;
+    vertical-align:middle;
 }
