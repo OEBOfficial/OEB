@@ -5,7 +5,6 @@
  */
 package model;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +16,6 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.json.JsonValue;
 
 /**
  *
@@ -26,9 +24,19 @@ import javax.json.JsonValue;
 public class Constraint{
     private int empTypeNo;
     private int positionNo;
-    private double hoursPerDay;
+    private double maxHoursPerDay;
+    private double minHoursPerDay;
+    private int payType;
     private double pay;
+    
+    public int getPayType() {
+        return payType;
+    }
 
+    public void setPayType(int payType) {
+        this.payType = payType;
+    }
+    
     public int getEmpTypeNo() {
         return empTypeNo;
     }
@@ -45,12 +53,20 @@ public class Constraint{
         this.positionNo = positionNo;
     }
 
-    public double getHoursPerDay() {
-        return hoursPerDay;
+    public double getMaxHoursPerDay() {
+        return maxHoursPerDay;
     }
 
-    public void setHoursPerDay(double hourPerDay) {
-        this.hoursPerDay = hourPerDay;
+    public void setMaxHoursPerDay(double maxHoursPerDay) {
+        this.maxHoursPerDay = maxHoursPerDay;
+    }
+
+    public double getMinHoursPerDay() {
+        return minHoursPerDay;
+    }
+
+    public void setMinHoursPerDay(double minHoursPerDay) {
+        this.minHoursPerDay = minHoursPerDay;
     }
 
     public double getPay() {
@@ -70,9 +86,12 @@ public class Constraint{
             JA = JAB.build();
             for(int i = 0 ; i < constraints.size() ; i++){
                 JsonObject jo = JOB
+                        .add("positionNo", constraints.get(i).getPositionNo())
                         .add("empTypeNo", constraints.get(i).getEmpTypeNo())
-                        .add("hoursPerDay", constraints.get(i).getHoursPerDay())
+                        .add("maxHoursPerDay", constraints.get(i).getMaxHoursPerDay())
+                        .add("minHoursPerDay", constraints.get(i).getMinHoursPerDay())
                         .add("pay", constraints.get(i).getPay())
+                        .add("payType",constraints.get(i).getPayType())
                         .build();
                 JAB.add(jo);
             }
@@ -85,12 +104,14 @@ public class Constraint{
         boolean success = false;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "INSERT INTO Constraint(empTypeNo,positionNo,hoursPerDay,pay) VALUES(?,?,?,?)";
+            String sql = "INSERT INTO Constraint(empTypeNo,positionNo,minHoursPerDay,maxHoursPerDay,pay,payType) VALUES(?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, empTypeNo);
             ps.setInt(2, positionNo);
-            ps.setDouble(3, hoursPerDay);
-            ps.setDouble(4, pay);
+            ps.setDouble(3, minHoursPerDay);
+            ps.setDouble(4, maxHoursPerDay);
+            ps.setDouble(5, pay);
+            ps.setInt(6, payType);
             int i = ps.executeUpdate();
             if(i > 0){
                 success = true;
@@ -106,12 +127,13 @@ public class Constraint{
         boolean success = false;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "UPDATE Constraint SET hoursPerDay = ?,pay = ? WHERE empTypeNo = ? AND positionNo = ?";
+            String sql = "UPDATE Constraint SET minHoursPerDay = ?,maxHoursPerDay = ?,pay = ? WHERE empTypeNo = ? AND positionNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setDouble(1, hoursPerDay);
-            ps.setDouble(2, pay);
-            ps.setInt(3, empTypeNo);
-            ps.setInt(4, positionNo);
+            ps.setDouble(1, minHoursPerDay);
+            ps.setDouble(2, maxHoursPerDay);
+            ps.setDouble(3, pay);
+            ps.setInt(4, empTypeNo);
+            ps.setInt(5, positionNo);
             int i = ps.executeUpdate();
             if(i > 0){
                 success = true;
@@ -184,8 +206,10 @@ public class Constraint{
     
     private static void orm(ResultSet rs,Constraint c) throws SQLException{
         c.setEmpTypeNo(rs.getInt("empTypeNo"));
-        c.setHoursPerDay(rs.getDouble("hoursPerDay"));
+        c.setMinHoursPerDay(rs.getDouble("minHoursPerDay"));
+        c.setMaxHoursPerDay(rs.getDouble("maxHoursPerDay"));
         c.setPay(rs.getDouble("pay"));
         c.setPositionNo(rs.getInt("positionNo"));
+        c.setPayType(rs.getInt("payType"));
     }
 }

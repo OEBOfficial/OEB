@@ -25,14 +25,16 @@ public class EditConstraintServlet extends HttpServlet {
         String target = "ToConstraintAjaxServlet";
         int empTypeNo = Integer.parseInt(request.getParameter("emptypeno"));
         int positionNo = Integer.parseInt(request.getParameter("positionno"));
-        double hoursPerDay = Double.parseDouble(request.getParameter("hoursperday"));
+        double minHoursPerDay = Double.parseDouble(request.getParameter("minhoursperday"));
+        double maxHoursPerDay = Double.parseDouble(request.getParameter("maxhoursperday"));
         double pay = Double.parseDouble(request.getParameter("pay"));
         
         Constraint c = new Constraint();
         c.setEmpTypeNo(empTypeNo);
         c.setPositionNo(positionNo);
         c.setPay(pay);
-        c.setHoursPerDay(hoursPerDay);
+        c.setMaxHoursPerDay(maxHoursPerDay);
+        c.setMinHoursPerDay(minHoursPerDay);
         c.editConstraint();
         response.sendRedirect(target);
     }

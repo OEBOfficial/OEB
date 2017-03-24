@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.RestaurantOwner;
 import model.ActorManagement;
-import model.Branch;
 
 /**
  *
