@@ -7,7 +7,6 @@ package ajaxcontroller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Constraint;
-import model.Employee;
 import model.EmployeePosition;
 
 /**
@@ -32,13 +30,13 @@ public class SetEmpPosAjaxServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        int empPosNo = Integer.parseInt(request.getParameter("positionno"));
+        int empPosNo = Integer.parseInt(request.getParameter("positionNo"));
         PrintWriter out = response.getWriter();
         EmployeePosition ep = EmployeePosition.getEmpPos(empPosNo);
         JsonObjectBuilder JOB = Json.createObjectBuilder();
         JsonObject mainJO = EmployeePosition.getEmpPosJson(empPosNo);
         JsonArray constraintJA = Constraint.getAllConJson(empPosNo);
-        mainJO = JOB.add("empPos", mainJO).add("constrarints", constraintJA).build();
+        mainJO = JOB.add("empPos", mainJO).add("constraints", constraintJA).build();
         
         out.print(mainJO);
         out.flush();

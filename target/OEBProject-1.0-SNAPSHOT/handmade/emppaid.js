@@ -18,3 +18,8 @@ $(document).ready(function () {
     $("#emptab").parent().find('ul').css('display', 'block');
     $("#emppaid").parent().addClass('active');
 });
+
+$('#css-irow').click(function(){
+    $(".ws-css-table-tr:last").clone().appendTo('#workhisttable');
+    (".ws-css-table-tr").remove(); 
+});

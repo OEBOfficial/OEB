@@ -28,7 +28,7 @@
                         <a id="emptab"><i class="fa fa-user"></i> จัดการพนักงาน <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a id="empdata" href="${target=='empdata'?'javascript:void(0)':'ToEmpServlet'}">ข้อมูลพนักงาน</a></li>
-                            <li><a href="index4.html">ตำแหน่งพนักงาน</a></li>
+                            <li><a id="emppos" href="${target=='emppos'?'javascript:void(0)':'ToEmpPosServlet'}">ตำแหน่งพนักงาน</a></li>
                             <li><a id="workhist" href="${target=='workhist'?'javascript:void(0)':'ToWorkHistServlet'}">ประวัติการทำงาน</a></li>
                             <li><a id="emppaid" href="${target=='emppaid'?'javascript:void(0)':'ToEmpPaidServlet'}">จ่ายเงินพนักงาน</a></li>
 <<<<<<< HEAD

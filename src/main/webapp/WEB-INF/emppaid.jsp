@@ -65,6 +65,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+<<<<<<< HEAD
                                             <c:forEach items="${employees}" var="e" varStatus="vs">
                                                 <tr id="tr${e.empNo}">
                                                     <td>${e.empName}</td>
@@ -76,6 +77,19 @@
                                                     </td>
                                                 </tr>
                                             </c:forEach>
+=======
+                                                <c:forEach items="${employees}" var="e" varStatus="vs">
+                                                    <tr id="tr${e.empNo}">
+                                                        <td>${e.empName}</td>
+                                                        <td>${e.positionName}</td>
+                                                        <td>${e.empTypeName}</td>
+                                                        <td>${e.SUMPAY}</td>
+                                                        <td>
+                                                            <button type="submit" class="btn btn-success" data-toggle="modal"  data-target="#paidDetail" onclick="setemppaid(${e.empNo})" >รายละเอียด</button>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+>>>>>>> origin/master
                                             </tbody>
                                         </table>
                                     </div>
@@ -107,6 +121,7 @@
 
                                                 </thead>
                                                 <tbody id=workhisttable>
+<<<<<<< HEAD
                                                 <tr>
                                                     <td class="body-rows"></td>
                                                 	<td class="body-rows"></td>
@@ -130,6 +145,15 @@
                                                 </tr>
                                                 
                                                                                    
+=======
+                                                    <tr>
+                                                        <td ></td>
+                                                        <td ></td>
+                                                        <td ></td>
+                                                        <td ></td>
+                                                        <td ></td>
+                                                    </tr>                                     
+>>>>>>> origin/master
                                                 </tbody>	 
                                             </table>
                                         </div>
@@ -158,7 +182,7 @@
     </div>
 
 
-    
+
 
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>

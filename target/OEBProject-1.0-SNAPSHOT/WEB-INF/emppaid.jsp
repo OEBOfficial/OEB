@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
 <%@page import="java.util.List"%>
 <%@page import="model.EmployeePosition" %>
 <%@page import="model.Employee" %>
@@ -13,7 +16,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< HEAD
         <title>พนักงานทั้งหมด</title>
+=======
+        <title>ประวัติการจ่ายเงิน</title>
+>>>>>>> origin/master
         <!-- Bootstrap -->
         <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -51,6 +58,12 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="x_panel">
+<<<<<<< HEAD
+=======
+                                    <div class="x_title">
+                                        <h4>ประวัติการจ่ายเงิน</h4>
+                                    </div>  
+>>>>>>> origin/master
                                     <div class="x_content">
                                         <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
@@ -96,6 +109,7 @@
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
+<<<<<<< HEAD
                                                         <th class="rows">วันที่</th>
                                                         <th class="rows">ชื่อ - นามสกุล</th>
                                                         <th class="rows">ตำแหน่ง</th>
@@ -105,16 +119,44 @@
                                                 </thead>
                                                 <tbody id=workhisttable>
                                                 </tbody>
+=======
+                                                        <th class="table-rows">วันที่</th>
+                                                        <th class="table-rows">ชื่อ - นามสกุล</th>
+                                                        <th class="table-rows">ตำแหน่ง</th>
+                                                        <th class="table-rows">รูปแบบพนักงาน</th>
+                                                        <th class="table-rows">จำนวนเงินที่ได้รับ</th>
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody id=workhisttable>
+                                                    <tr>
+                                                        <td ></td>
+                                                        <td ></td>
+                                                        <td ></td>
+                                                        <td ></td>
+                                                        <td ></td>
+                                                    </tr>                                     
+                                                </tbody>	 
+>>>>>>> origin/master
                                             </table>
                                         </div>
                                         <form>
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+<<<<<<< HEAD
                                                 <div class="col-md-4 col-md-offset-8">
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" placeholder="กรุณาใส่จำนวนเงิน..">
                                                         <span class="input-group-btn">
                                                             <button class="btn btn-default" type="button">จ่ายเงิน</button>
+=======
+                                                <div class="col-md-3">จำนวนเงินที่เบิกได้ :  บาท</div>
+                                                <div class="col-md-4 col-md-offset-5">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="กรุณาใส่จำนวนเงิน..">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-default" type="button" id="css-irow" name="paymoney">จ่ายเงิน</button>
+>>>>>>> origin/master
                                                         </span>
                                                     </div>
                                                 </div>
@@ -129,6 +171,13 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> origin/master
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -160,6 +209,7 @@
     <script src="../build/js/custom.min.js"></script>
     <script src="../handmade/emppaid.js"></script>
 </body>
+<<<<<<< HEAD
 =======
 <%@page import="java.util.List"%>
 <%@page import="model.EmployeePosition" %>
@@ -347,5 +397,7 @@
     <script src="../build/js/custom.min.js"></script>
     <script src="../handmade/emppaid.js"></script>
 </body>
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
 </html>

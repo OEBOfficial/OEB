@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import javax.json.Json;
@@ -342,11 +341,11 @@ public class WorkingHistory {
                     int intTime = (1440 - fromTime) + toTime;
                     calTime = (intTime / 60) + (intTime % 60) / 60.0;
                 } else {
-                    calTime = c.getHoursPerDay();
+                    calTime = c.getMaxHoursPerDay();
                 }
             }
-            if (calTime > c.getHoursPerDay()) {
-                calTime = c.getHoursPerDay();
+            if (calTime > c.getMaxHoursPerDay()) {
+                calTime = c.getMaxHoursPerDay();
             }
             workingPay = calTime * payPerTime;
         }
