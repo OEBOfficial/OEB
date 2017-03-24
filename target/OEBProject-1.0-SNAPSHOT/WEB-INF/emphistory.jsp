@@ -60,25 +60,46 @@
                                         <div class="x_title">
                                             <h4>ประวัติการทำงาน</h4>
                                             <!-- <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#addEmp">เพิ่มพนักงาน</button> -->
+<<<<<<< HEAD
                                             <div class="clearfix"></div>
                                         </div>
                                         <div class="x_content">
                                             <div class="col-md-2 col-md-offset-4">เลือกวันที่ต้องการแสดง</div>
                                             <div class="col-md-3">                                    
+=======
+                                        </div>
+                                        <div class="x_content">
+                                            <div class="col-md-5 col-md-offset-4">เลือกวันที่ต้องการแสดง
+>>>>>>> origin/master
                                                 <form class="form-horizontal" action="FilterWorkByDateServlet" method="POST">
                                                     <fieldset>
                                                         <div class="control-group">
                                                             <div class="controls">
                                                                 <div class="input-prepend input-group">
+<<<<<<< HEAD
                                                                     <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
                                                                     <input type="text" name="date" id="reservation" class="form-control datepicker" value="${daterange}" />
                                                                     <input type="submit">
                                                                 </div>
+=======
+                                                                    <span class="add-on input-group-addon" ><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                                                    <input type="text" name="date" id="reservation" class="form-control datepicker" value="${daterange}" />
+                                                                    <button type="button" class="btn btn-default">
+                                                                      <span class="glyphicon glyphicon-search"></span> ค้นหา
+                                                                    </button>
+                                                                </div>
+                                                                    
+
+>>>>>>> origin/master
                                                             </div>
                                                         </div>
                                                     </fieldset>                                              
                                                 </form>
+<<<<<<< HEAD
 
+=======
+                                            </div>
+>>>>>>> origin/master
                                             </div>
                                             <!--                                            <div class="col-md-3">
                                                                                             <input type="checkbox" name="clockin"> เวลาเข้างาน 

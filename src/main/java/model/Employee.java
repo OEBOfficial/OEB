@@ -39,8 +39,6 @@ public class Employee {
     public void setSUMPAY(Double SUMPAY) {
         this.SUMPAY = SUMPAY;
     }
-
-    
     
     public int getEmpNo() {
         return empNo;
@@ -309,6 +307,8 @@ public class Employee {
         e.setEmpTypeName(rs.getString("empTypeName"));
         e.setPositionName(rs.getString("positionName"));
     }
+    
+    
 
     @Override
     public String toString() {

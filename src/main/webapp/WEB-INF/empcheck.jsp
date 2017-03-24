@@ -62,9 +62,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <jsp:useBean id="todayDate" class="java.util.Date" scope="page" />
                                                 <c:forEach items="${workhist}" var="wh" varStatus="vs">
-                                                    <fmt:formatDate value="${todayDate}" pattern="yyyy-MM-dd" var="today" />
                                                     <tr id="tr${wh.empNo}">
                                                         <td>${wh.empName}</td>
                                                         <td>${wh.fromDate != null ? wh.toDate != null ? "ทำงานเสร็จแล้ว" : "กำลังทำงานอยู่" : "ยังไม่เข้างาน"}</td>
@@ -73,11 +71,11 @@
                                                                 <c:when test="${wh.fromDate != null}">
                                                                     <c:choose>
                                                                         <c:when test="${wh.toDate != null}">
-                                                                            เข้างาน : <fmt:formatNumber pattern="00.00" value="${Math.floor((wh.fromTime/60))+(wh.fromTime%60)/60}" /> น. ; 
-                                                                            ออกงาน : <fmt:formatNumber pattern="00.00" value="${Math.floor((wh.toTime/60))+(wh.toTime%60)/60}" /> น.
+                                                                            เข้างาน : <fmt:formatNumber pattern="00.00" value="${Math.floor((wh.fromTime/60))+(wh.fromTime%60)/100}" /> น. ; 
+                                                                            ออกงาน : <fmt:formatNumber pattern="00.00" value="${Math.floor((wh.toTime/60))+(wh.toTime%60)/100}" /> น.
                                                                         </c:when>
                                                                         <c:otherwise>
-                                                                            เข้างาน : <fmt:formatNumber pattern="00.00" value="${Math.floor((wh.fromTime/60))+(wh.fromTime%60)/60}" /> น.
+                                                                            เข้างาน : <fmt:formatNumber pattern="00.00" value="${Math.floor((wh.fromTime/60))+(wh.fromTime%60)/100}" /> น.
                                                                         </c:otherwise>
                                                                     </c:choose>
                                                                 </c:when>
@@ -94,13 +92,17 @@
                                                                             เสร็จแล้วอะ
                                                                         </c:when>
                                                                         <c:otherwise>
-                                                                            <button type="button" class="btn btn-dark">ออกงาน</button>
+                                                                            <button type="button" class="btn btn-warning" onclick="clockOut(${wh.workNo},${wh.empNo})">ออกงาน</button>
                                                                         </c:otherwise>
                                                                     </c:choose>
                                                                 </c:when>
                                                                 <c:otherwise>
+<<<<<<< HEAD
                                                                     <button type="button" class="btn btn-success">เข้างาน</button>
 
+=======
+                                                                    <button type="button" class="btn btn-success" onclick="clockIn(${wh.empNo})">เข้างาน</button>
+>>>>>>> origin/master
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </td>
@@ -148,5 +150,30 @@
         <!-- Custom Theme Scripts -->
         <script src="../build/js/custom.min.js"></script>
         <script src="../handmade/empcheck.js"></script>
+        <script>
+            function clockIn(empNo){
+                $.ajax({
+                    type: "POST",
+                    url: "ClockInAjaxServlet",
+                    dataType: "text",
+                    data: "empNo=" + encodeURIComponent(empNo),
+                    success: function (result) {
+                        swal("เรียบร้อย", "เช็คชื่อเข้าทำงานเรียบร้อยแล้ว", "success");
+                    }
+                });
+            }
+            
+            function clockOut(workNo,empNo){
+                $.ajax({
+                    type: "POST",
+                    url: "ClockOutAjaxServlet",
+                    dataType: "text",
+                    data: {'workNo' : encodeURIComponent(workNo),'empNo' : encodeURIComponent(empNo)},
+                    success: function (result) {
+//                        swal("เรียบร้อย", "เช็คชื่อเข้าทำงานเรียบร้อยแล้ว", "success");
+                    }
+                });
+            }
+        </script>
     </body>
 </html>

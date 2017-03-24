@@ -10,6 +10,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -147,7 +149,7 @@ public class WorkingHistory {
         }
         return workhist;
     }
-    
+
     public static List<WorkingHistory> getAllWorkHistWithCheck(int branchNo) {
         List<WorkingHistory> workhist = null;
         try {
@@ -247,6 +249,120 @@ public class WorkingHistory {
             JA = JAB.build();
         }
         return JA;
+    }
+
+    public static void clockIn(int empNo) {
+        try {
+            Employee e = Employee.getEmployee(empNo);
+            if (e != null) {
+                Connection con = ConnectionBuilder.getConnection();
+                String sql = "INSERT INTO WorkingHistory(fromTime,fromDate,empTypeName,positionName,empNo,branchNo) "
+                        + " VALUES(?,?,?,?,?,?)";
+                PreparedStatement ps = con.prepareStatement(sql);
+                Date now = new Date(System.currentTimeMillis());
+                ps.setInt(1, getIntTime(now));
+                ps.setDate(2, now);
+                ps.setString(3, e.getEmpTypeName());
+                ps.setString(4, e.getPositionName());
+                ps.setInt(5, e.getEmpNo());
+                ps.setInt(6, e.getBranchNo());
+                ps.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public static WorkingHistory getWorkHist(int workNo) {
+        WorkingHistory wh = null;
+        try {
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "SELECT * FROM WorkingHistory wh "
+                    + " JOIN Employee e ON wh.empNo = wh.empNo "
+                    + " WHERE workNo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, workNo);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                wh = new WorkingHistory();
+                orm(rs, wh);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return wh;
+    }
+
+    public static void clockOut(int workNo,int empNo) {
+        try {
+            WorkingHistory wh = getWorkHist(workNo);
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "UPDATE WorkingHistory SET toTime=?,toDate=?,workingPay=? WHERE workNo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            Date now = new Date(System.currentTimeMillis());
+            int intTimeNow = getIntTime(now);
+            ps.setInt(1, intTimeNow);
+            ps.setDate(2, now);
+            wh.setToDate(now);
+            wh.setToTime(intTimeNow);
+            wh.setEmpNo(empNo);
+            ps.setDouble(3, wh.calWorkingPay());
+            ps.setInt(4, workNo);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    private double calWorkingPay() {
+        //fromDate toDate fromTime toTime
+        double workingPay = 0; //initial
+        Employee e = Employee.getEmployee(empNo);
+        Constraint c = Constraint.getConstraint(e.getPositionNo(), e.getEmpTypeNo());
+        double payPerTime = 0; //initial
+        if (e.getSpecPay() != null) {
+            payPerTime = e.getSpecPay();
+        } else {
+            payPerTime = c.getPay();
+        }
+
+        if (e.getEmpTypeName().indexOf("เดือน") != -1) {
+            //ทำไงดี
+        } else if (e.getEmpTypeName().indexOf("วัน") != -1) {
+            workingPay = payPerTime;
+        } else{
+            long diff = toDate.getTime() - fromDate.getTime();
+            long diffDay = diff / (24 * 60 * 60 * 1000);
+            double calTime = 0; //initial
+            if (diffDay == 0) {
+                int intTime = toTime - fromTime;
+                calTime = (intTime / 60) + (intTime % 60) / 60.0;
+            } else {
+                if (diffDay == 1) {
+                    int intTime = (1440 - fromTime) + toTime;
+                    calTime = (intTime / 60) + (intTime % 60) / 60.0;
+                } else {
+                    calTime = c.getHoursPerDay();
+                }
+            }
+            if (calTime > c.getHoursPerDay()) {
+                calTime = c.getHoursPerDay();
+            }
+            workingPay = calTime * payPerTime;
+        }
+        return workingPay;
+    }
+
+    private static Integer getIntTime(Date d) {
+        Integer intTime = null;
+        if (d != null) {
+            DateFormat df = new SimpleDateFormat("HHmm");
+            String strIntTime = df.format(d);
+            int intHour = Integer.parseInt(strIntTime.substring(0, 2));
+            int intMin = Integer.parseInt(strIntTime.substring(2, 4));
+            intTime = (intHour * 60) + intMin;
+        }
+        return intTime;
     }
 
     private static void orm(ResultSet rs, WorkingHistory wh) throws SQLException {

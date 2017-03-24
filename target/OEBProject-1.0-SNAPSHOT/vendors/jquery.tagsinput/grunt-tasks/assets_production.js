@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 module.exports = function(grunt) {
    grunt.registerTask('assets:production',
    [
@@ -5,3 +6,12 @@ module.exports = function(grunt) {
       'uglify:plugin'
    ]);
 };
+=======
+module.exports = function(grunt) {
+   grunt.registerTask('assets:production',
+   [
+      'cssmin:plugin',
+      'uglify:plugin'
+   ]);
+};
+>>>>>>> origin/master

@@ -31,6 +31,10 @@
                             <li><a href="index4.html">ตำแหน่งพนักงาน</a></li>
                             <li><a id="workhist" href="${target=='workhist'?'javascript:void(0)':'ToWorkHistServlet'}">ประวัติการทำงาน</a></li>
                             <li><a id="emppaid" href="${target=='emppaid'?'javascript:void(0)':'ToEmpPaidServlet'}">จ่ายเงินพนักงาน</a></li>
+<<<<<<< HEAD
+=======
+                            <li><a id="empcheck" href="${target=='empcheck'?'javascript:void(0)':'ToEmpCheckServlet'}">เช็คชื่อพนักงาน</a></li>
+>>>>>>> origin/master
                         </ul>
                     </li>
                     <li>

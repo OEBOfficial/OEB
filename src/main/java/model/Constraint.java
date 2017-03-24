@@ -163,6 +163,25 @@ public class Constraint{
         return constraints;
     }
     
+    public static Constraint getConstraint(int positionNo,int empTypeNo){
+        Constraint c = null;
+        try{
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "SELECT * FROM `Constraint` WHERE positionNo = ? AND empTypeNo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,positionNo);
+            ps.setInt(2,empTypeNo);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                c = new Constraint();
+                orm(rs, c);
+            }
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return c;
+    }
+    
     private static void orm(ResultSet rs,Constraint c) throws SQLException{
         c.setEmpTypeNo(rs.getInt("empTypeNo"));
         c.setHoursPerDay(rs.getDouble("hoursPerDay"));
