@@ -16,6 +16,11 @@
     background-color: #FFDDDD;
 }
 
+#text-before-calendar{
+    text-align:right;
+    vertical-align:middle;
+}
+
 #reservation {
 	width: 190px;
 }
@@ -41,9 +46,14 @@
 
 .btn-default{
 	border-radius: 1px 4px 4px 1px;
+    text-align:left;
+    vertical-align:middle;
 }
-
-/*insert row*/
+/*.col-md-4{
+    text-align:center;
+    vertical-align:middle;
+}
+*//*insert row*/
 .ws-css-table {
     display: table;
 }

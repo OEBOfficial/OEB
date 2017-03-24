@@ -62,26 +62,27 @@
                                             <!-- <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#addEmp">เพิ่มพนักงาน</button> -->
                                         </div>
                                         <div class="x_content">
-                                            <div class="col-md-5 col-md-offset-4">เลือกวันที่ต้องการแสดง
+                                            <p class="col-md-3 col-md-offset-2" id="text-before-calendar">เลือกวันที่ต้องการแสดง</p>
                                                 <form class="form-horizontal" action="FilterWorkByDateServlet" method="POST">
                                                     <fieldset>
                                                         <div class="control-group">
                                                             <div class="controls">
-                                                                <div class="input-prepend input-group">
+                                                                <div class="input-prepend input-group col-md-2 ">
                                                                     <span class="add-on input-group-addon" ><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
                                                                     <input type="text" name="date" id="reservation" class="form-control datepicker" value="${daterange}" />
-                                                                    <button type="button" class="btn btn-default">
-                                                                      <span class="glyphicon glyphicon-search"></span> ค้นหา
-                                                                    </button>
                                                                 </div>
-                                                                    
+                                                                
 
                                                             </div>
                                                         </div>
                                                     </fieldset>                                              
                                                 </form>
+                                                <div class="col-md-2">
+                                                <button type="button" class="btn btn-default">
+                                                    <span class="glyphicon glyphicon-search"></span> ค้นหา
+                                                </button>
                                             </div>
-                                            </div>
+                                        </div>
                                             <!--                                            <div class="col-md-3">
                                                                                             <input type="checkbox" name="clockin"> เวลาเข้างาน 
                                                                                             <input type="checkbox" name="clockout"> เวลาออกงาน
