@@ -97,12 +97,8 @@
                                                                     </c:choose>
                                                                 </c:when>
                                                                 <c:otherwise>
-<<<<<<< HEAD
                                                                     <button type="button" class="btn btn-success">เข้างาน</button>
-
-=======
                                                                     <button type="button" class="btn btn-success" onclick="clockIn(${wh.empNo})">เข้างาน</button>
->>>>>>> origin/master
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </td>

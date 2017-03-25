@@ -65,7 +65,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-<<<<<<< HEAD
                                             <c:forEach items="${employees}" var="e" varStatus="vs">
                                                 <tr id="tr${e.empNo}">
                                                     <td>${e.empName}</td>
@@ -77,7 +76,6 @@
                                                     </td>
                                                 </tr>
                                             </c:forEach>
-=======
                                                 <c:forEach items="${employees}" var="e" varStatus="vs">
                                                     <tr id="tr${e.empNo}">
                                                         <td>${e.empName}</td>
@@ -89,7 +87,6 @@
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
->>>>>>> origin/master
                                             </tbody>
                                         </table>
                                     </div>
@@ -121,7 +118,6 @@
 
                                                 </thead>
                                                 <tbody id=workhisttable>
-<<<<<<< HEAD
                                                 <tr>
                                                     <td class="body-rows"></td>
                                                 	<td class="body-rows"></td>
@@ -143,9 +139,6 @@
                                                 	<td class="body-rows-lesshrs"></td>
                                                 	<td class="body-rows-lesshrs"></td>
                                                 </tr>
-                                                
-                                                                                   
-=======
                                                     <tr>
                                                         <td ></td>
                                                         <td ></td>
@@ -153,7 +146,6 @@
                                                         <td ></td>
                                                         <td ></td>
                                                     </tr>                                     
->>>>>>> origin/master
                                                 </tbody>	 
                                             </table>
                                         </div>
