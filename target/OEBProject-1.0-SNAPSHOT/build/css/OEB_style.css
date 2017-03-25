@@ -1,5 +1,25 @@
 .table-rows {
 	width: 20%;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.body-rows-receive, .body-rows, .body-rows-lesshrs{
+    border:1px solid #ddd;
+}
+
+.body-rows-receive {
+    background-color: #F0FFF0;
+}
+
+.body-rows-lesshrs{
+    background-color: #FFDDDD;
+}
+
+#text-before-calendar{
+    text-align:center;
+    vertical-align:middle;
+    font-size: 100%;
 }
 
 #reservation {
@@ -27,9 +47,14 @@
 
 .btn-default{
 	border-radius: 1px 4px 4px 1px;
+    text-align:left;
+    vertical-align:middle;
 }
 
-/*insert row*/
+*//*insert row*/
+.ws-css-table {
+    display: table;
+}
 
 .ws-css-table-tr { 
     display: table-row;     
@@ -42,11 +67,14 @@
     text-align:center;
   	vertical-align:middle;
 }
-.ws-css-table {
-    display: table;
-}
 
-.col-md-3{
-	text-align: left;
-	font-size: 120%;
+.input-group .form-control, .input-group-addon, .input-group-btn, .btn-default{
+    display: table-cell;
 }
+.btn-default {
+    border-left: 0;
+    border-left-width: 0px;
+    border-left-style: initial;
+    border-left-color: initial;
+}
+button.btn-default{margin-bottom:0px;margin-right:0px}
