@@ -26,6 +26,21 @@
         <!-- Custom Theme Style -->
         <link href="../build/css/custom.min.css" rel="stylesheet">
         <link href="../vendors/sweetalert/sweetalert.css" rel="stylesheet">
+        <style type="text/css">
+            .modal-body-forEmpPos {
+                position: relative;
+                overflow-y: auto;
+                width: 1000px;
+                right: 30%;
+                height: 700px
+            }
+            input[type=checkbox][disabled] + label {
+                color: #ccc;
+            }
+            label{
+                font-weight:100;
+            }
+        </style>
     </head>
     <body class="nav-md">
         <div class="container body">
@@ -58,11 +73,14 @@
                                             </thead>
                                             <tbody>
                                                 <c:forEach items="${emppos}" var="e" varStatus="vs">
-                                                    <tr>
+                                                    <tr id="tr${e.positionNo}">
                                                         <td>${e.positionName}</td>
                                                         <td>
                                                             <a href="javascript:void(0)" onclick="setConstraint(${e.positionNo})" data-toggle="modal" data-target="#addConstraint">
                                                                 <i class="fa fa-plus-circle"></i> จัดการ Constraint
+                                                            </a>
+                                                            <a href="javascript:void(0)" onclick="delPosition('${e.positionName}',${e.positionNo})" data-toggle="modal">
+                                                                <i class="fa fa-trash"></i> ลบ Position นี้
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -77,7 +95,7 @@
                             <div class="modal fade" id="addEmp" role="dialog">
                                 <div class="modal-dialog">
                                     <!-- เนือหาของ Modal ทั้งหมด -->
-                                    <div class="modal-content">
+                                    <div class="modal-content modal-body-forEmpPos">
                                         <!-- ส่วนหัวของ Modal -->
                                         <div class="modal-header">
                                             <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
@@ -85,22 +103,169 @@
                                             <h4 class="modal-title">เพิ่มตำแหน่งใหม่</h4>
                                         </div>
                                         <!-- ส่วนเนื้อหาของ Modal -->
-                                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="AddEmpPosServlet">
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <div class="col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" id="positionName" require name="positionName" class="form-control col-md-7 col-xs-12" placeholder="ชื่อตำแหน่ง">
+                                        <div class="modal-body">
+                                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" name="myform" id="addemppos" method="POST" action="AddEmpPosServlet">
+                                                <input type="hidden" id="hiddensub" name="proportion">
+                                                <div class="col-md-5 col-sm-5 col-xs-12 form-group">
+                                                    <input type="text" name="empPosName" id="empPos" placeholder="กรุณาใส่ชื่อตำแหน่ง" class="form-control" required></div>
+                                                <table class="table">
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="emptype" id="paytype1" value="1" class="emptype"><label for="paytype1"> Full - Time </label>
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" name="paytype" id="hour1" value="1" disabled class="paytype paytype1"> <label for="hour1">รายชั่วโมง</label>
+                                                        </td>
+                                                        <td>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="minhour" disabled id="empPos" placeholder="ทำงานน้อยสุด(ชั่วโมง)" class="form-control" required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="maxhour" disabled id="empPos" placeholder="ทำงานมากสุด(ชั่วโมง)" class="form-control" required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="pay" disabled id="empPos" placeholder="ใส่รายได้ต่อชั่วโมง" class="form-control" required>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>                                                
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" name="paytype" value="2" disabled id="day1" class="paytype paytype1"> <label for="day1">รายวัน</label>
+                                                        </td>
+                                                        <td>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="minhour" disabled id="empPos" placeholder="ทำงานน้อยสุด(ชั่วโมง)" class="form-control" required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="maxhour" disabled id="empPos" placeholder="ทำงานมากสุด(ชั่วโมง)" class="form-control" required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="pay" disabled id="empPos" placeholder="ใส่รายได้ต่อวัน" class="form-control" required>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>                                                
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" name="paytype" value="3" disabled id="month1" class="paytype paytype1"> <label for="month1">รายเดือน</label>
+                                                        </td>
+                                                        <td>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="minhour" disabled id="empPos" placeholder="ทำงานน้อยสุด(ชั่วโมง)" class="form-control" required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="maxhour" disabled id="empPos" placeholder="ทำงานมากสุด(ชั่วโมง)" class="form-control" required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="pay" disabled id="empPos" placeholder="ใส่รายได้ต่อเดือน" class="form-control" required>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="emptype" value="2" id="emptype2" class="emptype"><label for="emptype2"> Part - Time</label>
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" name="paytype" value="1" id="hour2" disabled class="paytype paytype2"> <label for="hour2">รายชั่วโมง</label>
+                                                        </td>
+                                                        <td>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="minhour" id="empPos" placeholder="ทำงานน้อยสุด(ชั่วโมง)" class="form-control" disabled required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="maxhour" id="empPos" placeholder="ทำงานมากสุด(ชั่วโมง)" class="form-control" disabled required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="pay" id="empPos" placeholder="ใส่รายได้ต่อชั่วโมง" class="form-control" disabled required>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>                                                
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" name="paytype" value="2" id="day2" disabled class="paytype paytype2"> <label for="day2">รายวัน</label>
+                                                        </td>
+                                                        <td>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="minhour" id="empPos" placeholder="ทำงานน้อยสุด(ชั่วโมง)" class="form-control" disabled required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="maxhour" id="empPos" placeholder="ทำงานมากสุด(ชั่วโมง)" class="form-control" disabled required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="pay" id="empPos" placeholder="ใส่รายได้ต่อวัน" class="form-control" disabled required>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>                                                
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" name="paytype" value="3" id="month2" disabled class="paytype paytype2"> <label for="month2">รายเดือน</label>
+                                                        </td>
+                                                        <td>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="minhour" id="empPos" placeholder="ทำงานน้อยสุด(ชั่วโมง)" class="form-control" disabled required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="maxhour" id="empPos" placeholder="ทำงานมากสุด(ชั่วโมง)" class="form-control" disabled required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="pay" id="empPos" placeholder="ใส่รายได้ต่อเดือน" class="form-control" disabled required>
+                                                            </div>
+                                                        </td>
+                                                    </tr> 
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="emptype" value="3" id="emptype3" class="emptype"> <label for="emptype3">Training</label>
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" name="paytype" value="1" id="hour3" disabled class="paytype paytype3"> <label for="hour3">รายชั่วโมง</label>
+                                                        </td>
+                                                        <td>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="minhour" id="empPos" placeholder="ทำงานน้อยสุด(ชั่วโมง)" class="form-control" disabled required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="maxhour" id="empPos" placeholder="ทำงานมากสุด(ชั่วโมง)" class="form-control" disabled required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="pay" id="empPos" placeholder="ใส่รายได้ต่อชั่วโมง" class="form-control" disabled required>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>                                                
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" name="paytype" value="2" id="day3" disabled class="paytype paytype3"> <label for="day3">รายวัน</label>
+                                                        </td>
+                                                        <td>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="minhour" id="empPos" placeholder="ทำงานน้อยสุด(ชั่วโมง)" class="form-control" disabled required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="maxhour" id="empPos" placeholder="ทำงานมากสุด(ชั่วโมง)" class="form-control" disabled required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="pay" id="empPos" placeholder="ใส่รายได้ต่อวัน" class="form-control" disabled required>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>                                                
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" name="paytype" value="3" id="month3" disabled class="paytype paytype3"> <label for="month3">รายเดือน</label>
+                                                        </td>
+                                                        <td>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="minhour" id="empPos" placeholder="ทำงานน้อยสุด(ชั่วโมง)" class="form-control" disabled required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="maxhour" id="empPos" placeholder="ทำงานมากสุด(ชั่วโมง)" class="form-control" disabled required></div>
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                                <input type="text" name="pay" id="empPos" placeholder="ใส่รายได้ต่อเดือน" class="form-control" disabled required>
+                                                            </div>
+                                                        </td>
+                                                    </tr>                                            
+                                                </table>                                                
+                                                <div class="modal-footer">
+                                                    <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+                                                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                                        <button type="submit" class="btn btn-success">ตกลง</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <button type="submit" class="btn btn-success">ตกลง</button>
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -9,14 +9,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import static model.Employee.getEmployee;
 
 /**
  *
@@ -105,24 +103,26 @@ public class EmployeePosition {
         return empPos;
     }
     
-    public boolean addEmpPosName(){
-        boolean success = false;
+    public Integer addEmpPosName(){
+        Integer posNo = null;
         try{
             Connection con = ConnectionBuilder.getConnection();
             String sql = "INSERT INTO EmployeePosition(positionName,branchNo) "
-                    + " VALUES(?,?)";
-            PreparedStatement ps = con.prepareStatement(sql);
+                    + " VALUES(?,?) ";
+            PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, positionName);
             ps.setInt(2, branchNo);
             int i = ps.executeUpdate();
             if(i > 0){
-                success = true;
+                ResultSet rs = ps.getGeneratedKeys();
+                rs.next();
+                posNo = rs.getInt(1);
             }
             con.close();
         }catch(SQLException ex){
             System.out.println(ex);
         }
-        return success;
+        return posNo;
     }
     
     public boolean editEmpPosName(){

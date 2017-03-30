@@ -44,14 +44,13 @@
 .plusemp{
 	font-size:25px;
 }
-
+/*
 .btn-default{
 	border-radius: 1px 4px 4px 1px;
     text-align:left;
     vertical-align:middle;
 }
 
-*//*insert row*/
 .ws-css-table {
     display: table;
 }
@@ -77,4 +76,4 @@
     border-left-style: initial;
     border-left-color: initial;
 }
-button.btn-default{margin-bottom:0px;margin-right:0px}
+button.btn-default{margin-bottom:0px;margin-right:0px}*/

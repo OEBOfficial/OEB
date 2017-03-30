@@ -132,6 +132,7 @@
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" >
                                                     <select name="empPos" class="form-control" required>
+                                                        <option value="0">---- เลือกตำแหน่ง ----</option>
                                                         <c:forEach items="${empPos}" var="ep">
                                                             <option value="${ep.positionNo}">${ep.positionName}</option>
                                                         </c:forEach>
@@ -141,13 +142,13 @@
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <div class="btn-group" data-toggle="buttons">
-                                                        <label class="btn btn-default" id="1" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                        <label class="btn btn-default" id="1" value="1" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                                             <input type="radio" name="etype" required> Full - Time
                                                         </label>
-                                                        <label class="btn btn-default"  id="2" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                        <label class="btn btn-default"  id="2" value="2" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                                             <input type="radio" name="etype" required> Part - Time
                                                         </label>
-                                                        <label class="btn btn-default"  id="3" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                        <label class="btn btn-default"  id="3" value="3" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                                             <input type="radio" name="etype" required> Training
                                                         </label>
                                                     </div>
@@ -155,9 +156,10 @@
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" >
                                                     <select id="empType" name="empType" class="form-control" disabled required>
-                                                        <option value="hourly">รายชั่วโมง</option>
-                                                        <option value="daily">รายวัน</option>
-                                                        <option value="monthly">รายเดือน</option>
+                                                        <option value="0">---- เลือกประเภทการจ่าย ----</option>
+                                                        <option value="1">รายชั่วโมง</option>
+                                                        <option value="2">รายวัน</option>
+                                                        <option value="3">รายเดือน</option>
                                                     </select>
                                                 </div>
 
@@ -296,36 +298,35 @@
             </div>
         </div>
     </div>
-</div>
-<!-- jQuery -->
-<script src="../vendors/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src="../vendors/fastclick/lib/fastclick.js"></script>
-<!-- NProgress -->
-<script src="../vendors/nprogress/nprogress.js"></script>
-<!-- iCheck -->
-<script src="../vendors/iCheck/icheck.min.js"></script>
-<!-- Datatables -->
-<script src="../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="../vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-<script src="../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-<script src="../vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="../vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="../vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-<script src="../vendors/jszip/dist/jszip.min.js"></script>
-<script src="../vendors/pdfmake/build/pdfmake.min.js"></script>
-<script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
-<script src="../vendors/sweetalert/sweetalert.min.js"></script>
-<!-- Custom Theme Scripts -->
-<script src="../build/js/custom.min.js"></script>
-<script src="../handmade/empindex.js"></script>
+    <!-- jQuery -->
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- iCheck -->
+    <script src="../vendors/iCheck/icheck.min.js"></script>
+    <!-- Datatables -->
+    <script src="../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="../vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="../vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="../vendors/jszip/dist/jszip.min.js"></script>
+    <script src="../vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="../vendors/sweetalert/sweetalert.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>
+    <script src="../handmade/empindex.js"></script>
 </body>
 </html>
