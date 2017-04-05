@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.IOException;
@@ -18,10 +13,6 @@ import model.Employee;
 import model.EmployeePosition;
 import model.RestaurantOwner;
 
-/**
- *
- * @author USER
- */
 public class ToEmpServlet extends HttpServlet {
 
     @Override
@@ -33,17 +24,13 @@ public class ToEmpServlet extends HttpServlet {
         HttpSession hs = request.getSession();
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
         List<Employee> employees = Employee.getAllEmp(ro.getBranchNo());
-        request.setAttribute("employees", employees);
         List<EmployeePosition> empPos = EmployeePosition.getAllEmpPos(ro.getBranchNo());
+        Map<String,String> constraintMap = Constraint.getMapConstraint(ro.getBranchNo());
+        request.setAttribute("employees", employees);
         request.setAttribute("empPos", empPos);
         request.setAttribute("target","empdata");
+        request.setAttribute("constraintMap",constraintMap);
         
         getServletContext().getRequestDispatcher(target).forward(request, response);
     }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

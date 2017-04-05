@@ -35,7 +35,7 @@ public class EditConstraintServlet extends HttpServlet {
         c.setPay(pay);
         c.setMaxHoursPerDay(maxHoursPerDay);
         c.setMinHoursPerDay(minHoursPerDay);
-        c.editConstraint();
+//        c.editConstraint();
         response.sendRedirect(target);
     }
 

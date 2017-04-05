@@ -1,9 +1,0 @@
-#surefire
-#Fri Mar 24 02:57:45 ICT 2017
-maven.ext.class.path=C\:\\Program Files\\NetBeans 8.2\\java\\maven-nblib\\netbeans-eventspy.jar
-user.dir=C\:\\Users\\USER\\Documents\\NetBeansProjects\\OEB
-file.encoding=UTF-8
-localRepository=C\:\\Users\\USER\\.m2\\repository
-netbeans.deploy=true
-netbeans.deploy.clientUrlPart=/LogInServlet
-basedir=C\:\\Users\\USER\\Documents\\NetBeansProjects\\OEB

@@ -10,8 +10,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import javax.json.Json;
@@ -149,6 +151,7 @@ public class WorkingHistory {
         return workhist;
     }
 
+    // is used
     public static List<WorkingHistory> getAllWorkHistWithCheck(int branchNo) {
         List<WorkingHistory> workhist = null;
         try {
@@ -255,16 +258,14 @@ public class WorkingHistory {
             Employee e = Employee.getEmployee(empNo);
             if (e != null) {
                 Connection con = ConnectionBuilder.getConnection();
-                String sql = "INSERT INTO WorkingHistory(fromTime,fromDate,empTypeName,positionName,empNo,branchNo) "
-                        + " VALUES(?,?,?,?,?,?)";
+                String sql = "INSERT INTO WorkingHistory(fromTime,fromDate,empNo,branchNo) "
+                        + " VALUES(?,?,?,?)";
                 PreparedStatement ps = con.prepareStatement(sql);
                 Date now = new Date(System.currentTimeMillis());
                 ps.setInt(1, getIntTime(now));
                 ps.setDate(2, now);
-                ps.setString(3, e.getEmpTypeName());
-                ps.setString(4, e.getPositionName());
-                ps.setInt(5, e.getEmpNo());
-                ps.setInt(6, e.getBranchNo());
+                ps.setInt(3, e.getEmpNo());
+                ps.setInt(4, e.getBranchNo());
                 ps.executeUpdate();
             }
         } catch (SQLException ex) {
@@ -278,6 +279,10 @@ public class WorkingHistory {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT * FROM WorkingHistory wh "
                     + " JOIN Employee e ON wh.empNo = wh.empNo "
+                    + " JOIN `Constraint` c ON e.constraintNo = c.constraintNo "
+                    + " JOIN EmployeePosition ep ON c.positionNo = ep.positionNo "
+                    + " JOIN EmploymentType et ON c.empTypeNo = et.empTypeNo "
+                    + " JOIN PayType pt ON c.payTypeNo = pt.payTypeNo "
                     + " WHERE workNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, workNo);
@@ -285,6 +290,8 @@ public class WorkingHistory {
             if (rs.next()) {
                 wh = new WorkingHistory();
                 orm(rs, wh);
+                wh.setEmpTypeName(rs.getString("empTypeName"));
+                wh.setPositionName(rs.getString("positionName"));
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -317,19 +324,20 @@ public class WorkingHistory {
         //fromDate toDate fromTime toTime
         double workingPay = 0; //initial
         Employee e = Employee.getEmployee(empNo);
-        Constraint c = Constraint.getConstraint(e.getPositionNo(), e.getEmpTypeNo());
+        Constraint c = Constraint.getConstraint(e.getPositionNo(), e.getEmpTypeNo(),e.getPayTypeNo());
         double payPerTime = 0; //initial
         if (e.getSpecPay() != null) {
             payPerTime = e.getSpecPay();
         } else {
+            System.out.println("payPerTime : "+c.getPay());
             payPerTime = c.getPay();
         }
-
-        if (e.getEmpTypeName().indexOf("เดือน") != -1) {
-            //ทำไงดี
-        } else if (e.getEmpTypeName().indexOf("วัน") != -1) {
+        
+        if (e.getPayTypeName().indexOf("วัน") != -1) {
             workingPay = payPerTime;
+            System.out.println("in day");
         } else{
+            System.out.println("in hour");
             long diff = toDate.getTime() - fromDate.getTime();
             long diffDay = diff / (24 * 60 * 60 * 1000);
             double calTime = 0; //initial
@@ -349,6 +357,8 @@ public class WorkingHistory {
             }
             workingPay = calTime * payPerTime;
         }
+        
+        System.out.println("workingPay : "+workingPay);
         return workingPay;
     }
 
@@ -368,10 +378,10 @@ public class WorkingHistory {
         wh.setBranchNo(rs.getInt("workNo"));
         wh.setEmpName(rs.getString("empName"));
         wh.setEmpNo(rs.getInt("empNo"));
-        wh.setEmpTypeName(rs.getString("empTypeName"));
+//        wh.setEmpTypeName(rs.getString("empTypeName"));
         wh.setFromDate(rs.getDate("fromDate"));
         wh.setFromTime(rs.getInt("fromTime"));
-        wh.setPositionName(rs.getString("positionName"));
+//        wh.setPositionName(rs.getString("positionName"));
         wh.setToDate(rs.getDate("toDate"));
         wh.setToTime(rs.getInt("toTime"));
         wh.setWorkNo(rs.getInt("workNo"));

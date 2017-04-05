@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ajaxcontroller;
 
 import java.io.IOException;
@@ -18,10 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import model.Constraint;
 import model.EmployeePosition;
 
-/**
- *
- * @author USER
- */
 public class SetEmpPosAjaxServlet extends HttpServlet {
 
     
@@ -42,15 +33,4 @@ public class SetEmpPosAjaxServlet extends HttpServlet {
         out.flush();
         out.close();
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

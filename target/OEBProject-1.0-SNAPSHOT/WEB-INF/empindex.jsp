@@ -1,8 +1,4 @@
-<%-- 
-    Document   : empindex
-    Created on : Mar 17, 2017, 10:25:35 PM
-    Author     : USER
---%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page import="java.util.List"%>
 <%@page import="model.EmployeePosition" %>
 <%@page import="model.Employee" %>
@@ -68,8 +64,8 @@
                                         <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th class="table-rows"">ชื่อ</th>
-                                                    <th class="table-rows"ตำแหน่ง</th>
+                                                    <th class="table-rows">ชื่อ</th>
+                                                    <th class="table-rows">ตำแหน่ง</th>
                                                 <th class="table-rows">ประเภท</th>
                                                 <th class="table-rows">ค่าจ้างต่อหน่วยเวลา</th>
                                                 <th class="table-rows">ตัวเลือก</th>
@@ -81,7 +77,7 @@
                                                     <td>${e.empName}</td>
                                                     <td>${e.positionName}</td>
                                                     <td>${e.empTypeName}</td>
-                                                    <td>${e.specPay!=null?e.specPay:'จ่ายตามตำแหน่ง'}</td>
+                                                    <td><fmt:formatNumber value="${e.specPay!=null?e.specPay:e.pay}" pattern="#,###,###.##"/> บาท/${e.payTypeName} ${e.specPay!=null?'':'(ตามตำแหน่ง)'}</td>
                                                     <td>
                                                         <a onclick="editEmp(${e.empNo})" href="javascript:void(0)" data-toggle="modal" data-target="#editEmpBtn"><i class="fa fa-edit"></i> </a> 
                                                         <a onclick="delEmp(${e.empNo}, '${e.empName}')" href="javascript:void(0)"><i class="fa fa-trash"></i></a>
@@ -107,7 +103,7 @@
                                     </div>
                                     <!-- ส่วนเนื้อหาของ Modal -->
                                     <div class="modal-body">
-                                        <form class="form-horizontal form-label-left input_mask" action="AddEmpServlet" method="post">
+                                        <form class="form-horizontal form-label-left input_mask" id="addemp" action="AddEmpServlet" method="post">
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                 <input type="text" class="form-control" name="empName" placeholder="ชื่อ - นามสกุล" required>
                                                 <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
@@ -131,8 +127,8 @@
                                                     <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" >
-                                                    <select name="empPos" class="form-control" required>
-                                                        <option value="0">---- เลือกตำแหน่ง ----</option>
+                                                    <select id="addEmpPos" name="empPos" class="form-control" required>
+                                                        <option value="">---เลือกตำแหน่ง---</option>
                                                         <c:forEach items="${empPos}" var="ep">
                                                             <option value="${ep.positionNo}">${ep.positionName}</option>
                                                         </c:forEach>
@@ -142,35 +138,32 @@
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <div class="btn-group" data-toggle="buttons">
-                                                        <label class="btn btn-default" id="1" value="1" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                            <input type="radio" name="etype" required> Full - Time
+                                                        <label class="btn btn-default empTypeItem" id="1" value="1" data-toggle-class="btn-primary" disabled data-toggle-passive-class="btn-default">
+                                                            <input type="radio" name="etype" value="1" required> Full - Time
                                                         </label>
-                                                        <label class="btn btn-default"  id="2" value="2" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                            <input type="radio" name="etype" required> Part - Time
+                                                        <label class="btn btn-default empTypeItem"  id="2" value="2" data-toggle-class="btn-primary" disabled data-toggle-passive-class="btn-default">
+                                                            <input type="radio" name="etype" value="2" required> Part - Time
                                                         </label>
-                                                        <label class="btn btn-default"  id="3" value="3" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                            <input type="radio" name="etype" required> Training
+                                                        <label class="btn btn-default empTypeItem"  id="3" value="3" data-toggle-class="btn-primary" disabled data-toggle-passive-class="btn-default">
+                                                            <input type="radio" name="etype" value="3" required> Training
                                                         </label>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" >
-                                                    <select id="empType" name="empType" class="form-control" disabled required>
-                                                        <option value="0">---- เลือกประเภทการจ่าย ----</option>
-                                                        <option value="1">รายชั่วโมง</option>
-                                                        <option value="2">รายวัน</option>
-                                                        <option value="3">รายเดือน</option>
+                                                    <select id="payTypeItem" name="payType" class="form-control" required disabled>
+                                                        <option value="">---เลือกประเภทการจ่าย---</option>
                                                     </select>
                                                 </div>
 
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <div class="btn-group" data-toggle="buttons">
-                                                        <label class="btn btn-default" id="addgeneral" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                            <input type="radio" name="payType" required> จ่ายตามตำแหน่ง
+                                                        <label class="btn btn-default payMethod" id="addgeneral" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default" disabled>
+                                                            <input type="radio" name="payMethod" required> จ่ายตามตำแหน่ง
                                                         </label>
-                                                        <label class="btn btn-default" id="addspecial" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                            <input type="radio" name="payType" required> จ่ายรายคน
+                                                        <label class="btn btn-default payMethod" id="addspecial" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default" disabled>
+                                                            <input type="radio" name="payMethod" required> จ่ายรายคน
                                                         </label>
                                                     </div>
                                                 </div>
@@ -233,6 +226,7 @@
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" >
                                                     <select name="empPos" class="form-control" id="empPos" required>
+                                                        <option value="">---เลือกตำแหน่ง---</option>
                                                         <c:forEach items="${empPos}" var="ep">
                                                             <option value="${ep.positionNo}">${ep.positionName}</option>
                                                         </c:forEach>
@@ -242,34 +236,32 @@
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <div class="btn-group" data-toggle="buttons">
-                                                        <label class="btn btn-default" id="e1" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                            <input type="radio" name="etype" required> Full - Time
+                                                        <label class="btn btn-default editEmpTypeItem" value="1" id="e1" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default" disabled>
+                                                            <input type="radio" name="etype" value="1" required> Full - Time
                                                         </label>
-                                                        <label class="btn btn-default"  id="e2" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                            <input type="radio" name="etype" required> Part - Time
+                                                        <label class="btn btn-default editEmpTypeItem" value="2" id="e2" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default" disabled>
+                                                            <input type="radio" name="etype" value="2" required> Part - Time
                                                         </label>
-                                                        <label class="btn btn-default"  id="e3" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                            <input type="radio" name="etype" required> Training
+                                                        <label class="btn btn-default editEmpTypeItem" value="3" id="e3" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default" disabled>
+                                                            <input type="radio" name="etype" value="3" required> Training
                                                         </label>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" >
-                                                    <select id="eempType" name="empType" class="form-control" disabled required>
-                                                        <option value="hourly">รายชั่วโมง</option>
-                                                        <option value="daily">รายวัน</option>
-                                                        <option value="monthly">รายเดือน</option>
+                                                    <select id="editPayTypeItem" name="empType" class="form-control" required disabled>
+                                                        <option>---เลือกประเภทการจ่าย---</option>
                                                     </select>
                                                 </div>
 
 
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <div class="btn-group" data-toggle="buttons">
-                                                        <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                            <input type="radio" name="c-specPay" value="1" id="general" required> จ่ายตามตำแหน่ง
+                                                        <label class="btn btn-default editPayMethod" data-toggle-class="btn-primary" id="general" value="1" data-toggle-passive-class="btn-default" disabled>
+                                                            <input type="radio" name="c-specPay" value="1" required> จ่ายตามตำแหน่ง
                                                         </label>
-                                                        <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                            <input type="radio" name="c-specPay" value="2" id="special" required> จ่ายรายคน
+                                                        <label class="btn btn-default editPayMethod" data-toggle-class="btn-primary" value="2" id="special" data-toggle-passive-class="btn-default" disabled>
+                                                            <input type="radio" name="c-specPay" value="2" required> จ่ายรายคน
                                                         </label>
                                                     </div>
                                                 </div>
@@ -328,5 +320,23 @@
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
     <script src="../handmade/empindex.js"></script>
+    <script>
+        var empTypeConstraint = {};
+        var payTypeConstraint = {};
+        <c:forEach items="${constraintMap}" var="cm" >
+            var key = "${cm.key}";
+            var value = "${cm.value}";
+            var positionNo = key.substr(0,key.indexOf("|"));
+            var empTypeNo = key.substr(key.indexOf("|")+1,key.length);
+            
+            if(empTypeConstraint[positionNo] == null){
+                empTypeConstraint[positionNo] = empTypeNo;
+            }else{
+                empTypeConstraint[positionNo] = empTypeConstraint[positionNo] + empTypeNo;
+            }
+            
+            payTypeConstraint[key] = value;
+        </c:forEach>
+    </script>
 </body>
 </html>

@@ -97,7 +97,6 @@
                                                                     </c:choose>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <button type="button" class="btn btn-success">เข้างาน</button>
                                                                     <button type="button" class="btn btn-success" onclick="clockIn(${wh.empNo})">เข้างาน</button>
                                                                 </c:otherwise>
                                                             </c:choose>
@@ -154,7 +153,8 @@
                     dataType: "text",
                     data: "empNo=" + encodeURIComponent(empNo),
                     success: function (result) {
-                        swal("เรียบร้อย", "เช็คชื่อเข้าทำงานเรียบร้อยแล้ว", "success");
+//                        swal("เรียบร้อย", "เช็คชื่อเข้าทำงานเรียบร้อยแล้ว", "success");
+                        location.reload();
                     }
                 });
             }
@@ -166,7 +166,8 @@
                     dataType: "text",
                     data: {'workNo' : encodeURIComponent(workNo),'empNo' : encodeURIComponent(empNo)},
                     success: function (result) {
-//                        swal("เรียบร้อย", "เช็คชื่อเข้าทำงานเรียบร้อยแล้ว", "success");
+//                        swal("เรียบร้อย", "เช็คชื่อออกงานเรียบร้อยแล้ว", "success");
+                        location.reload();
                     }
                 });
             }

@@ -88,6 +88,10 @@
         <servlet-name>ClockOutAjaxServlet</servlet-name>
         <servlet-class>ajaxcontroller.ClockOutAjaxServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CheckEmpPosAjaxServlet</servlet-name>
+        <servlet-class>ajaxcontroller.CheckEmpPosAjaxServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LogInServlet</servlet-name>
         <url-pattern>/LogInServlet</url-pattern>
@@ -171,6 +175,10 @@
     <servlet-mapping>
         <servlet-name>ClockOutAjaxServlet</servlet-name>
         <url-pattern>/ClockOutAjaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckEmpPosAjaxServlet</servlet-name>
+        <url-pattern>/CheckEmpPosAjaxServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

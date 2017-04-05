@@ -1,45 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Branch;
-import model.EmployeePosition;
+import model.Constraint;
+import model.RestaurantOwner;
 
-/**
- *
- * @author USER
- */
 public class EditEmpPosServlet extends HttpServlet {
 
-    
     @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String target = "ToEmpPosServlet";
-        String positionName = request.getParameter("positionname");
-        int positionNo = Integer.parseInt(request.getParameter("positionno"));
         HttpSession hs = request.getSession();
-        EmployeePosition ep = new EmployeePosition();
-        ep.setPositionNo(positionNo);
-        ep.setPositionName(positionName);
-        ep.editEmpPosName();
+        RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
+        Integer empPosNo = Integer.parseInt(request.getParameter("empPosNo"));
+        Constraint.delConstraints(empPosNo);
+        String[] empTypes = request.getParameterValues("emptype");
+        String[] payTypes = request.getParameterValues("paytype");
+        String[] maxHour = request.getParameterValues("maxhour");
+        String[] minHour = request.getParameterValues("minhour");
+        String[] pay = request.getParameterValues("pay");
+        String proportion = request.getParameter("proportion");
+        System.out.println(proportion);
+        if (empTypes != null) {
+            boolean success = Constraint.addConstraints(empPosNo, empTypes, payTypes, maxHour, minHour, pay, proportion, ro.getBranchNo());
+        }
         response.sendRedirect(target);
     }
-
-    
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

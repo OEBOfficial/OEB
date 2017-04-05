@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.sql.Connection;
@@ -15,10 +10,6 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
-/**
- *
- * @author USER
- */
 public class Employee {
     private int empNo;
     private String empName;
@@ -26,11 +17,47 @@ public class Employee {
     private String telNo;
     private Double specPay;
     private int empTypeNo;
-    private int positionNo;
-    private int branchNo;
     private String empTypeName;
+    private int positionNo;
     private String positionName;
+    private int payTypeNo;
+    private String payTypeName;
+    private int branchNo;
+    private int constraintNo;
+    private Double pay;
     private Double SUMPAY;
+
+    public Double getPay() {
+        return pay;
+    }
+
+    public void setPay(Double pay) {
+        this.pay = pay;
+    }
+
+    public int getPayTypeNo() {
+        return payTypeNo;
+    }
+
+    public void setPayTypeNo(int payTypeNo) {
+        this.payTypeNo = payTypeNo;
+    }
+
+    public String getPayTypeName() {
+        return payTypeName;
+    }
+
+    public void setPayTypeName(String payTypeName) {
+        this.payTypeName = payTypeName;
+    }
+    
+    public int getConstraintNo() {
+        return constraintNo;
+    }
+
+    public void setConstraintNo(int constraintNo) {
+        this.constraintNo = constraintNo;
+    }
 
     public Double getSUMPAY() {
         return SUMPAY;
@@ -123,13 +150,15 @@ public class Employee {
     }
 
     
-    
+    // is used
     public static Employee getEmployee(int empNo){
         Employee e = null;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "SELECT * FROM Employee e JOIN EmployeePosition ep ON e.positionNo = ep.positionNo "
-                    + " JOIN EmploymentType et ON e.empTypeNo = et.empTypeNo "
+            String sql = "SELECT * FROM Employee e JOIN `Constraint` c ON e.constraintNo = c.constraintNo "
+                    + " JOIN EmployeePosition ep ON c.positionNo = ep.positionNo "
+                    + " JOIN PayType pt ON c.payTypeNo = pt.payTypeNo "
+                    + " JOIN EmploymentType et ON c.empTypeNo = et.empTypeNo "
                     + " WHERE e.empNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1,empNo);
@@ -144,6 +173,7 @@ public class Employee {
         return e;
     }
     
+    //is used
     public static JsonObject getEmployeeJson(int empNo){
         JsonObjectBuilder empBuilder = Json.createObjectBuilder();
         Employee e = getEmployee(empNo);
@@ -160,17 +190,23 @@ public class Employee {
                 .add("gender", e.getGender())
                 .add("specPay", ""+e.getSpecPay())
                 .add("telNo", e.getTelNo())
+                .add("payTypeNo",e.getPayTypeNo())
+                .add("payTypeName",e.getPayTypeName())
+                .add("pay",e.getPay())
                 .build();
         }
         return empJO;
     }
     
+    //is used
     public static List<Employee> getAllEmp(int branchNo){
         List<Employee> employees = null;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "SELECT * FROM Employee e JOIN EmployeePosition ep ON e.positionNo = ep.positionNo "
-                    + " JOIN EmploymentType et ON e.empTypeNo = et.empTypeNo "
+            String sql = "SELECT * FROM Employee e JOIN `Constraint` c ON e.constraintNo = c.constraintNo "
+                    + " JOIN EmployeePosition ep ON c.positionNo = ep.positionNo "
+                    + " JOIN PayType pt ON c.payTypeNo = pt.payTypeNo "
+                    + " JOIN EmploymentType et ON c.empTypeNo = et.empTypeNo "
                     + " WHERE e.branchNo = ? ORDER BY e.empName";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, branchNo);
@@ -188,12 +224,13 @@ public class Employee {
         return employees;
     }
     
+    //is used
     public boolean addEmp(){
         boolean success = false;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "INSERT INTO Employee(empName,gender,telNo,specPay,empTypeNO,positionNo,branchNo) "
-                    + " VALUES(?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO Employee(empName,gender,telNo,specPay,constraintNo,branchNo) "
+                    + " VALUES(?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, empName);
             ps.setString(2, gender);
@@ -203,9 +240,8 @@ public class Employee {
             }else{
                 ps.setObject(4, null);
             }
-            ps.setInt(5, empTypeNo);
-            ps.setInt(6, positionNo);
-            ps.setInt(7, branchNo);
+            ps.setInt(5, constraintNo);
+            ps.setInt(6, branchNo);
             int i = ps.executeUpdate();
             if(i > 0){
                 success = true;
@@ -221,7 +257,7 @@ public class Employee {
         boolean success = false;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "UPDATE Employee SET empName = ?,gender = ?,telNo = ?,specPay = ?,empTypeNo = ?,positionNo = ? WHERE empNo = ?";
+            String sql = "UPDATE Employee SET empName = ?,gender = ?,telNo = ?,specPay = ?,constraintNo= ? WHERE empNo = ? and branchNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, empName);
             ps.setString(2, gender);
@@ -231,9 +267,9 @@ public class Employee {
             }else{
                 ps.setObject(4, null);
             }
-            ps.setInt(5, empTypeNo);
-            ps.setInt(6, positionNo);
-            ps.setInt(7, empNo);
+            ps.setInt(5, constraintNo);
+            ps.setInt(6, empNo);
+            ps.setInt(7, branchNo);
             int i = ps.executeUpdate();
             if(i > 0){
                 success = true;
@@ -298,6 +334,7 @@ public class Employee {
         e.setPositionNo(rs.getInt("positionNo"));
         e.setBranchNo(rs.getInt("branchNo"));
         e.setGender(rs.getString("gender"));
+        e.setConstraintNo(rs.getInt("constraintNo"));
         if(rs.getObject("specPay") == null){
             e.setSpecPay(null);
         }else{
@@ -306,6 +343,9 @@ public class Employee {
         e.setTelNo(rs.getString("telNo"));
         e.setEmpTypeName(rs.getString("empTypeName"));
         e.setPositionName(rs.getString("positionName"));
+        e.setPayTypeNo(rs.getInt("payTypeNo"));
+        e.setPayTypeName(rs.getString("payTypeName"));
+        e.setPay(rs.getDouble("pay"));
     }
     
     

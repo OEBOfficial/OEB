@@ -67,7 +67,7 @@
                                                                         <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                                                                     </span>
                                                                     <input type="text" name="date" id="reservation" class="form-control datepicker" value="${daterange}" />
-                                                                    <button type="button" class="btn btn-default">
+                                                                    <button type="submit" class="btn btn-default">
                                                                         <span class="glyphicon glyphicon-search"></span> ค้นหา
                                                                     </button>
                                                                 </div>   
@@ -83,11 +83,12 @@
                                             <table id="datatable" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th class="table-rows">วัน/เดือน/ปี</th>
-                                                        <th class="table-rows">ชื่อ</th>
-                                                        <th class="table-rows">เวลาเข้างาน</th>
-                                                        <th class="table-rows">เวลาออกงาน</th>
-                                                        <th class="table-rows">ชั่วโมงงาน</th>
+                                                        <th class="table-rows" style="width:16.67%;">วัน/เดือน/ปี</th>
+                                                        <th class="table-rows" style="width:16.67%;">ชื่อ</th>
+                                                        <th class="table-rows" style="width:16.67%;">เวลาเข้างาน</th>
+                                                        <th class="table-rows" style="width:16.67%;">เวลาออกงาน</th>
+                                                        <th class="table-rows" style="width:16.67%;">ชั่วโมงงาน</th>
+                                                        <th class="table-rows" style="width:16.67%;">ค่าจ้างวันนี้</th>
 
                                                     </tr>
                                                 </thead>
@@ -110,6 +111,9 @@
                                                             <td>
                                                                 <fmt:formatNumber type="number" pattern="#0" value="${Math.floor(((wh.toTime - wh.fromTime)/60))}"/> ชั่วโมง
                                                                 <fmt:formatNumber type="number" pattern="#0" value="${Math.floor(((wh.toTime - wh.fromTime)%60))}"/> นาที
+                                                            </td>
+                                                            <td>
+                                                                <fmt:formatNumber type="number" pattern="##,###0.00" value="${wh.workingPay}"/> ฿
                                                             </td>
                                                         </tr>
                                                     </c:forEach>

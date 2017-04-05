@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.sql.Connection;
@@ -16,10 +11,6 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
-/**
- *
- * @author USER
- */
 public class EmployeePosition {
     private int positionNo;
     private String positionName;
@@ -82,6 +73,7 @@ public class EmployeePosition {
         return empJO;
     }
     
+    //is used
     public static List<EmployeePosition> getAllEmpPos(int branchNo){
         List<EmployeePosition> empPos = null;
         try{
@@ -103,6 +95,7 @@ public class EmployeePosition {
         return empPos;
     }
     
+    //is used
     public Integer addEmpPosName(){
         Integer posNo = null;
         try{

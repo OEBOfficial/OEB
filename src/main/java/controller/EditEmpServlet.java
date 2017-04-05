@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Constraint;
 import model.Employee;
 import model.RestaurantOwner;
 
@@ -27,24 +28,25 @@ public class EditEmpServlet extends HttpServlet {
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
         Employee e = new Employee();
         String empName = request.getParameter("empName");
-        String idCardNo = request.getParameter("idCardNo");
         String gender = request.getParameter("gender");
+        String telNo = request.getParameter("telNo");
+        int positionNo = Integer.parseInt(request.getParameter("empPos"));
         int empNo = Integer.parseInt(request.getParameter("empNo"));
         // Special Pay
         if(Integer.parseInt(request.getParameter("c-specPay")) == 2){
             double specPay = Double.parseDouble(request.getParameter("specPay"));
             e.setSpecPay(specPay);
         }
-        String telNo = request.getParameter("telNo");
-        int empTypeNo = Integer.parseInt(request.getParameter("empType"));
-        int positionNo = Integer.parseInt(request.getParameter("empPos"));
-        e.setEmpNo(empNo);
+        int empTypeNo = Integer.parseInt(request.getParameter("etype"));
+        int payTypeNo = Integer.parseInt(request.getParameter("empType"));
+        int constraintNo = Constraint.findConstraintNo(positionNo,empTypeNo,payTypeNo);
+        
+        e.setBranchNo(ro.getBranchNo());
+        e.setConstraintNo(constraintNo);
         e.setEmpName(empName);
-        e.setEmpTypeNo(empTypeNo);
-        e.setPositionNo(positionNo);
+        e.setEmpNo(empNo);
         e.setGender(gender);
         e.setTelNo(telNo);
-        e.setBranchNo(ro.getBranchNo());
         e.editEmp();
         response.sendRedirect(target);
         return;

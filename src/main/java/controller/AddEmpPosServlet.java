@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +24,6 @@ public class AddEmpPosServlet extends HttpServlet {
         ep.setPositionName(positionName);
         ep.setBranchNo(ro.getBranchNo());
         Integer empPosNo = ep.addEmpPosName();
-        System.out.println(empPosNo);
         if (empPosNo != null) {
             String[] empTypes = request.getParameterValues("emptype");
             String[] payTypes = request.getParameterValues("paytype");
@@ -34,16 +32,10 @@ public class AddEmpPosServlet extends HttpServlet {
             String[] pay = request.getParameterValues("pay");
             String proportion = request.getParameter("proportion");
             if (empTypes != null) {
-                boolean success = Constraint.addConstraints(empPosNo,empTypes,payTypes,maxHour,minHour,pay,proportion);
+                boolean success = Constraint.addConstraints(empPosNo,empTypes,payTypes,maxHour,minHour,pay,proportion,ro.getBranchNo());
             }
         }
-        //จะรู้ได้ยังไง ว่า empposno อะไร
 
         response.sendRedirect(target);
     }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 }
