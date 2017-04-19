@@ -37,7 +37,9 @@ public class AddEmpServlet extends HttpServlet {
         e.setEmpName(empName);
         e.setGender(gender);
         e.setTelNo(telNo);
-        e.setConstraintNo(constraintNo);
+        Constraint c = new Constraint();
+        c.setConstraintNo(constraintNo);
+        e.setConstraint(c);
         
         e.addEmp();
         response.sendRedirect(target);

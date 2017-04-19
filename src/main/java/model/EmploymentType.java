@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.sql.Connection;
@@ -12,14 +7,20 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- *
- * @author USER
- */
 public class EmploymentType {
     private int empTypeNo;
     private String empTypeName;
 
+    public EmploymentType() {
+    }
+
+    
+    
+    public EmploymentType(int empTypeNo, String empTypeName) {
+        this.empTypeNo = empTypeNo;
+        this.empTypeName = empTypeName;
+    }
+    
     public int getEmpTypeNo() {
         return empTypeNo;
     }
@@ -75,8 +76,15 @@ public class EmploymentType {
         return empTypes;
     }
     
-    private static void orm(ResultSet rs,EmploymentType et) throws SQLException{
+    public static void orm(ResultSet rs,EmploymentType et) throws SQLException{
         et.setEmpTypeName(rs.getString("empTypeName"));
         et.setEmpTypeNo(rs.getInt("empTypeNo"));
     }
+
+    @Override
+    public String toString() {
+        return "EmploymentType{" + "empTypeNo=" + empTypeNo + ", empTypeName=" + empTypeName + '}';
+    }
+    
+    
 }

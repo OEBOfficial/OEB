@@ -2,7 +2,7 @@
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            <a href="LogInServlet" class="site_title">
+            <a href="#" class="site_title">
                 <img src="images/OEB_LOGO.png" style="width:50px;margin-right:5px;" alt="...">
                 <span>Order Eat Bill</span>
             </a>
@@ -29,13 +29,13 @@
                         <ul class="nav child_menu">
                             <li><a id="empdata" href="${target=='empdata'?'javascript:void(0)':'ToEmpServlet'}">ข้อมูลพนักงาน</a></li>
                             <li><a id="emppos" href="${target=='emppos'?'javascript:void(0)':'ToEmpPosServlet'}">ตำแหน่งพนักงาน</a></li>
-                            <li><a id="workhist" href="${target=='workhist'?'javascript:void(0)':'ToWorkHistServlet'}">ประวัติการทำงาน</a></li>
+                            <li><a id="workhist" href="${target=='workhist'?'javascript:void(0)':'ToEmpWorkHistServlet'}">ประวัติการทำงาน</a></li>
                             <li><a id="emppaid" href="${target=='emppaid'?'javascript:void(0)':'ToEmpPaidServlet'}">จ่ายเงินพนักงาน</a></li>
                             <li><a id="empcheck" href="${target=='empcheck'?'javascript:void(0)':'ToEmpCheckServlet'}">เช็คชื่อพนักงาน</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a><i class="fa fa-edit"></i> E - Menu <span class="fa fa-chevron-down"></span></a>
+                        <a><i class="fa fa-cutlery"></i> E - Menu <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="media_gallery.html">เพิ่ม และ แก้ไข เมนู</a></li>
                         </ul>
@@ -63,7 +63,7 @@
             <a data-toggle="tooltip" data-placement="top" title="Settings">
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
             </a>
-            <a data-toggle="tooltip" data-placement="top" title="Logout" href="LogOutServlet">
+            <a data-toggle="tooltip" data-placement="top" title="Logout" href="LogoutServlet">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </a>
         </div>
@@ -93,7 +93,7 @@
                             </a>
                         </li>
                         <li><a href="javascript:;">Help</a></li>
-                        <li><a href="LogOutServlet"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                        <li><a href="LogoutServlet"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                     </ul>
                 </li>
             </ul>

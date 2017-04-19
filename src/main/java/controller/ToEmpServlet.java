@@ -18,18 +18,18 @@ public class ToEmpServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
         String target = "/WEB-INF/empindex.jsp";
         HttpSession hs = request.getSession();
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
-        List<Employee> employees = Employee.getAllEmp(ro.getBranchNo());
+        
+        List<Employee> employees = Employee.getEmpByBranch(ro.getBranchNo());
         List<EmployeePosition> empPos = EmployeePosition.getAllEmpPos(ro.getBranchNo());
         Map<String,String> constraintMap = Constraint.getMapConstraint(ro.getBranchNo());
+        
         request.setAttribute("employees", employees);
         request.setAttribute("empPos", empPos);
-        request.setAttribute("target","empdata");
         request.setAttribute("constraintMap",constraintMap);
+        request.setAttribute("target","empdata");
         
         getServletContext().getRequestDispatcher(target).forward(request, response);
     }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.IOException;
@@ -16,10 +11,7 @@ import javax.servlet.http.HttpSession;
 import model.Employee;
 import model.RestaurantOwner;
 
-/**
- *
- * @author USER
- */
+
 public class ToEmpPaidServlet extends HttpServlet {
 
     @Override
@@ -28,15 +20,9 @@ public class ToEmpPaidServlet extends HttpServlet {
         String target = "/WEB-INF/emppaid.jsp";
         HttpSession hs = request.getSession();
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
-        List<Employee> employees = Employee.getEmpPaid(ro.getBranchNo());
+        List<Employee> employees = Employee.getEmpByBranchWithSUMPAY(ro.getBranchNo()); // ผิดอยู่น้าาาาาาาาาาาาาา
         request.setAttribute("employees", employees);
         request.setAttribute("target", "emppaid");
         getServletContext().getRequestDispatcher(target).forward(request, response);
     }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

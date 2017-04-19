@@ -17,52 +17,32 @@ import javax.json.JsonObjectBuilder;
 public class Constraint {
 
     private int constraintNo;
-    private int empTypeNo;
-    private int positionNo;
     private double maxHoursPerDay;
     private double minHoursPerDay;
-    private int payTypeNo;
-    private String payTypeName;
     private double pay;
+    private EmployeePosition employeePosition;
+    private EmploymentType employmentType;
+    private PayType payType;
 
+    public Constraint() {
+    }
+    
+    public Constraint(int constraintNo, double maxHoursPerDay, double minHoursPerDay, double pay, EmployeePosition employeePosition, EmploymentType employmentType, PayType payType) {
+        this.constraintNo = constraintNo;
+        this.maxHoursPerDay = maxHoursPerDay;
+        this.minHoursPerDay = minHoursPerDay;
+        this.pay = pay;
+        this.employeePosition = employeePosition;
+        this.employmentType = employmentType;
+        this.payType = payType;
+    }
+    
     public int getConstraintNo() {
         return constraintNo;
     }
 
     public void setConstraintNo(int constraintNo) {
         this.constraintNo = constraintNo;
-    }
-    
-    public String getPayTypeName() {
-        return payTypeName;
-    }
-
-    public void setPayTypeName(String payTypeName) {
-        this.payTypeName = payTypeName;
-    }
-
-    public int getPayTypeNo() {
-        return payTypeNo;
-    }
-
-    public void setPayTypeNo(int payTypeNo) {
-        this.payTypeNo = payTypeNo;
-    }
-
-    public int getEmpTypeNo() {
-        return empTypeNo;
-    }
-
-    public void setEmpTypeNo(int empTypeNo) {
-        this.empTypeNo = empTypeNo;
-    }
-
-    public int getPositionNo() {
-        return positionNo;
-    }
-
-    public void setPositionNo(int positionNo) {
-        this.positionNo = positionNo;
     }
 
     public double getMaxHoursPerDay() {
@@ -81,6 +61,30 @@ public class Constraint {
         this.minHoursPerDay = minHoursPerDay;
     }
 
+    public EmployeePosition getEmployeePosition() {
+        return employeePosition;
+    }
+
+    public void setEmployeePosition(EmployeePosition employeePosition) {
+        this.employeePosition = employeePosition;
+    }
+
+    public EmploymentType getEmploymentType() {
+        return employmentType;
+    }
+
+    public void setEmploymentType(EmploymentType employmentType) {
+        this.employmentType = employmentType;
+    }
+
+    public PayType getPayType() {
+        return payType;
+    }
+
+    public void setPayType(PayType payType) {
+        this.payType = payType;
+    }
+
     public double getPay() {
         return pay;
     }
@@ -88,8 +92,7 @@ public class Constraint {
     public void setPay(double pay) {
         this.pay = pay;
     }
-
-    //is used
+    
     public static JsonArray getAllConJson(int positionNo) {
         JsonArrayBuilder JAB = Json.createArrayBuilder();
         JsonObjectBuilder JOB = Json.createObjectBuilder();
@@ -99,14 +102,16 @@ public class Constraint {
             JA = JAB.build();
             for (int i = 0; i < constraints.size(); i++) {
                 JsonObject jo = JOB
-                        .add("positionNo", constraints.get(i).getPositionNo())
-                        .add("empTypeNo", constraints.get(i).getEmpTypeNo())
+                        .add("constraintNo",constraints.get(i).getConstraintNo())
                         .add("maxHoursPerDay", constraints.get(i).getMaxHoursPerDay())
                         .add("minHoursPerDay", constraints.get(i).getMinHoursPerDay())
                         .add("pay", constraints.get(i).getPay())
-                        .add("payTypeNo", constraints.get(i).getPayTypeNo())
-                        .add("payTypeName", constraints.get(i).getPayTypeName())
-                        .add("constraintNo",constraints.get(i).getConstraintNo())
+                        .add("positionNo", constraints.get(i).getEmployeePosition().getPositionNo())
+                        .add("positionName", constraints.get(i).getEmployeePosition().getPositionName())
+                        .add("empTypeNo", constraints.get(i).getEmploymentType().getEmpTypeNo())
+                        .add("empTypeName", constraints.get(i).getEmploymentType().getEmpTypeName())
+                        .add("payTypeNo", constraints.get(i).getPayType().getPayTypeNo())
+                        .add("payTypeName", constraints.get(i).getPayType().getPayTypeName())
                         .build();
                 JAB.add(jo);
             }
@@ -115,7 +120,6 @@ public class Constraint {
         return JA;
     }
     
-    //is used
     public static boolean addConstraints(int positionNo, String[] empTypes, String[] payTypes, String[] maxHours, String[] minHours, String[] pay, String proportion,int branchNo) {
         try {
             Connection con = ConnectionBuilder.getConnection();
@@ -158,30 +162,7 @@ public class Constraint {
         }
         return true;
     }
-
-//    public boolean editConstraint() {
-//        boolean success = false;
-//        try {
-//            Connection con = ConnectionBuilder.getConnection();
-//            String sql = "UPDATE Constraint SET minHoursPerDay = ?,maxHoursPerDay = ?,pay = ? WHERE empTypeNo = ? AND positionNo = ?";
-//            PreparedStatement ps = con.prepareStatement(sql);
-//            ps.setDouble(1, minHoursPerDay);
-//            ps.setDouble(2, maxHoursPerDay);
-//            ps.setDouble(3, pay);
-//            ps.setInt(4, empTypeNo);
-//            ps.setInt(5, positionNo);
-//            int i = ps.executeUpdate();
-//            if (i > 0) {
-//                success = true;
-//            }
-//            con.close();
-//        } catch (SQLException ex) {
-//            System.out.println(ex);
-//        }
-//        return success;
-//    }
-
-    //is used
+    
     public static boolean delConstraints(int positionNo) {
         boolean success = false;
         try {
@@ -200,12 +181,15 @@ public class Constraint {
         return success;
     }
 
-    // is used
     public static List<Constraint> getAllConstraint(int positionNo) {
         List<Constraint> constraints = null;
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "SELECT * FROM `Constraint` c JOIN PayType pt ON c.payTypeNo = pt.payTypeNo WHERE positionNo = ? ORDER BY c.positionNo,c.empTypeNo,c.payTypeNo";
+            String sql = "SELECT * FROM `Constraint` c "
+                    + " JOIN EmployeePosition ep ON c.positionNo = ep.positionNo "
+                    + " JOIN EmploymentType et ON c.empTypeNo = et.empTypeNo "
+                    + " JOIN PayType pt ON c.payTypeNo = pt.payTypeNo "
+                    + " WHERE c.positionNo = ? ORDER BY c.positionNo,c.empTypeNo,c.payTypeNo";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, positionNo);
             ResultSet rs = ps.executeQuery();
@@ -213,7 +197,6 @@ public class Constraint {
             while (rs.next()) {
                 Constraint c = new Constraint();
                 orm(rs, c);
-                c.setPayTypeName(rs.getString("payTypeName"));
                 constraints.add(c);
             }
             con.close();
@@ -224,7 +207,6 @@ public class Constraint {
     }
     
     
-    //is used
     public static Integer findConstraintNo(int positionNo,int empTypeNo,int payTypeNo){
         Integer constraintNo = null;
         try{
@@ -251,6 +233,8 @@ public class Constraint {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT * FROM `Constraint` c "
                     + " JOIN EmploymentType et ON c.empTypeNo = et.empTypeNo "
+                    + " JOIN EmployeePosition ep ON c.positionNo = ep.positionNo "
+                    + " JOIN PayType pt ON c.payTypeNo = pt.payTypeNo "
                     + " WHERE c.positionNo = ? AND c.empTypeNo = ? AND c.payTypeNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, positionNo);
@@ -267,12 +251,15 @@ public class Constraint {
         return c;
     }
     
-    //is used
     private static List<Constraint> getConstraintByBranch(int branchNo){
         List<Constraint> constraints = null;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "SELECT * FROM `Constraint` c JOIN PayType p ON c.payTypeNo = p.payTypeNo WHERE positionNo IN (SELECT positionNo FROM EmployeePosition WHERE branchNo = ?)";
+            String sql = "SELECT * FROM `Constraint` c "
+                    + " JOIN EmployeePosition ep ON c.positionNo = ep.positionNo "
+                    + " JOIN EmploymentType et ON c.empTypeNo = et.empTypeNo "
+                    + " JOIN PayType p ON c.payTypeNo = p.payTypeNo "
+                    + " WHERE c.positionNo IN (SELECT positionNo FROM EmployeePosition WHERE branchNo = ?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1,branchNo);
             ResultSet rs = ps.executeQuery();
@@ -296,8 +283,8 @@ public class Constraint {
         if (constraints != null) {
             constraintMaps = new LinkedHashMap<String,String>();
             for (Constraint c : constraints) {
-                String key = c.getPositionNo() + "|" + c.getEmpTypeNo();
-                String value = c.getPayTypeNo()+"";
+                String key = c.getEmployeePosition().getPositionNo() + "|" + c.getEmploymentType().getEmpTypeNo();
+                String value = c.getPayType().getPayTypeNo()+"";
                 if(constraintMaps.get(key) == null){
                     constraintMaps.put(key, value);
                 }else{
@@ -309,18 +296,20 @@ public class Constraint {
         return constraintMaps;
     }
 
-    private static void orm(ResultSet rs, Constraint c) throws SQLException {
-        c.setEmpTypeNo(rs.getInt("empTypeNo"));
-        c.setMinHoursPerDay(rs.getDouble("minHoursPerDay"));
-        c.setMaxHoursPerDay(rs.getDouble("maxHoursPerDay"));
-        c.setPay(rs.getDouble("pay"));
-        c.setPositionNo(rs.getInt("positionNo"));
-        c.setPayTypeNo(rs.getInt("payTypeNo"));
-//        c.setPayTypeName(rs.getString("payTypeName"));
+    public static void orm(ResultSet rs, Constraint c) throws SQLException {
         c.setConstraintNo(rs.getInt("constraintNo"));
+        c.setMaxHoursPerDay(rs.getInt("maxHoursPerDay"));
+        c.setMinHoursPerDay(rs.getInt("minHoursPerDay"));
+        c.setPay(rs.getDouble("pay"));
+        c.setEmployeePosition(new EmployeePosition(rs.getInt("positionNo"),rs.getInt("branchNo"),rs.getString("positionName")));
+        c.setEmploymentType(new EmploymentType(rs.getInt("empTypeNo"),rs.getString("empTypeName")));
+        c.setPayType(new PayType(rs.getInt("payTypeNo"),rs.getString("payTypeName")));
+    }
+
+    @Override
+    public String toString() {
+        return "Constraint{" + "constraintNo=" + constraintNo + ", maxHoursPerDay=" + maxHoursPerDay + ", minHoursPerDay=" + minHoursPerDay + ", pay=" + pay + ", employeePosition=" + employeePosition + ", employmentType=" + employmentType + ", payType=" + payType + '}';
     }
     
-    public static void main(String[] args) {
-        System.out.println(getMapConstraint(1));
-    }
+    
 }

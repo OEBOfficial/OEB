@@ -18,16 +18,11 @@ public class ToEmpCheckServlet extends HttpServlet {
         String target = "/WEB-INF/empcheck.jsp";
         HttpSession hs = request.getSession();
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
-        int branchNo = ro.getBranchNo();
-        List<WorkingHistory> workhist = WorkingHistory.getAllWorkHistWithCheck(branchNo);
+        
+        List<WorkingHistory> workhist = WorkingHistory.getAllWorkHistWithCheck(ro.getBranchNo());
+        
         request.setAttribute("workhist", workhist);
         request.setAttribute("target", "empcheck");
         getServletContext().getRequestDispatcher(target).forward(request, response);
     }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page import="java.util.List"%>
 <%@page import="model.EmployeePosition" %>
 <%@page import="model.Employee" %>
@@ -68,25 +69,14 @@
                                             <c:forEach items="${employees}" var="e" varStatus="vs">
                                                 <tr id="tr${e.empNo}">
                                                     <td>${e.empName}</td>
-                                                    <td>${e.positionName}</td>
-                                                    <td>${e.empTypeName}</td>
-                                                    <td>${e.SUMPAY}</td>
+                                                    <td>${e.constraint.employeePosition.positionName}</td>
+                                                    <td>${e.constraint.employmentType.empTypeName} ราย${e.constraint.payType.payTypeName}</td>
+                                                    <td><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${e.SUMPAY}"/> ฿</td>
                                                     <td>
                                                         <button type="submit" class="btn btn-success" data-toggle="modal"  data-target="#paidDetail" onclick="setemppaid(${e.empNo})">รายละเอียด</button>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
-                                                <c:forEach items="${employees}" var="e" varStatus="vs">
-                                                    <tr id="tr${e.empNo}">
-                                                        <td>${e.empName}</td>
-                                                        <td>${e.positionName}</td>
-                                                        <td>${e.empTypeName}</td>
-                                                        <td>${e.SUMPAY}</td>
-                                                        <td>
-                                                            <button type="submit" class="btn btn-success" data-toggle="modal"  data-target="#paidDetail" onclick="setemppaid(${e.empNo})" >รายละเอียด</button>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>
@@ -102,7 +92,7 @@
                                         <div class="modal-header">
                                             <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">รายละเอียดเงินเดือนของ ${e.empName}</h4>
+                                            <h4 class="modal-title">รายละเอียดประวัติรายได้ของ <span id="empName"></span></h4>
                                         </div>
                                         <!-- ส่วนเนื้อหาของ Modal -->
                                         <div class="modal-body">
@@ -110,7 +100,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="table-rows">วันที่</th>
-                                                        <th class="table-rows">ชื่อ - นามสกุล</th>
+                                                        <th class="table-rows">ชั่วโมงงาน</th>
                                                         <th class="table-rows">ตำแหน่ง</th>
                                                         <th class="table-rows">ประเภทพนักงาน</th>
                                                         <th class="table-rows">จำนวนเงินที่ได้รับ</th>
@@ -118,44 +108,17 @@
 
                                                 </thead>
                                                 <tbody id=workhisttable>
-                                                <tr>
-                                                    <td class="body-rows"></td>
-                                                	<td class="body-rows"></td>
-                                                	<td class="body-rows">ควย</td>
-                                                	<td class="body-rows"></td>
-                                                	<td class="body-rows"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="body-rows-receive"></td>
-                                                	<td class="body-rows-receive"></td>
-                                                	<td class="body-rows-receive">ควย</td>
-                                                	<td class="body-rows-receive"></td>
-                                                	<td class="body-rows-receive"></td>
-                                                </tr>   
-                                                <tr>
-                                                	<td class="body-rows-lesshrs"></td>
-                                                	<td class="body-rows-lesshrs"></td>
-                                                	<td class="body-rows-lesshrs">ควย</td>
-                                                	<td class="body-rows-lesshrs"></td>
-                                                	<td class="body-rows-lesshrs"></td>
-                                                </tr>
-                                                    <tr>
-                                                        <td ></td>
-                                                        <td ></td>
-                                                        <td ></td>
-                                                        <td ></td>
-                                                        <td ></td>
-                                                    </tr>                                     
                                                 </tbody>	 
                                             </table>
                                         </div>
                                         <form>
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                                <div class="col-md-3">จำนวนเงินที่เบิกได้:  บาท</div>
+                                                <input type="hidden" id="empno">
+                                                <div class="col-md-3">จำนวนเงินที่เบิกได้ : <span id="sumpay"></span>  บาท</div>
                                                 <div class="col-md-4 col-md-offset-5">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="กรุณาใส่จำนวนเงิน..">
+                                                        <input type="number" id="input-withdraw" class="form-control" placeholder="กรุณาใส่จำนวนเงิน..">
                                                         <span class="input-group-btn">
                                                             <button class="btn btn-default" type="button" id="css-irow" name="paymoney">จ่ายเงิน</button>
                                                         </span>

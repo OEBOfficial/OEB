@@ -13,7 +13,7 @@
     </head>
     <body>
         <%
-            response.sendRedirect("LogInServlet");
+            response.sendRedirect("ToEmpServlet");
         %>
     </body>
 </html>

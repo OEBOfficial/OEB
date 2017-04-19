@@ -75,9 +75,9 @@
                                             <c:forEach items="${employees}" var="e" varStatus="vs">
                                                 <tr id="tr${e.empNo}">
                                                     <td>${e.empName}</td>
-                                                    <td>${e.positionName}</td>
-                                                    <td>${e.empTypeName}</td>
-                                                    <td><fmt:formatNumber value="${e.specPay!=null?e.specPay:e.pay}" pattern="#,###,###.##"/> บาท/${e.payTypeName} ${e.specPay!=null?'':'(ตามตำแหน่ง)'}</td>
+                                                    <td>${e.constraint.employeePosition.positionName}</td>
+                                                    <td>${e.constraint.employmentType.empTypeName}</td>
+                                                    <td><fmt:formatNumber value="${e.specPay!=null?e.specPay:e.constraint.pay}" pattern="#,###,###.##"/> บาท/${e.constraint.payType.payTypeName} ${e.specPay!=null?'':'(ตามตำแหน่ง)'}</td>
                                                     <td>
                                                         <a onclick="editEmp(${e.empNo})" href="javascript:void(0)" data-toggle="modal" data-target="#editEmpBtn"><i class="fa fa-edit"></i> </a> 
                                                         <a onclick="delEmp(${e.empNo}, '${e.empName}')" href="javascript:void(0)"><i class="fa fa-trash"></i></a>
@@ -280,7 +280,6 @@
                                                 </div>
                                             </div>
                                         </form>
-
                                     </div>
                                 </div>
                             </div>

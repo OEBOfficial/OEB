@@ -1,12 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>SessionFilter</filter-name>
+        <filter-class>filter.SessionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SessionFilter</filter-name>
+        <servlet-name>ToEmpServlet</servlet-name>
+        <servlet-name>ToEmpPosServlet</servlet-name>
+        <servlet-name>AddEmpServlet</servlet-name>
+        <servlet-name>EditEmpServlet</servlet-name>
+        <servlet-name>SetEmpAjaxServlet</servlet-name>
+        <servlet-name>AddEmpPosServlet</servlet-name>
+        <servlet-name>EditEmpPosServlet</servlet-name>
+        <servlet-name>AddConstraintServlet</servlet-name>
+        <servlet-name>DelEmpAjaxServlet</servlet-name>
+        <servlet-name>SetEmpPosAjaxServlet</servlet-name>
+        <servlet-name>DelEmpPosAjaxServlet</servlet-name>
+        <servlet-name>ForTestThaiLanguage</servlet-name>
+        <servlet-name>ToEmpWorkHistServlet</servlet-name>
+        <servlet-name>FilterWorkByDateServlet</servlet-name>
+        <servlet-name>ToEmpPaidServlet</servlet-name>
+        <servlet-name>SetEmpPaidServlet</servlet-name>
+        <servlet-name>ToEmpCheckServlet</servlet-name>
+        <servlet-name>ClockInAjaxServlet</servlet-name>
+        <servlet-name>ClockOutAjaxServlet</servlet-name>
+        <servlet-name>CheckEmpPosAjaxServlet</servlet-name>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
     <servlet>
-        <servlet-name>LogInServlet</servlet-name>
-        <servlet-class>controller.LogInServlet</servlet-class>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>controller.LoginServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LogOutServlet</servlet-name>
-        <servlet-class>controller.LogOutServlet</servlet-class>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>controller.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ToEmpServlet</servlet-name>
@@ -41,10 +70,6 @@
         <servlet-class>controller.AddConstraintServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>EditConstraintServlet</servlet-name>
-        <servlet-class>controller.EditConstraintServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>DelEmpAjaxServlet</servlet-name>
         <servlet-class>ajaxcontroller.DelEmpAjaxServlet</servlet-class>
     </servlet>
@@ -61,8 +86,8 @@
         <servlet-class>controller.ForTestThaiLanguage</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ToWorkHistServlet</servlet-name>
-        <servlet-class>controller.ToWorkHistServlet</servlet-class>
+        <servlet-name>ToEmpWorkHistServlet</servlet-name>
+        <servlet-class>controller.ToEmpWorkHistServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>FilterWorkByDateServlet</servlet-name>
@@ -92,13 +117,17 @@
         <servlet-name>CheckEmpPosAjaxServlet</servlet-name>
         <servlet-class>ajaxcontroller.CheckEmpPosAjaxServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PayEmpAjaxServlet</servlet-name>
+        <servlet-class>ajaxcontroller.PayEmpAjaxServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>LogInServlet</servlet-name>
-        <url-pattern>/LogInServlet</url-pattern>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LogOutServlet</servlet-name>
-        <url-pattern>/LogOutServlet</url-pattern>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ToEmpServlet</servlet-name>
@@ -133,10 +162,6 @@
         <url-pattern>/AddConstraintServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>EditConstraintServlet</servlet-name>
-        <url-pattern>/EditConstraintServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>DelEmpAjaxServlet</servlet-name>
         <url-pattern>/DelEmpAjaxServlet</url-pattern>
     </servlet-mapping>
@@ -149,8 +174,8 @@
         <url-pattern>/DelEmpPosAjaxServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ToWorkHistServlet</servlet-name>
-        <url-pattern>/ToWorkHistServlet</url-pattern>
+        <servlet-name>ToEmpWorkHistServlet</servlet-name>
+        <url-pattern>/ToEmpWorkHistServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FilterWorkByDateServlet</servlet-name>
@@ -179,6 +204,10 @@
     <servlet-mapping>
         <servlet-name>CheckEmpPosAjaxServlet</servlet-name>
         <url-pattern>/CheckEmpPosAjaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PayEmpAjaxServlet</servlet-name>
+        <url-pattern>/PayEmpAjaxServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

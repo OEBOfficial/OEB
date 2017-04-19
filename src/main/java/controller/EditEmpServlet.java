@@ -42,7 +42,9 @@ public class EditEmpServlet extends HttpServlet {
         int constraintNo = Constraint.findConstraintNo(positionNo,empTypeNo,payTypeNo);
         
         e.setBranchNo(ro.getBranchNo());
-        e.setConstraintNo(constraintNo);
+        Constraint c = new Constraint();
+        c.setConstraintNo(constraintNo);
+        e.setConstraint(c);
         e.setEmpName(empName);
         e.setEmpNo(empNo);
         e.setGender(gender);

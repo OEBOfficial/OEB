@@ -13,9 +13,18 @@ import javax.json.JsonObjectBuilder;
 
 public class EmployeePosition {
     private int positionNo;
-    private String positionName;
     private int branchNo;
+    private String positionName;
 
+    public EmployeePosition() {
+    }
+    
+    public EmployeePosition(int positionNo, int branchNo, String positionName) {
+        this.positionNo = positionNo;
+        this.branchNo = branchNo;
+        this.positionName = positionName;
+    }
+    
     public int getPositionNo() {
         return positionNo;
     }
@@ -155,9 +164,15 @@ public class EmployeePosition {
         return success;
     }
     
-    private static void orm(ResultSet rs,EmployeePosition ep) throws SQLException{
+    public static void orm(ResultSet rs,EmployeePosition ep) throws SQLException{
         ep.setBranchNo(rs.getInt("branchNo"));
         ep.setPositionNo(rs.getInt("positionNo"));
         ep.setPositionName(rs.getString("positionName"));
     }
+
+    @Override
+    public String toString() {
+        return "EmployeePosition{" + "positionNo=" + positionNo + ", branchNo=" + branchNo + ", positionName=" + positionName + '}';
+    }
+    
 }

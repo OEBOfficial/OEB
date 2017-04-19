@@ -11,15 +11,16 @@ import model.EmployeePosition;
 import model.RestaurantOwner;
 
 public class ToEmpPosServlet extends HttpServlet {
-    
+     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String target = "/WEB-INF/emppos.jsp";
         HttpSession hs = request.getSession();
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
-        int branchNo = ro.getBranchNo();
-        List<EmployeePosition> emppos = EmployeePosition.getAllEmpPos(branchNo);
+        
+        List<EmployeePosition> emppos = EmployeePosition.getAllEmpPos(ro.getBranchNo());
+        
         request.setAttribute("emppos", emppos);
         request.setAttribute("target", "emppos");
         getServletContext().getRequestDispatcher(target).forward(request, response);

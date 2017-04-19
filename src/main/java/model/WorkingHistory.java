@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.sql.Connection;
@@ -10,10 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import javax.json.Json;
@@ -22,24 +15,39 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
-/**
- *
- * @author USER
- */
 public class WorkingHistory {
 
     private int workNo;
     private int fromTime;
     private int toTime;
+    private int branchNo;
+    private int empNo;
+    private double workingPay;
     private Date fromDate;
     private Date toDate;
+    private double minHoursPerDay;
+    private double maxHoursPerDay;
     private String empTypeName;
     private String positionName;
-    private int workingPay;
-    private int empNo;
     private String empName;
-    private int branchNo;
+    private String payTypeName;
 
+    public double getMinHoursPerDay() {
+        return minHoursPerDay;
+    }
+
+    public void setMinHoursPerDay(double minHoursPerDay) {
+        this.minHoursPerDay = minHoursPerDay;
+    }
+
+    public double getMaxHoursPerDay() {
+        return maxHoursPerDay;
+    }
+
+    public void setMaxHoursPerDay(double maxHoursPerDay) {
+        this.maxHoursPerDay = maxHoursPerDay;
+    }
+    
     public String getEmpName() {
         return empName;
     }
@@ -104,11 +112,11 @@ public class WorkingHistory {
         this.positionName = positionName;
     }
 
-    public int getWorkingPay() {
+    public double getWorkingPay() {
         return workingPay;
     }
 
-    public void setWorkingPay(int workingPay) {
+    public void setWorkingPay(double workingPay) {
         this.workingPay = workingPay;
     }
 
@@ -128,13 +136,23 @@ public class WorkingHistory {
         this.branchNo = branchNo;
     }
 
+    public String getPayTypeName() {
+        return payTypeName;
+    }
+
+    public void setPayTypeName(String payTypeName) {
+        this.payTypeName = payTypeName;
+    }
+    
+    
+
     public static List<WorkingHistory> getAllWorkHist(int branchNo) {
         List<WorkingHistory> workhist = null;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT * FROM WorkingHistory wh "
                     + " JOIN Employee e ON e.empNo = wh.empNo "
-                    + " WHERE wh.branchNo = ? AND wh.toTime IS NOT NULL "
+                    + " WHERE wh.branchNo = ? AND wh.toTime IS NOT NULL AND empTypeName <> 'withdraw' "
                     + " ORDER BY wh.fromDate DESC,wh.toTime DESC";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, branchNo);
@@ -157,7 +175,7 @@ public class WorkingHistory {
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT * FROM Employee e "
-                    + " LEFT JOIN (SELECT * FROM WorkingHistory WHERE fromDate = ? OR (fromDate = ? AND toDate IS NULL)) as wh ON e.empNo = wh.empNo "
+                    + " LEFT JOIN (SELECT * FROM WorkingHistory WHERE (fromDate = ? OR (fromDate = ? AND toDate IS NULL)) AND empTypeName <> 'withdraw') as wh ON e.empNo = wh.empNo "
                     + " WHERE e.branchNo = ? "
                     + " GROUP BY e.empNo "
                     + " ORDER BY wh.fromDate DESC,wh.toTime DESC";
@@ -245,6 +263,9 @@ public class WorkingHistory {
                         .add("empNo", workHist.get(i).getEmpNo())
                         .add("empName", workHist.get(i).getEmpName())
                         .add("branchNo", workHist.get(i).getBranchNo())
+                        .add("maxHoursPerDay", workHist.get(i).getMaxHoursPerDay())
+                        .add("minHoursPerDay", workHist.get(i).getMinHoursPerDay())
+                        .add("payTypeName", workHist.get(i).getPayTypeName())
                         .build();
                 JAB.add(jo);
             }
@@ -255,17 +276,22 @@ public class WorkingHistory {
 
     public static void clockIn(int empNo) {
         try {
-            Employee e = Employee.getEmployee(empNo);
+            Employee e = Employee.getEmpByEmpNo(empNo);
             if (e != null) {
                 Connection con = ConnectionBuilder.getConnection();
-                String sql = "INSERT INTO WorkingHistory(fromTime,fromDate,empNo,branchNo) "
-                        + " VALUES(?,?,?,?)";
+                String sql = "INSERT INTO WorkingHistory(fromTime,fromDate,empNo,branchNo,minHoursPerDay,maxHoursPerDay,empTypeName,positionName,payTypeName) "
+                        + " VALUES(?,?,?,?,?,?,?,?,?)";
                 PreparedStatement ps = con.prepareStatement(sql);
                 Date now = new Date(System.currentTimeMillis());
                 ps.setInt(1, getIntTime(now));
                 ps.setDate(2, now);
                 ps.setInt(3, e.getEmpNo());
                 ps.setInt(4, e.getBranchNo());
+                ps.setDouble(5, e.getConstraint().getMinHoursPerDay());
+                ps.setDouble(6, e.getConstraint().getMaxHoursPerDay());
+                ps.setString(7, e.getConstraint().getEmploymentType().getEmpTypeName());
+                ps.setString(8, e.getConstraint().getEmployeePosition().getPositionName());
+                ps.setString(9, e.getConstraint().getPayType().getPayTypeName());
                 ps.executeUpdate();
             }
         } catch (SQLException ex) {
@@ -323,8 +349,8 @@ public class WorkingHistory {
     private double calWorkingPay() {
         //fromDate toDate fromTime toTime
         double workingPay = 0; //initial
-        Employee e = Employee.getEmployee(empNo);
-        Constraint c = Constraint.getConstraint(e.getPositionNo(), e.getEmpTypeNo(),e.getPayTypeNo());
+        Employee e = Employee.getEmpByEmpNo(empNo);
+        Constraint c = Constraint.getConstraint(e.getConstraint().getEmployeePosition().getPositionNo(), e.getConstraint().getEmploymentType().getEmpTypeNo(),e.getConstraint().getPayType().getPayTypeNo());
         double payPerTime = 0; //initial
         if (e.getSpecPay() != null) {
             payPerTime = e.getSpecPay();
@@ -333,7 +359,7 @@ public class WorkingHistory {
             payPerTime = c.getPay();
         }
         
-        if (e.getPayTypeName().indexOf("วัน") != -1) {
+        if (e.getConstraint().getPayType().getPayTypeName().indexOf("วัน") != -1) {
             workingPay = payPerTime;
             System.out.println("in day");
         } else{
@@ -373,18 +399,45 @@ public class WorkingHistory {
         }
         return intTime;
     }
+    
+    public static void payEmp(int empNo,double inputWithdraw,int branchNo){
+        try{
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "INSERT INTO WorkingHistory(fromTime,toTime,fromDate,toDate,workingPay,empNo,branchNo,minHoursPerDay,maxHoursPerDay,positionName,payTypeName,empTypeName) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            Date now = new Date(System.currentTimeMillis());
+            ps.setInt(1,getIntTime(now));
+            ps.setInt(2,getIntTime(now));
+            ps.setDate(3,now);
+            ps.setDate(4,now);
+            ps.setDouble(5,-inputWithdraw);
+            ps.setInt(6,empNo);
+            ps.setInt(7,branchNo);
+            ps.setDouble(8,0);
+            ps.setDouble(9,0);
+            ps.setString(10,"withdraw");
+            ps.setString(11,"withdraw");
+            ps.setString(12,"withdraw");
+            ps.executeUpdate();
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+    }
 
     private static void orm(ResultSet rs, WorkingHistory wh) throws SQLException {
         wh.setBranchNo(rs.getInt("workNo"));
         wh.setEmpName(rs.getString("empName"));
         wh.setEmpNo(rs.getInt("empNo"));
-//        wh.setEmpTypeName(rs.getString("empTypeName"));
+        wh.setEmpTypeName(rs.getString("empTypeName"));
         wh.setFromDate(rs.getDate("fromDate"));
         wh.setFromTime(rs.getInt("fromTime"));
-//        wh.setPositionName(rs.getString("positionName"));
+        wh.setPositionName(rs.getString("positionName"));
         wh.setToDate(rs.getDate("toDate"));
         wh.setToTime(rs.getInt("toTime"));
         wh.setWorkNo(rs.getInt("workNo"));
-        wh.setWorkingPay(rs.getInt("workingPay"));
+        wh.setWorkingPay(rs.getDouble("workingPay"));
+        wh.setMinHoursPerDay(rs.getDouble("minHoursPerDay"));
+        wh.setMaxHoursPerDay(rs.getDouble("maxHoursPerDay"));
+        wh.setPayTypeName(rs.getString("payTypeName"));
     }
 }

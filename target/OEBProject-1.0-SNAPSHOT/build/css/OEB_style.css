@@ -4,15 +4,15 @@
     vertical-align:middle;
 }
 
-.body-rows-receive, .body-rows, .body-rows-lesshrs{
+.body-rows-receive, .body-rows, .body-rows-lesshrs > td{
     border:1px solid #ddd;
 }
 
-.body-rows-receive {
+.body-rows-receive > td{
     background-color: #F0FFF0;
 }
 
-.body-rows-lesshrs{
+.body-rows-lesshrs > td{
     background-color: #FFDDDD;
 }
 

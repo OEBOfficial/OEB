@@ -10,7 +10,7 @@
 
     <body>
         <div class="login-form">
-            <form action="LogInServlet" method="POST">
+            <form action="LoginServlet" method="POST">
                 <div class="col-xs-2 col-xs-0ffset-2">     
                     <img class="logo" src="../images/OEB_LOGO.png" >
                 </div>
