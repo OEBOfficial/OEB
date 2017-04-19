@@ -121,10 +121,6 @@
         <servlet-name>PayEmpAjaxServlet</servlet-name>
         <servlet-class>ajaxcontroller.PayEmpAjaxServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>ToMenuTypeServlet</servlet-name>
-        <servlet-class>controller.ToMenuTypeServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -212,10 +208,6 @@
     <servlet-mapping>
         <servlet-name>PayEmpAjaxServlet</servlet-name>
         <url-pattern>/PayEmpAjaxServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ToMenuTypeServlet</servlet-name>
-        <url-pattern>/ToMenuTypeServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
