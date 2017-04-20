@@ -355,15 +355,12 @@ public class WorkingHistory {
         if (e.getSpecPay() != null) {
             payPerTime = e.getSpecPay();
         } else {
-            System.out.println("payPerTime : "+c.getPay());
             payPerTime = c.getPay();
         }
         
         if (e.getConstraint().getPayType().getPayTypeName().indexOf("วัน") != -1) {
             workingPay = payPerTime;
-            System.out.println("in day");
         } else{
-            System.out.println("in hour");
             long diff = toDate.getTime() - fromDate.getTime();
             long diffDay = diff / (24 * 60 * 60 * 1000);
             double calTime = 0; //initial
@@ -384,7 +381,6 @@ public class WorkingHistory {
             workingPay = calTime * payPerTime;
         }
         
-        System.out.println("workingPay : "+workingPay);
         return workingPay;
     }
 

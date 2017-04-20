@@ -25,7 +25,6 @@ public class EditEmpPosServlet extends HttpServlet {
         String[] minHour = request.getParameterValues("minhour");
         String[] pay = request.getParameterValues("pay");
         String proportion = request.getParameter("proportion");
-        System.out.println(proportion);
         if (empTypes != null) {
             boolean success = Constraint.addConstraints(empPosNo, empTypes, payTypes, maxHour, minHour, pay, proportion, ro.getBranchNo());
         }

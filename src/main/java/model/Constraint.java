@@ -155,7 +155,6 @@ public class Constraint {
             }
             ps.executeBatch();
             con.commit();
-            System.out.println("commit !!!");
             con.close();
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -278,7 +277,6 @@ public class Constraint {
     //is used
     public static Map<String, String> getMapConstraint(int branchNo) {
         List<Constraint> constraints = getConstraintByBranch(branchNo);
-        System.out.println(constraints);
         Map<String, String> constraintMaps = null;
         if (constraints != null) {
             constraintMaps = new LinkedHashMap<String,String>();

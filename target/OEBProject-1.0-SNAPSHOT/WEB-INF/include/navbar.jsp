@@ -35,9 +35,10 @@
                         </ul>
                     </li>
                     <li>
-                        <a><i class="fa fa-cutlery"></i> E - Menu <span class="fa fa-chevron-down"></span></a>
+                        <a><i class="fa fa-cutlery"></i> จัดการเมนูอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="media_gallery.html">เพิ่ม และ แก้ไข เมนู</a></li>
+                            <li><a id="menu" href="${target=='menu'?'javascript:void(0)':'ToMenuServlet'}">ข้อมูลเมนูอาหาร</a></li>
+                            <li><a id="menutype" href="${target=='menutype'?'javascript:void(0)':'ToMenuTypeServlet'}">ประเภทเมนูอาหาร</a></li>
                         </ul>
                     </li>
                     <li>
