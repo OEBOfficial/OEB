@@ -28,7 +28,6 @@ public class SetEmpPosAjaxServlet extends HttpServlet {
         JsonObject mainJO = EmployeePosition.getEmpPosJson(empPosNo);
         JsonArray constraintJA = Constraint.getAllConJson(empPosNo);
         mainJO = JOB.add("empPos", mainJO).add("constraints", constraintJA).build();
-        
         out.print(mainJO);
         out.flush();
         out.close();

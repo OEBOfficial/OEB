@@ -380,7 +380,6 @@ public class WorkingHistory {
             }
             workingPay = calTime * payPerTime;
         }
-        
         return workingPay;
     }
 

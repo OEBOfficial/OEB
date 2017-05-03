@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -22,15 +23,15 @@ public class ToEmpServlet extends HttpServlet {
         HttpSession hs = request.getSession();
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
         
-        List<Employee> employees = Employee.getEmpByBranch(ro.getBranchNo());
-        List<EmployeePosition> empPos = EmployeePosition.getAllEmpPos(ro.getBranchNo());
+        Map<Integer,Employee> employees = Employee.getEmpByBranch(ro.getBranchNo());
+        Map<Integer,EmployeePosition> empPos = EmployeePosition.getAllEmpPos(ro.getBranchNo());
         Map<String,String> constraintMap = Constraint.getMapConstraint(ro.getBranchNo());
         
         request.setAttribute("employees", employees);
         request.setAttribute("empPos", empPos);
         request.setAttribute("constraintMap",constraintMap);
         request.setAttribute("target","empdata");
-        
+        request.setAttribute("tester",2);
         getServletContext().getRequestDispatcher(target).forward(request, response);
     }
 }

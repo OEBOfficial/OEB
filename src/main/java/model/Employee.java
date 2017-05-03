@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -132,8 +134,8 @@ public class Employee {
         return empJO;
     }
 
-    public static List<Employee> getEmpByBranch(int branchNo) {
-        List<Employee> employees = null;
+    public static Map<Integer,Employee> getEmpByBranch(int branchNo) {
+        Map<Integer,Employee> employees = null;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT * FROM Employee e "
@@ -146,11 +148,11 @@ public class Employee {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, branchNo);
             ResultSet rs = ps.executeQuery();
-            employees = new LinkedList<Employee>();
+            employees = new LinkedHashMap<Integer,Employee>();
             while (rs.next()) {
                 Employee e = new Employee();
                 orm(rs, e);
-                employees.add(e);
+                employees.put(rs.getInt("empNo"), e);
             }
             con.close();
         } catch (SQLException ex) {

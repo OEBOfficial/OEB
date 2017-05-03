@@ -162,6 +162,48 @@ public class Constraint {
         return true;
     }
     
+    public static boolean editConstraints(int positionNo, String[] empTypes, String[] payTypes, String[] maxHours, String[] minHours, String[] pay, String proportion,int branchNo) {
+        try {
+            Connection con = ConnectionBuilder.getConnection();
+            con.setAutoCommit(false);
+            String sql = "UPDATE `Constraint` SET minHoursPerDay = ?,maxHoursPerDay = ?,pay = ? WHERE payTypeNo = ? AND branchNo = ? AND positionNo = ? AND empTypeNo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            int idx = 0;
+            int proportionIdx = 0;
+            for (String stEmpType : empTypes) {
+                int empTypeNo = Integer.parseInt(stEmpType);
+                int iPropotion = Integer.parseInt("" + proportion.charAt(proportionIdx));
+                int roundInWhile = 0;
+                while (idx < payTypes.length) {
+                    int payTypeNo = Integer.parseInt(payTypes[idx]);
+                    ps.setDouble(1, Double.parseDouble(minHours[idx]));
+                    ps.setDouble(2, Double.parseDouble(maxHours[idx]));
+                    ps.setDouble(3, Double.parseDouble(pay[idx]));
+                    ps.setInt(4, payTypeNo);
+                    ps.setInt(5, branchNo);
+                    ps.setInt(6, positionNo);
+                    ps.setInt(7, empTypeNo);
+                    ps.addBatch();
+                    idx++;
+                    roundInWhile++;
+                    if (idx >= payTypes.length || roundInWhile >= iPropotion) { // next emptype
+                        break;
+                    }
+                }
+                if (idx >= payTypes.length) {
+                    break;
+                }
+                proportionIdx++;
+            }
+            ps.executeBatch();
+            con.commit();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return true;
+    }
+    
     public static boolean delConstraints(int positionNo) {
         boolean success = false;
         try {

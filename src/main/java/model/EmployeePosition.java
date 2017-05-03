@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -83,19 +85,19 @@ public class EmployeePosition {
     }
     
     //is used
-    public static List<EmployeePosition> getAllEmpPos(int branchNo){
-        List<EmployeePosition> empPos = null;
+    public static Map<Integer,EmployeePosition> getAllEmpPos(int branchNo){
+        Map<Integer,EmployeePosition> empPos = null;
         try{
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT * FROM EmployeePosition WHERE branchNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1,branchNo);
             ResultSet rs = ps.executeQuery();
-            empPos = new LinkedList<EmployeePosition>();
+            empPos = new LinkedHashMap<Integer,EmployeePosition>();
             while(rs.next()){
                 EmployeePosition ep = new EmployeePosition();
                 orm(rs,ep);
-                empPos.add(ep);
+                empPos.put(rs.getInt("positionNo"),ep);
             }
             con.close();
         }catch(SQLException ex){

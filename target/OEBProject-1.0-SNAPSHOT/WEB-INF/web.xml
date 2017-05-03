@@ -26,6 +26,14 @@
         <servlet-name>ClockInAjaxServlet</servlet-name>
         <servlet-name>ClockOutAjaxServlet</servlet-name>
         <servlet-name>CheckEmpPosAjaxServlet</servlet-name>
+        <servlet-name>PayEmpAjaxServlet</servlet-name>
+        <servlet-name>ToMenuServlet</servlet-name>
+        <servlet-name>ToMenuTypeServlet</servlet-name>
+        <servlet-name>SetMenuSetAjaxServlet</servlet-name>
+        <servlet-name>AddMenuTypeServlet</servlet-name>
+        <servlet-name>DelMenuTypeAjaxServlet</servlet-name>
+        <servlet-name>SetMenuAjaxServlet</servlet-name>
+        <servlet-name>EditMenuTypeServlet</servlet-name>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
@@ -121,6 +129,38 @@
         <servlet-name>PayEmpAjaxServlet</servlet-name>
         <servlet-class>ajaxcontroller.PayEmpAjaxServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ToMenuServlet</servlet-name>
+        <servlet-class>controller.ToMenuServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ToMenuTypeServlet</servlet-name>
+        <servlet-class>controller.ToMenuTypeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SetMenuSetAjaxServlet</servlet-name>
+        <servlet-class>ajaxcontroller.SetMenuSetAjaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddMenuTypeServlet</servlet-name>
+        <servlet-class>controller.AddMenuTypeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DelMenuTypeAjaxServlet</servlet-name>
+        <servlet-class>ajaxcontroller.DelMenuTypeAjaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SetMenuAjaxServlet</servlet-name>
+        <servlet-class>ajaxcontroller.SetMenuAjaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditMenuTypeServlet</servlet-name>
+        <servlet-class>controller.EditMenuTypeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DelMenuSetAjaxServlet</servlet-name>
+        <servlet-class>ajaxcontroller.DelMenuSetAjaxServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -208,6 +248,38 @@
     <servlet-mapping>
         <servlet-name>PayEmpAjaxServlet</servlet-name>
         <url-pattern>/PayEmpAjaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToMenuServlet</servlet-name>
+        <url-pattern>/ToMenuServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToMenuTypeServlet</servlet-name>
+        <url-pattern>/ToMenuTypeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SetMenuSetAjaxServlet</servlet-name>
+        <url-pattern>/SetMenuSetAjaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddMenuTypeServlet</servlet-name>
+        <url-pattern>/AddMenuTypeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DelMenuTypeAjaxServlet</servlet-name>
+        <url-pattern>/DelMenuTypeAjaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SetMenuAjaxServlet</servlet-name>
+        <url-pattern>/SetMenuAjaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditMenuTypeServlet</servlet-name>
+        <url-pattern>/EditMenuTypeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DelMenuSetAjaxServlet</servlet-name>
+        <url-pattern>/DelMenuSetAjaxServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

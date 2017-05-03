@@ -73,14 +73,14 @@
                                         </thead>
                                         <tbody>
                                             <c:forEach items="${employees}" var="e" varStatus="vs">
-                                                <tr id="tr${e.empNo}">
-                                                    <td>${e.empName}</td>
-                                                    <td>${e.constraint.employeePosition.positionName}</td>
-                                                    <td>${e.constraint.employmentType.empTypeName}</td>
-                                                    <td><fmt:formatNumber value="${e.specPay!=null?e.specPay:e.constraint.pay}" pattern="#,###,###.##"/> บาท/${e.constraint.payType.payTypeName} ${e.specPay!=null?'':'(ตามตำแหน่ง)'}</td>
+                                                <tr id="tr${e.key}">
+                                                    <td>${e.value.empName}</td>
+                                                    <td>${e.value.constraint.employeePosition.positionName}</td>
+                                                    <td>${e.value.constraint.employmentType.empTypeName}</td>
+                                                    <td><fmt:formatNumber value="${e.value.specPay!=null?e.value.specPay:e.value.constraint.pay}" pattern="#,###,###.##"/> บาท/${e.value.constraint.payType.payTypeName} ${e.value.specPay!=null?'':'(ตามตำแหน่ง)'}</td>
                                                     <td>
-                                                        <a onclick="editEmp(${e.empNo})" href="javascript:void(0)" data-toggle="modal" data-target="#editEmpBtn"><i class="fa fa-edit"></i> </a> 
-                                                        <a onclick="delEmp(${e.empNo}, '${e.empName}')" href="javascript:void(0)"><i class="fa fa-trash"></i></a>
+                                                        <a onclick="test(35)" href="javascript:void(0)" data-toggle="modal" data-target="#editEmpBtn"><i class="fa fa-edit"></i> </a> 
+                                                        <a onclick="delEmp(${e.value.empNo}, '${e.value.empName}')" href="javascript:void(0)"><i class="fa fa-trash"></i></a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -130,7 +130,7 @@
                                                     <select id="addEmpPos" name="empPos" class="form-control" required>
                                                         <option value="">---เลือกตำแหน่ง---</option>
                                                         <c:forEach items="${empPos}" var="ep">
-                                                            <option value="${ep.positionNo}">${ep.positionName}</option>
+                                                            <option value="${ep.value.positionNo}">${ep.value.positionName}</option>
                                                         </c:forEach>
                                                     </select>
                                                 </div>
@@ -228,7 +228,7 @@
                                                     <select name="empPos" class="form-control" id="empPos" required>
                                                         <option value="">---เลือกตำแหน่ง---</option>
                                                         <c:forEach items="${empPos}" var="ep">
-                                                            <option value="${ep.positionNo}">${ep.positionName}</option>
+                                                            <option value="${ep.value.positionNo}">${ep.value.positionName}</option>
                                                         </c:forEach>
                                                     </select>
                                                 </div>
@@ -336,6 +336,10 @@
             
             payTypeConstraint[key] = value;
         </c:forEach>
+            
+        function test(oh){
+            alert(${employees[(oh).intValue()]});
+        }
     </script>
 </body>
 </html>

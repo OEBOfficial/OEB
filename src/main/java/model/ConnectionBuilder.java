@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 public class ConnectionBuilder {
     public static Connection getConnection(){
         Connection con = null;
-        String url = "jdbc:mysql://iambighead.com:3306/OEB?characterEncoding=UTF-8";
+        String url = "jdbc:mysql://iambighead.com:3306/OEB?characterEncoding=UTF-8&autoReconnect=true&useSSL=false";
         String username = "OrderEatBill";
         String password = "OEBProject2017";
         try{
@@ -19,4 +19,7 @@ public class ConnectionBuilder {
         return con;
     }
    
+    public static void main(String[] args) {
+        System.out.println(ConnectionBuilder.getConnection());
+    }
 }

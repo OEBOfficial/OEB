@@ -18,7 +18,6 @@ public class EditEmpPosServlet extends HttpServlet {
         HttpSession hs = request.getSession();
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
         Integer empPosNo = Integer.parseInt(request.getParameter("empPosNo"));
-        Constraint.delConstraints(empPosNo);
         String[] empTypes = request.getParameterValues("emptype");
         String[] payTypes = request.getParameterValues("paytype");
         String[] maxHour = request.getParameterValues("maxhour");
@@ -26,7 +25,7 @@ public class EditEmpPosServlet extends HttpServlet {
         String[] pay = request.getParameterValues("pay");
         String proportion = request.getParameter("proportion");
         if (empTypes != null) {
-            boolean success = Constraint.addConstraints(empPosNo, empTypes, payTypes, maxHour, minHour, pay, proportion, ro.getBranchNo());
+            boolean success = Constraint.editConstraints(empPosNo, empTypes, payTypes, maxHour, minHour, pay, proportion, ro.getBranchNo());
         }
         response.sendRedirect(target);
     }

@@ -35,24 +35,18 @@
                         </ul>
                     </li>
                     <li>
-                        <a><i class="fa fa-cutlery"></i> จัดการเมนูอาหาร <span class="fa fa-chevron-down"></span></a>
+                        <a id="menutab"><i class="fa fa-cutlery"></i> จัดการเมนูอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a id="menu" href="${target=='menu'?'javascript:void(0)':'ToMenuServlet'}">ข้อมูลเมนูอาหาร</a></li>
                             <li><a id="menutype" href="${target=='menutype'?'javascript:void(0)':'ToMenuTypeServlet'}">ประเภทเมนูอาหาร</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a><i class="fa fa-spoon"></i> Table Layout <span class="fa fa-chevron-down"></span></a>
+                        <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="general_elements.html">จัดการ Layout ของร้าน</a></li>
-                            <li><a href="widgets.html">Widgets</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a><i class="fa fa-tag"></i> E - Promotion <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="tables.html">Tables</a></li>
-                            <li><a href="tables_dynamic.html">Table Dynamic</a></li>
+                            <li><a href="${target=='material'?'javascript:void(0)':'ToMaterial'}">ข้อมูลวัตถุดิบ</a></li>
+                            <li><a href="${target=='materialType'?'javascript:void(0)':'ToMaterialType'}">ประเภทวัตถุดิบ</a></li>
+                            <li><a href="${target=='materialStock'?'javascript:void(0)':'ToMaterialStock'}">สต็อกวัตถุดิบ</a></li>
                         </ul>
                     </li>
                 </ul>

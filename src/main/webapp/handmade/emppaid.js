@@ -49,7 +49,7 @@ $("#css-irow").click(function () {
     empno = $("#empno").val();
     if (inputwd === '') {
         alert('กรุณาใส่เงินที่ต้องการเบิกก่อน');
-    } else if(inputwd < sumpay && inputwd > 0){
+    } else if(inputwd <= sumpay && inputwd > 0){
         swal({
             title: "คุณต้องการเบิกเงินให้ "+$("#empName").text()+" ?",
             text: "จำนวนเงิน " + inputwd + " ฿ จากที่เบิกได้ " + sumpay +" ฿",
