@@ -37,7 +37,8 @@
                     <li>
                         <a id="menutab"><i class="fa fa-cutlery"></i> จัดการเมนูอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a id="menu" href="${target=='menu'?'javascript:void(0)':'ToMenuServlet'}">ข้อมูลเมนูอาหาร</a></li>
+                            <li><a id="menu" href="${target=='menu'?'javascript:void(0)':'ToMenuServlet'}">เมนูอาหารแบบเดี่ยว</a></li>
+                            <li><a id="menuset" href="${target=='menuset'?'javascript:void(0)':'ToMenuSetServlet'}">เมนูอาหารแบบชุด</a></li>
                             <li><a id="menutype" href="${target=='menutype'?'javascript:void(0)':'ToMenuTypeServlet'}">ประเภทเมนูอาหาร</a></li>
                         </ul>
                     </li>

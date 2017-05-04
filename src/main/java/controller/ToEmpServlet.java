@@ -31,7 +31,6 @@ public class ToEmpServlet extends HttpServlet {
         request.setAttribute("empPos", empPos);
         request.setAttribute("constraintMap",constraintMap);
         request.setAttribute("target","empdata");
-        request.setAttribute("tester",2);
         getServletContext().getRequestDispatcher(target).forward(request, response);
     }
 }

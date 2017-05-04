@@ -126,6 +126,7 @@ public class MenuSet {
                 if (rs.getInt("isOfficialMenuSet") == 0) {  // Menu of this branch only
                     sql = "DELETE MenuSet WHERE menuSetNo = ?";
                     ps = con.prepareStatement(sql);
+                    ps.setInt(1,menuSetNo);
                     ps.executeUpdate();
                 } else {
                     sql = "DELETE FROM Branch_MenuSet WHERE menuSetNo = ? AND branchNo = ?";  // Delete Branch_MenuSet

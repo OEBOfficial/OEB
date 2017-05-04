@@ -10,6 +10,7 @@ C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\controller\AddEmpServ
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\filter\SessionFilter.java
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\model\Restaurant.java
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\controller\ToEmpWorkHistServlet.java
+C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\ajaxcontroller\DelMenuAjaxServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\controller\ToEmpPosServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\model\ConnectionBuilder.java
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\model\MenuSet.java
@@ -22,9 +23,12 @@ C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\controller\AddMenuTyp
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\model\RestaurantOwner.java
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\ajaxcontroller\SetEmpPaidServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\model\Branch.java
+C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\ajaxcontroller\SetMenuAjaxServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\ajaxcontroller\SetEmpPosAjaxServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\controller\ToMenuServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\model\WorkingHistory.java
+C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\ajaxcontroller\DelMenuSetAjaxServlet.java
+C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\controller\EditMenuTypeServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\model\Address.java
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\controller\FilterWorkByDateServlet.java
 C:\Users\USER\Documents\NetBeansProjects\OEB\src\main\java\controller\ToEmpCheckServlet.java

@@ -19,7 +19,7 @@ public class Menu {
     private String menuNameTH;
     private String menuNameEN;
     private String menuDesc;
-    private double menuPrice;
+    private Double menuPrice;
     private int isOfficialMenu;
     private boolean isThisBranchMenu;
     private int branchNo;
@@ -72,11 +72,11 @@ public class Menu {
         this.menuDesc = menuDesc;
     }
 
-    public double getMenuPrice() {
+    public Double getMenuPrice() {
         return menuPrice;
     }
 
-    public void setMenuPrice(double menuPrice) {
+    public void setMenuPrice(Double menuPrice) {
         this.menuPrice = menuPrice;
     }
 
@@ -201,15 +201,43 @@ public class Menu {
         return JA;
     }
 
-    public static void delMenu(int menuNo) {
+    public static void delMenu(int menuNo,int branchNo) {
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "DELETE FROM Menu WHERE menuNo = ?";
+            String sql = "SELECT * FROM Menu WHERE menuNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, menuNo);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                if (rs.getInt("isOfficialMenu") == 0) {  // Menu of this branch only
+                    sql = "DELETE FROM Menu WHERE menuNo = ?";
+                    ps = con.prepareStatement(sql);
+                    ps.setInt(1,menuNo);
+                    ps.executeUpdate();
+                } else {
+                    sql = "DELETE FROM Branch_Menu WHERE menuNo = ? AND branchNo = ?";  // Delete Branch_Menu
+                    ps = con.prepareStatement(sql);
+                    ps.setInt(1, menuNo);
+                    ps.setInt(2, branchNo);
+                    int success = ps.executeUpdate();
+                    if (success == 1) {
+                        sql = "SELECT * FROM Branch_Menu WHERE menuNo = ?"; // check if menu is in other branch
+                        ps = con.prepareStatement(sql);
+                        ps.setInt(1, menuNo);
+                        rs = ps.executeQuery();
+                        if (rs.next()) {
+                            sql = "UPDATE Menu SET branchNo = ? WHERE menuNo = ?";
+                            ps = con.prepareStatement(sql);
+                            ps.setInt(1, rs.getInt("branchNo"));
+                            ps.setInt(2, menuNo);
+                            ps.executeUpdate();
+                        }
+                    }
+                }
+            }
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
         }
     }
 

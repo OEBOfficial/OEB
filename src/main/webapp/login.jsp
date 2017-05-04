@@ -5,14 +5,14 @@
         <meta charset="UTF-8">
         <title>ลงชื่อเข้าใช้</title>
         <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
-        <link rel="stylesheet" href="../build/css/loginstyle.css">
+        <link rel="stylesheet" href="build/css/loginstyle.css">
     </head>
 
     <body>
         <div class="login-form">
             <form action="LoginServlet" method="POST">
                 <div class="col-xs-2 col-xs-0ffset-2">     
-                    <img class="logo" src="../images/OEB_LOGO.png" >
+                    <img class="logo" src="images/OEB_LOGO.png" >
                 </div>
 
                 <div class="form-group ">

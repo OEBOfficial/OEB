@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ public class ToEmpPosServlet extends HttpServlet {
         HttpSession hs = request.getSession();
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
         
-        List<EmployeePosition> emppos = EmployeePosition.getAllEmpPos(ro.getBranchNo());
+        Map<Integer,EmployeePosition> emppos = EmployeePosition.getAllEmpPos(ro.getBranchNo());
         
         request.setAttribute("emppos", emppos);
         request.setAttribute("target", "emppos");

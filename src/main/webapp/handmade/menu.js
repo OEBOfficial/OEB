@@ -4,24 +4,7 @@ $(document).ready(function () {
     $("#menu").parent().addClass('active');
     $("#thisbranchmenu").DataTable();
     $("#otherbranchmenu").DataTable();
-    $("#thisbranchmenuset").DataTable();
-    $("#otherbranchmenuset").DataTable();
 });
-
-function getMenuByMenuSet(menuSetNo) {
-    $.ajax({
-        type: "POST",
-        url: "SetMenuSetAjaxServlet",
-        dataType: "json",
-        data: "menuSetNo=" + encodeURIComponent(menuSetNo),
-        success: function (json) {
-            for (i = 0; i < json.menuset.length; i++) {
-                var ms = json.menuset[i];
-                alert('menuNo : ' + ms.menuNo);
-            }
-        }
-    });
-}
 
 function getMenu(menuNo) {
     $.ajax({
@@ -35,22 +18,7 @@ function getMenu(menuNo) {
     });
 }
 
-function getMenuByMenuSetForEdit(menuSetNo) {
-    $.ajax({
-        type: "POST",
-        url: "SetMenuSetAjaxServlet",
-        dataType: "json",
-        data: "menuSetNo=" + encodeURIComponent(menuSetNo),
-        success: function (json) {
-            for (i = 0; i < json.menuset.length; i++) {
-                var ms = json.menuset[i];
-                alert('menuNo : ' + ms.menuNo);
-            }
-        }
-    });
-}
-
-function delMenuSet(menuSetNo) {
+function delMenu(menuNo) {
     swal({
         title: "คุณต้องการลบใช่หรือไม่ ?",
         type: "warning",
@@ -63,12 +31,12 @@ function delMenuSet(menuSetNo) {
             function () {
                 $.ajax({
                     type: "POST",
-                    url: "DelMenuSetAjaxServlet",
+                    url: "DelMenuAjaxServlet",
                     dataType: "text",
-                    data: "menuSetNo=" + encodeURIComponent(menuSetNo),
+                    data: "menuNo=" + encodeURIComponent(menuNo),
                     success: function (result) {
-                        swal("เรียบร้อย", "เซตอาหารถูกลบออกเรียบร้อยแล้ว", "success");
-                        $("#thisbranchmenuset").DataTable().row("#trthis" + menuSetNo).remove().draw();
+                        swal("เรียบร้อย", "เมนูอาหารถูกลบออกเรียบร้อยแล้ว", "success");
+                        $("#thisbranchmenu").DataTable().row("#trthis" + menuNo).remove().draw();
                     }
                 });
             });

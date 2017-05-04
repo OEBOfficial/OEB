@@ -20,9 +20,7 @@ public class ToMenuServlet extends HttpServlet {
         HttpSession hs = request.getSession();
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
         List<Menu> menus = Menu.getAllMenu(ro.getBranchNo());
-        List<MenuSet> menuSets = MenuSet.getAllMenuSet(ro.getBranchNo());
         List<MenuType> menuTypes = MenuType.getAllMenuType(ro.getBranchNo());
-        request.setAttribute("menusets",menuSets);
         request.setAttribute("menus",menus);
         request.setAttribute("menuTypes",menuTypes);
         request.setAttribute("target","menu");
