@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MenuSet {
 
@@ -113,6 +115,59 @@ public class MenuSet {
             System.out.println(e);
         }
         return menuSet;
+    }
+    
+    public Integer addMenuSet(Map<Integer,Integer> menuNo,int isAvailable,double price){
+        Integer menuSetNo = null;
+        try{
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "INSERT INTO MenuSet(menuSetNameTH,menuSetNameEN,menuSetDesc,menuSetPrice,menuSetPicPath,isOfficialMenuSet,branchNo) "
+                    + " VALUES(?,?,?,?,?,?,?)";
+            PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1,menuSetNameTH);
+            ps.setString(2,menuSetNameEN);
+            ps.setString(3,menuSetDesc);
+            ps.setDouble(4,menuSetPrice);
+            ps.setString(5,menuSetPicPath);
+            ps.setInt(6,isOfficialMenuSet);
+            ps.setInt(7,branchNo);
+            int success = ps.executeUpdate();
+            if(success == 1){
+                ResultSet rs = ps.executeQuery();
+                rs.next();
+                menuSetNo = rs.getInt(1);
+                for(Map.Entry<Integer,Integer> entry : menuNo.entrySet()){
+                    sql = "INSERT INTO Menu_MenuSet(menuSetNo,menuNo,amount) VALUES(?,?,?)";
+                    ps = con.prepareStatement(sql);
+                    ps.setInt(1,menuSetNo);
+                    ps.setInt(2,entry.getKey()); // menuNo
+                    ps.setInt(3,entry.getValue()); // amount
+                    ps.addBatch();
+                }
+                success = ps.executeUpdate();
+                if(success > 0){
+                    addMenuSetToBranch(menuSetNo,branchNo,isAvailable,price);
+                }
+            }
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        return menuSetNo;
+    }
+    
+    public static void addMenuSetToBranch(int menuSetNo,int branchNo,int isAvailable,double price){
+        try{
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "INSERT INTO Branch_Menu(branchNo,menuSetNo,isAvailable,price) VALUES(?,?,?,?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,branchNo);
+            ps.setInt(2,menuSetNo);
+            ps.setInt(3,isAvailable);
+            ps.setDouble(4,price);
+            ps.executeUpdate();
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
     }
 
     public static void delMenuSet(int menuSetNo, int branchNo) {

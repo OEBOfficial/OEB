@@ -27,27 +27,28 @@
                     <li>
                         <a id="emptab"><i class="fa fa-user"></i> จัดการพนักงาน <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a id="empdata" href="${target=='empdata'?'javascript:void(0)':'ToEmpServlet'}">ข้อมูลพนักงาน</a></li>
-                            <li><a id="emppos" href="${target=='emppos'?'javascript:void(0)':'ToEmpPosServlet'}">ตำแหน่งพนักงาน</a></li>
-                            <li><a id="workhist" href="${target=='workhist'?'javascript:void(0)':'ToEmpWorkHistServlet'}">ประวัติการทำงาน</a></li>
-                            <li><a id="emppaid" href="${target=='emppaid'?'javascript:void(0)':'ToEmpPaidServlet'}">จ่ายเงินพนักงาน</a></li>
-                            <li><a id="empcheck" href="${target=='empcheck'?'javascript:void(0)':'ToEmpCheckServlet'}">เช็คชื่อพนักงาน</a></li>
+                            <li><a id="empdata" href="ToEmpServlet">ข้อมูลพนักงาน</a></li>
+                            <li><a id="emppos" href="ToEmpPosServlet">ตำแหน่งพนักงาน</a></li>
+                            <li><a id="workhist" href="ToEmpWorkHistServlet">ประวัติการทำงาน</a></li>
+                            <li><a id="emppaid" href="ToEmpPaidServlet">จ่ายเงินพนักงาน</a></li>
+                            <li><a id="empcheck" href="ToEmpCheckServlet">เช็คชื่อพนักงาน</a></li>
                         </ul>
                     </li>
                     <li>
                         <a id="menutab"><i class="fa fa-cutlery"></i> จัดการเมนูอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a id="menu" href="${target=='menu'?'javascript:void(0)':'ToMenuServlet'}">เมนูอาหารแบบเดี่ยว</a></li>
-                            <li><a id="menuset" href="${target=='menuset'?'javascript:void(0)':'ToMenuSetServlet'}">เมนูอาหารแบบชุด</a></li>
-                            <li><a id="menutype" href="${target=='menutype'?'javascript:void(0)':'ToMenuTypeServlet'}">ประเภทเมนูอาหาร</a></li>
+                            <li><a id="menu" href="ToMenuServlet">เมนูอาหารแบบเดี่ยว</a></li>
+                            <li><a id="menuset" href="ToMenuSetServlet">เมนูอาหารแบบชุด</a></li>
+                            <li><a id="menutype" href="ToMenuTypeServlet">ประเภทเมนูอาหาร</a></li>
+                            <li><a id="menucust" href="ToMenuCustServlet">ปรับแต่งเมนูอาหาร</a></li>
                         </ul>
                     </li>
                     <li>
                         <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="${target=='material'?'javascript:void(0)':'ToMaterial'}">ข้อมูลวัตถุดิบ</a></li>
-                            <li><a href="${target=='materialType'?'javascript:void(0)':'ToMaterialType'}">ประเภทวัตถุดิบ</a></li>
-                            <li><a href="${target=='materialStock'?'javascript:void(0)':'ToMaterialStock'}">สต็อกวัตถุดิบ</a></li>
+                            <li><a href="ToMaterial">ข้อมูลวัตถุดิบ</a></li>
+                            <li><a href="ToMaterialType">ประเภทวัตถุดิบ</a></li>
+                            <li><a href="ToMaterialStock">สต็อกวัตถุดิบ</a></li>
                         </ul>
                     </li>
                 </ul>
