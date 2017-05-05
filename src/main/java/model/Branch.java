@@ -1,9 +1,7 @@
+//check code I
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class Branch {
     private int branchNo;
@@ -61,45 +59,7 @@ public class Branch {
         this.branchDesc = branchDesc;
     }
     
-    public static Branch getBranch(int branchNo){
-        Branch b = null;
-        try{
-            Connection con = ConnectionBuilder.getConnection();
-            String sql = "SELECT * FROM Branch WHERE branchNo = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1,branchNo);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                b = new Branch();
-                orm(rs,b);
-            }
-            con.close();
-        }catch(SQLException ex){
-            System.out.println(ex);
-        }
-        return b;
-    }
-    
-    public static Branch getBranchByOwner(int restOwnerNo){
-        Branch b = null;
-        try{
-            Connection con = ConnectionBuilder.getConnection();
-            String sql = "SELECT * FROM Branch WHERE restOwnerNo = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1,restOwnerNo);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                b = new Branch();
-                orm(rs,b);
-            }
-            con.close();
-        }catch(SQLException ex){
-            System.out.println(ex);
-        }
-        return b;
-    }
-    
-    private static void orm(ResultSet rs,Branch b) throws SQLException{
+    private static void orm(ResultSet rs,Branch b) throws Exception{
         b.setBranchDesc(rs.getString("branchDesc"));
         b.setBranchName(rs.getString("branchName"));
         b.setBranchNo(rs.getInt("branchNo"));
@@ -108,5 +68,3 @@ public class Branch {
         b.setAddressNo(rs.getInt("addressNo"));
     }
 }
-
-//check code 1

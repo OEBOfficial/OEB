@@ -1,10 +1,11 @@
+//check code I
 package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+
+import java.util.LinkedList;
 import java.util.List;
 
 public class Material {
@@ -43,32 +44,37 @@ public class Material {
             String sql = "SELECT * FROM Material";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            mats = new ArrayList<Material>();
+            mats = new LinkedList<Material>();
             while(rs.next()){
                 Material m = new Material();
                 orm(rs,m);
                 mats.add(m);
             }
+            con.close();
         } catch (Exception ex) {
             System.out.println(ex);
         }
         return mats;
     }
     
-    public void addMaterialType(){
+    public boolean addMaterialType(){
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "INSERT INTO Material(matName,matTypeNo) VALUES(?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1,matName);
             ps.setInt(2,matTypeNo);
-            ps.executeUpdate();
+            success = ps.executeUpdate() > 0;
+            con.close();
         } catch (Exception ex) {
             System.out.println(ex);
         }
+        return success;
     }
     
-    public void editMaterialType(){
+    public boolean editMaterialType(){
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "UPDATE Material SET matName = ?, matTypeNo = ? WHERE matNo = ?";
@@ -76,25 +82,30 @@ public class Material {
             ps.setString(1,matName);
             ps.setInt(2,matTypeNo);
             ps.setInt(3,matNo);
-            ps.executeUpdate();
+            success = ps.executeUpdate() > 0;
+            con.close();
         } catch (Exception ex) {
             System.out.println(ex);
         }
+        return success;
     }
     
-    public void delMaterialType(int matNo){
+    public boolean delMaterialType(int matNo){
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "DELETE FROM Material WHERE matNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1,matNo);
-            ps.executeUpdate();
+            success = ps.executeUpdate() > 0;
+            con.close();
         } catch (Exception ex) {
             System.out.println(ex);
         }
+        return success;
     }
     
-    private static void orm(ResultSet rs,Material m) throws SQLException{
+    private static void orm(ResultSet rs,Material m) throws Exception{
         m.setMatName(rs.getString("matName"));
         m.setMatNo(rs.getInt("matNo"));
         m.setMatTypeNo(rs.getInt("matTypeNo"));

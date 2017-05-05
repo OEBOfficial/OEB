@@ -1,11 +1,12 @@
+//check code I
 package model;
 
 import com.mysql.cj.api.jdbc.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+
+import java.util.LinkedList;
 import java.util.List;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -88,8 +89,8 @@ public class Menu {
         this.isOfficialMenu = isOfficialMenu;
     }
 
-    public static ArrayList<Menu> getAllMenu(int branchNo) {
-        ArrayList<Menu> menus = null;
+    public static LinkedList<Menu> getAllMenu(int branchNo) {
+        LinkedList<Menu> menus = null;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT *,bm.branchNo AS bm_branchNo FROM Menu m "
@@ -97,7 +98,7 @@ public class Menu {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, branchNo);
             ResultSet rs = ps.executeQuery();
-            menus = new ArrayList<Menu>();
+            menus = new LinkedList<Menu>();
             while (rs.next()) {
                 Menu m = new Menu();
                 orm(rs, m);
@@ -106,6 +107,7 @@ public class Menu {
                 }
                 menus.add(m);
             }
+            con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -124,6 +126,7 @@ public class Menu {
                 m = new Menu();
                 orm(rs, m);
             }
+            con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -150,7 +153,7 @@ public class Menu {
     }
 
     public static List<Menu> getMenuByMenuSet(int menuSetNo, int branchNo) {
-        ArrayList<Menu> menus = null;
+        LinkedList<Menu> menus = null;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT *,bm.branchNo AS bm_branchNo FROM Menu m "
@@ -161,7 +164,7 @@ public class Menu {
             ps.setInt(1, branchNo);
             ps.setInt(2, menuSetNo);
             ResultSet rs = ps.executeQuery();
-            menus = new ArrayList<Menu>();
+            menus = new LinkedList<Menu>();
             while (rs.next()) {
                 Menu m = new Menu();
                 orm(rs, m);
@@ -170,6 +173,7 @@ public class Menu {
                 }
                 menus.add(m);
             }
+            con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -201,9 +205,11 @@ public class Menu {
         return JA;
     }
 
-    public static void delMenu(int menuNo,int branchNo) {
+    public static boolean delMenu(int menuNo,int branchNo) {
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
+            con.setAutoCommit(false);
             String sql = "SELECT * FROM Menu WHERE menuNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, menuNo);
@@ -219,8 +225,8 @@ public class Menu {
                     ps = con.prepareStatement(sql);
                     ps.setInt(1, menuNo);
                     ps.setInt(2, branchNo);
-                    int success = ps.executeUpdate();
-                    if (success == 1) {
+                    int successInSQL = ps.executeUpdate();
+                    if (successInSQL == 1) {
                         sql = "SELECT * FROM Branch_Menu WHERE menuNo = ?"; // check if menu is in other branch
                         ps = con.prepareStatement(sql);
                         ps.setInt(1, menuNo);
@@ -235,15 +241,20 @@ public class Menu {
                     }
                 }
             }
+            con.commit();
             con.close();
-        } catch (SQLException ex) {
+            success = true;
+        } catch (Exception ex) {
             System.out.println(ex);
         }
+        return success;
     }
 
-    public void addMenu(int isOfficialMenu) {
+    public boolean addMenu(int isOfficialMenu) {
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
+            con.setAutoCommit(false);
             String sql = "INSERT INTO Menu(menuNameTH,menuNameEN,menuDesc,menuPrice,isOfficialMenu,branchNo) "
                     + "VALUES(?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
@@ -253,19 +264,25 @@ public class Menu {
             ps.setDouble(4, menuPrice);
             ps.setInt(5, isOfficialMenu);
             ps.setInt(6,branchNo);
-            int success = ps.executeUpdate();
-            if(success == 1){
+            int successInSQL = ps.executeUpdate();
+            if(successInSQL == 1){
                 ResultSet rs = ps.executeQuery();
                 rs.next();
                 int menuNo = rs.getInt(1);
-                addMenuIntoBranch(menuNo,branchNo,0,null);
+                success = addMenuIntoBranch(menuNo,branchNo,0,null);
             }
+            if(success){
+                con.commit();
+            }
+            con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
+        return success;
     }
     
-    public static void addMenuIntoBranch(int menuNo,int branchNo,int isAvailable,Double price){
+    public static boolean addMenuIntoBranch(int menuNo,int branchNo,int isAvailable,Double price){
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "INSERT INTO Branch_Menu(menuNo,branchNo,isAvailable,price) "
@@ -279,13 +296,16 @@ public class Menu {
             }else{
                 ps.setDouble(4, price);
             }
-            ps.executeUpdate();
+            success = ps.executeUpdate() > 0;
+            con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
+        return success;
     }
 
-    public void editMenu(int menuNo) {
+    public boolean editMenu(int menuNo) {
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "UPDATE Menu SET menuNameTH = ?,menuNameEN = ?,menuDesc = ?,"
@@ -297,13 +317,15 @@ public class Menu {
             ps.setDouble(4, menuPrice);
             ps.setInt(5, isOfficialMenu);
             ps.setInt(6, menuNo);
-            ps.executeUpdate();
+            success = ps.executeUpdate() > 0;
+            con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
+        return success;
     }
 
-    private static void orm(ResultSet rs, Menu m) throws SQLException {
+    private static void orm(ResultSet rs, Menu m) throws Exception {
         m.setMenuNo(rs.getInt("menuNo"));
         m.setMenuNameTH(rs.getString("menuNameTH"));
         m.setMenuNameEN(rs.getString("menuNameEN"));

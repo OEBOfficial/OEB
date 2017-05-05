@@ -1,7 +1,8 @@
+//check code I
 package model;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 
 public class PayType {
     private int payTypeNo;
@@ -31,7 +32,7 @@ public class PayType {
         this.payTypeName = payTypeName;
     }
     
-    public static void orm(ResultSet rs, PayType pt) throws SQLException{
+    public static void orm(ResultSet rs, PayType pt) throws Exception{
         pt.setPayTypeNo(rs.getInt("payTypeNo"));
         pt.setPayTypeName(rs.getString("payTypeName"));
     }

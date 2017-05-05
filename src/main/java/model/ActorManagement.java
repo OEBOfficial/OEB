@@ -1,3 +1,4 @@
+//check code I
 package model;
 
 import javax.servlet.http.Cookie;
@@ -48,5 +49,3 @@ public class ActorManagement {
         return value;
     }
 }
-
-//check code 1

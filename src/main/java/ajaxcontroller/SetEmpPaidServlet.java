@@ -1,3 +1,4 @@
+//check code I
 package ajaxcontroller;
 
 import java.io.IOException;
@@ -23,10 +24,4 @@ public class SetEmpPaidServlet extends HttpServlet {
         out.flush();
         out.close();
     }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

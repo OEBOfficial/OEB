@@ -1,9 +1,9 @@
+//check code I
 package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class Address {
     private int addressNo;
@@ -83,13 +83,13 @@ public class Address {
                 orm(rs,a);
             }
             con.close();
-        }catch(SQLException ex){
+        }catch(Exception ex){
             System.out.println(ex);
         }
         return a;
     }
     
-    private static void orm(ResultSet rs,Address a) throws SQLException{
+    private static void orm(ResultSet rs,Address a) throws Exception{
         a.setAddressName(rs.getString("addressName"));
         a.setAddressNo(rs.getInt("addressNo"));
         a.setDistrict(rs.getString("district"));
@@ -99,5 +99,3 @@ public class Address {
         a.setZip(rs.getString("zip"));
     }
 }
-
-//check code 1

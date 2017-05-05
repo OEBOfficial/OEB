@@ -1,3 +1,4 @@
+//check code I
 package ajaxcontroller;
 
 import java.io.IOException;
@@ -14,8 +15,6 @@ import model.Constraint;
 import model.EmployeePosition;
 
 public class SetEmpPosAjaxServlet extends HttpServlet {
-
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

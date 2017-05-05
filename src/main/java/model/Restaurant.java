@@ -1,19 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//check code I
 package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
-/**
- *
- * @author USER
- */
 public class Restaurant {
     private int restNo;
     private String restName;
@@ -47,13 +38,13 @@ public class Restaurant {
                 orm(rs,r);
             }
             con.close();
-        }catch(SQLException ex){
+        }catch(Exception ex){
             System.out.println(ex);
         }
         return r;
     }
     
-    private static void orm(ResultSet rs,Restaurant r) throws SQLException{
+    private static void orm(ResultSet rs,Restaurant r) throws Exception{
         r.setRestName(rs.getString("restName"));
         r.setRestNo(rs.getInt("restNo"));
     }

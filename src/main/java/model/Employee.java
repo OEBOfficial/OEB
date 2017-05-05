@@ -1,13 +1,12 @@
+//check code I
 package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.LinkedHashMap;
+
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -104,7 +103,8 @@ public class Employee {
                 e = new Employee();
                 orm(rs, e);
             }
-        } catch (SQLException ex) {
+            con.close();
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return e;
@@ -134,8 +134,8 @@ public class Employee {
         return empJO;
     }
 
-    public static Map<Integer,Employee> getEmpByBranch(int branchNo) {
-        Map<Integer,Employee> employees = null;
+    public static List<Employee> getEmpByBranch(int branchNo) {
+        List<Employee> employees = null;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT * FROM Employee e "
@@ -148,14 +148,14 @@ public class Employee {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, branchNo);
             ResultSet rs = ps.executeQuery();
-            employees = new LinkedHashMap<Integer,Employee>();
+            employees = new LinkedList<Employee>();
             while (rs.next()) {
                 Employee e = new Employee();
                 orm(rs, e);
-                employees.put(rs.getInt("empNo"), e);
+                employees.add(e);
             }
             con.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return employees;
@@ -185,7 +185,7 @@ public class Employee {
                 employees.add(e);
             }
             con.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return employees;
@@ -213,7 +213,7 @@ public class Employee {
                 success = true;
             }
             con.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return success;
@@ -241,7 +241,7 @@ public class Employee {
                 success = true;
             }
             con.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return success;
@@ -259,13 +259,13 @@ public class Employee {
                 success = true;
             }
             con.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return success;
     }
 
-    private static void orm(ResultSet rs, Employee e) throws SQLException {
+    private static void orm(ResultSet rs, Employee e) throws Exception {
         e.setEmpNo(rs.getInt("empNo"));
         e.setBranchNo(rs.getInt("branchNo"));
         if (rs.getObject("specPay") != null) {
@@ -289,5 +289,4 @@ public class Employee {
     public String toString() {
         return "Employee{" + "empNo=" + empNo + ", branchNo=" + branchNo + ", specPay=" + specPay + ", SUMPAY=" + SUMPAY + ", empName=" + empName + ", gender=" + gender + ", telNo=" + telNo + ", constraint=" + constraint + '}';
     }
-
 }

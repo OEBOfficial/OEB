@@ -1,6 +1,8 @@
+//check code I
 package ajaxcontroller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,8 @@ public class PayEmpAjaxServlet extends HttpServlet {
         int empNo = Integer.parseInt(request.getParameter("empno"));
         HttpSession hs = request.getSession();
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
-        WorkingHistory.payEmp(empNo,inputwd,ro.getBranchNo());
+        boolean success = WorkingHistory.payEmp(empNo,inputwd,ro.getBranchNo());
+        PrintWriter out = response.getWriter();
+        out.print(success);
     }
 }

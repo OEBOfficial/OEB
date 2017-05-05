@@ -1,6 +1,8 @@
+//check code I
 package ajaxcontroller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,8 @@ public class DelMenuSetAjaxServlet extends HttpServlet {
         HttpSession hs = request.getSession();
         RestaurantOwner ro = (RestaurantOwner) hs.getAttribute("restowner");
         int menuSetNo = Integer.parseInt(request.getParameter("menuSetNo"));
-        MenuSet.delMenuSet(menuSetNo,ro.getBranchNo());
+        boolean success = MenuSet.delMenuSet(menuSetNo,ro.getBranchNo());
+        PrintWriter out = response.getWriter();
+        out.print(success);
     }
 }

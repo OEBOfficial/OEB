@@ -1,13 +1,12 @@
+//check code I
 package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.sql.Statement;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -64,7 +63,7 @@ public class EmployeePosition {
                 orm(rs,ep);
             }
             con.close();
-        }catch(SQLException ex){
+        }catch(Exception ex){
             System.out.println(ex);
         }
         return ep;
@@ -84,7 +83,6 @@ public class EmployeePosition {
         return empJO;
     }
     
-    //is used
     public static Map<Integer,EmployeePosition> getAllEmpPos(int branchNo){
         Map<Integer,EmployeePosition> empPos = null;
         try{
@@ -100,13 +98,12 @@ public class EmployeePosition {
                 empPos.put(rs.getInt("positionNo"),ep);
             }
             con.close();
-        }catch(SQLException ex){
+        }catch(Exception ex){
             System.out.println(ex);
         }
         return empPos;
     }
     
-    //is used
     public Integer addEmpPosName(){
         Integer posNo = null;
         try{
@@ -123,7 +120,7 @@ public class EmployeePosition {
                 posNo = rs.getInt(1);
             }
             con.close();
-        }catch(SQLException ex){
+        }catch(Exception ex){
             System.out.println(ex);
         }
         return posNo;
@@ -142,7 +139,7 @@ public class EmployeePosition {
                 success = true;
             }
             con.close();
-        }catch(SQLException ex){
+        }catch(Exception ex){
             System.out.println(ex);
         }
         return success;
@@ -165,13 +162,13 @@ public class EmployeePosition {
                 success = true;
             }
             con.close();
-        }catch(SQLException ex){
+        }catch(Exception ex){
             System.out.println(ex);
         }
         return success;
     }
     
-    public static void orm(ResultSet rs,EmployeePosition ep) throws SQLException{
+    public static void orm(ResultSet rs,EmployeePosition ep) throws Exception{
         ep.setBranchNo(rs.getInt("branchNo"));
         ep.setPositionNo(rs.getInt("positionNo"));
         ep.setPositionName(rs.getString("positionName"));

@@ -1,11 +1,12 @@
+//check code I
 package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class MenuType {
     private int menuTypeNo;
@@ -27,8 +28,8 @@ public class MenuType {
         this.menuTypeName = menuTypeName;
     }
     
-    public static ArrayList<MenuType> getAllMenuType(int branchNo){
-        ArrayList<MenuType> mt = null;
+    public static LinkedList<MenuType> getAllMenuType(int branchNo){
+        LinkedList<MenuType> mt = null;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT * FROM MenuType mt "
@@ -37,38 +38,47 @@ public class MenuType {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1,branchNo);
             ResultSet rs = ps.executeQuery();
-            mt = new ArrayList<MenuType>();
+            mt = new LinkedList<MenuType>();
             while(rs.next()){
                 MenuType m = new MenuType();
                 orm(rs, m);
                 mt.add(m);
             }
+            con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
         return mt;
     }
     
-    public void addMenuType(int branchNo){
+    public boolean addMenuType(int branchNo){
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
+            con.setAutoCommit(false);
             String sql = "INSERT INTO MenuType(menuTypeName) "
                     + "VALUES(?)";
             PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, menuTypeName);
-            int success = ps.executeUpdate();
-            if(success == 1){
+            boolean successInSQL = ps.executeUpdate() == 1;
+            if(successInSQL){
                 ResultSet rs = ps.getGeneratedKeys();
                 rs.next();
                 menuTypeNo = rs.getInt(1);
-                addMenuTypeIntoBranch(menuTypeNo,branchNo);
+                success = addMenuTypeIntoBranch(menuTypeNo,branchNo);
             }
+            if(success){
+                con.commit();
+            }
+            con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
+        return success;
     }
     
-    public static void addMenuTypeIntoBranch(int menuTypeNo,int branchNo){
+    public static boolean addMenuTypeIntoBranch(int menuTypeNo,int branchNo){
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "INSERT INTO Branch_MenuType(menuTypeNo,branchNo) "
@@ -76,53 +86,63 @@ public class MenuType {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, menuTypeNo);
             ps.setInt(2, branchNo);
-            int success = ps.executeUpdate();
+            success = ps.executeUpdate() > 0;
+            con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
+        return success;
     }
     
-    public void editMenuType(int menuTypeNo){
+    public boolean editMenuType(int menuTypeNo){
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "UPDATE MenuType SET menuTypeName = ? WHERE menuTypeNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, menuTypeName);
             ps.setInt(2, menuTypeNo);
-            ps.executeUpdate();
+            success = ps.executeUpdate() > 0;
+            con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
+        return success;
     }
     
-    public static void delMenuType(int menuTypeNo){
+    public static boolean delMenuType(int menuTypeNo){
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "DELETE FROM MenuType WHERE menuTypeNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, menuTypeNo);
-            ps.executeUpdate();
+            success = ps.executeUpdate() > 0;
+            con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
+        return success;
     }
     
-    public static void editMenuType(int menuTypeNo,String menuTypeName){
+    public static boolean editMenuType(int menuTypeNo,String menuTypeName){
+        boolean success = false;
         try{
             Connection con = ConnectionBuilder.getConnection();
             String sql = "UPDATE MenuType SET menuTypeName = ? WHERE menuTypeNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1,menuTypeName);
             ps.setInt(2,menuTypeNo);
-            int success = ps.executeUpdate();
-        }catch(SQLException ex){
+            success = ps.executeUpdate() > 0;
+            con.close();
+        }catch(Exception ex){
             System.out.println(ex);
         }
+        return success;
     }
     
-    private static void orm(ResultSet rs, MenuType m) throws SQLException {
+    private static void orm(ResultSet rs, MenuType m) throws Exception {
         m.setMenuTypeNo(rs.getInt("menuTypeNo"));
         m.setMenuTypeName(rs.getString("menuTypeName"));
     }
-        
 }

@@ -1,3 +1,4 @@
+//check code I
 package ajaxcontroller;
 
 import java.io.IOException;
@@ -14,7 +15,8 @@ public class DelEmpAjaxServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int empNo = Integer.parseInt(request.getParameter("empno"));
-        Employee.delEmp(empNo);
-        // set for something change
+        boolean success = Employee.delEmp(empNo);
+        PrintWriter out = response.getWriter();
+        out.print(success);
     }
 }

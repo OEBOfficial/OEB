@@ -1,19 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//check code I
 package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
-/**
- *
- * @author USER
- */
+
 public class RestaurantOwner {
     private int restOwnerNo;
     private String restUserName;
@@ -65,7 +57,7 @@ public class RestaurantOwner {
                 orm(rs,ro);
             }
             con.close();
-        }catch(SQLException ex){
+        }catch(Exception ex){
             System.out.println(ex);
         }
         return ro;
@@ -88,16 +80,10 @@ public class RestaurantOwner {
                 }
             }
             con.close();
-        }catch(SQLException ex){
+        }catch(Exception ex){
             System.out.println(ex);
         }        
         return ro;
-    }
-    
-    private static void orm(ResultSet rs,RestaurantOwner ro) throws SQLException, SQLException, SQLException, SQLException, SQLException {
-        ro.setRestOwnerNo(rs.getInt("restOwnerNo"));
-        ro.setRestUserName(rs.getString("restUserName"));
-        ro.setBranchNo(rs.getInt("branchNo"));
     }
     
     public static RestaurantOwner signInForCookie(String cookieVal){
@@ -115,9 +101,15 @@ public class RestaurantOwner {
                 orm(rs,ro);
             }
             con.close();
-        }catch(SQLException ex){
+        }catch(Exception ex){
             System.out.println(ex);
         }
         return ro;
+    }
+    
+    private static void orm(ResultSet rs,RestaurantOwner ro) throws Exception, Exception, Exception, Exception, Exception {
+        ro.setRestOwnerNo(rs.getInt("restOwnerNo"));
+        ro.setRestUserName(rs.getString("restUserName"));
+        ro.setBranchNo(rs.getInt("branchNo"));
     }
 }

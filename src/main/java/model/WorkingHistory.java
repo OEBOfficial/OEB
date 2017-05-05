@@ -1,10 +1,11 @@
+//check code I
 package model;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
@@ -144,8 +145,6 @@ public class WorkingHistory {
         this.payTypeName = payTypeName;
     }
     
-    
-
     public static List<WorkingHistory> getAllWorkHist(int branchNo) {
         List<WorkingHistory> workhist = null;
         try {
@@ -163,13 +162,13 @@ public class WorkingHistory {
                 orm(rs, wh);
                 workhist.add(wh);
             }
-        } catch (SQLException ex) {
+            con.close();
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return workhist;
     }
 
-    // is used
     public static List<WorkingHistory> getAllWorkHistWithCheck(int branchNo) {
         List<WorkingHistory> workhist = null;
         try {
@@ -190,7 +189,8 @@ public class WorkingHistory {
                 orm(rs, wh);
                 workhist.add(wh);
             }
-        } catch (SQLException ex) {
+            con.close();
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return workhist;
@@ -214,7 +214,8 @@ public class WorkingHistory {
                 orm(rs, wh);
                 workhist.add(wh);
             }
-        } catch (SQLException ex) {
+            con.close();
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return workhist;
@@ -237,7 +238,8 @@ public class WorkingHistory {
                 orm(rs, wh);
                 workHist.add(wh);
             }
-        } catch (SQLException ex) {
+            con.close();
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return workHist;
@@ -274,7 +276,8 @@ public class WorkingHistory {
         return JA;
     }
 
-    public static void clockIn(int empNo) {
+    public static boolean clockIn(int empNo) {
+        boolean success = false;
         try {
             Employee e = Employee.getEmpByEmpNo(empNo);
             if (e != null) {
@@ -292,11 +295,13 @@ public class WorkingHistory {
                 ps.setString(7, e.getConstraint().getEmploymentType().getEmpTypeName());
                 ps.setString(8, e.getConstraint().getEmployeePosition().getPositionName());
                 ps.setString(9, e.getConstraint().getPayType().getPayTypeName());
-                ps.executeUpdate();
+                success = ps.executeUpdate() == 1;
+                con.close();
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println(ex);
         }
+        return success;
     }
 
     public static WorkingHistory getWorkHist(int workNo) {
@@ -319,13 +324,15 @@ public class WorkingHistory {
                 wh.setEmpTypeName(rs.getString("empTypeName"));
                 wh.setPositionName(rs.getString("positionName"));
             }
-        } catch (SQLException ex) {
+            con.close();
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return wh;
     }
 
-    public static void clockOut(int workNo,int empNo) {
+    public static boolean clockOut(int workNo,int empNo) {
+        boolean success = false;
         try {
             WorkingHistory wh = getWorkHist(workNo);
             Connection con = ConnectionBuilder.getConnection();
@@ -340,10 +347,12 @@ public class WorkingHistory {
             wh.setEmpNo(empNo);
             ps.setDouble(3, wh.calWorkingPay());
             ps.setInt(4, workNo);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
+            success = ps.executeUpdate() == 1;
+            con.close();
+        } catch (Exception ex) {
             System.out.println(ex);
         }
+        return success;
     }
 
     private double calWorkingPay() {
@@ -395,7 +404,8 @@ public class WorkingHistory {
         return intTime;
     }
     
-    public static void payEmp(int empNo,double inputWithdraw,int branchNo){
+    public static boolean payEmp(int empNo,double inputWithdraw,int branchNo){
+        boolean success = false;
         try{
             Connection con = ConnectionBuilder.getConnection();
             String sql = "INSERT INTO WorkingHistory(fromTime,toTime,fromDate,toDate,workingPay,empNo,branchNo,minHoursPerDay,maxHoursPerDay,positionName,payTypeName,empTypeName) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -413,13 +423,14 @@ public class WorkingHistory {
             ps.setString(10,"withdraw");
             ps.setString(11,"withdraw");
             ps.setString(12,"withdraw");
-            ps.executeUpdate();
-        }catch(SQLException ex){
+            success = ps.executeUpdate() == 1;
+        }catch(Exception ex){
             System.out.println(ex);
         }
+        return success;
     }
 
-    private static void orm(ResultSet rs, WorkingHistory wh) throws SQLException {
+    private static void orm(ResultSet rs, WorkingHistory wh) throws Exception {
         wh.setBranchNo(rs.getInt("workNo"));
         wh.setEmpName(rs.getString("empName"));
         wh.setEmpNo(rs.getInt("empNo"));

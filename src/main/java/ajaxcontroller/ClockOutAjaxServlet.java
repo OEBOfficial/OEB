@@ -1,3 +1,4 @@
+//check code I
 package ajaxcontroller;
 
 import java.io.IOException;
@@ -14,15 +15,10 @@ public class ClockOutAjaxServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json");
         int workNo = Integer.parseInt(request.getParameter("workNo"));
         int empNo = Integer.parseInt(request.getParameter("empNo"));
-        WorkingHistory.clockOut(workNo,empNo);
+        boolean success = WorkingHistory.clockOut(workNo,empNo);
+        PrintWriter out = response.getWriter();
+        out.print(success);
     }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

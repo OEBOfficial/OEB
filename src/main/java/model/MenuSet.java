@@ -1,11 +1,12 @@
+//check code I
 package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,7 +96,7 @@ public class MenuSet {
     }
 
     public static List<MenuSet> getAllMenuSet(int branchNo) {
-        ArrayList<MenuSet> menuSet = null;
+        LinkedList<MenuSet> menuSet = null;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT *,bms.branchNo AS bms_branchNo FROM MenuSet ms "
@@ -103,7 +104,7 @@ public class MenuSet {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, branchNo);
             ResultSet rs = ps.executeQuery();
-            menuSet = new ArrayList<MenuSet>();
+            menuSet = new LinkedList<MenuSet>();
             while (rs.next()) {
                 MenuSet ms = new MenuSet();
                 orm(rs, ms);
@@ -112,16 +113,18 @@ public class MenuSet {
                 }
                 menuSet.add(ms);
             }
+            con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
         return menuSet;
     }
 
-    public Integer addMenuSet(Map<Integer, Integer> menuNo, int isAvailable, double price) {
-        Integer menuSetNo = null;
+    public boolean addMenuSet(Map<Integer, Integer> menuNo, int isAvailable, double price) {
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
+            con.setAutoCommit(false);
             String sql = "INSERT INTO MenuSet(menuSetNameTH,menuSetNameEN,menuSetDesc,menuSetPrice,menuSetPicPath,isOfficialMenuSet,branchNo) "
                     + " VALUES(?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -132,12 +135,11 @@ public class MenuSet {
             ps.setString(5, menuSetPicPath);
             ps.setInt(6, isOfficialMenuSet);
             ps.setInt(7, branchNo);
-            int success = ps.executeUpdate();
-            if (success == 1) {
+            int successInSQL = ps.executeUpdate();
+            if (successInSQL == 1) {
                 ResultSet rs = ps.getGeneratedKeys();
                 rs.next();
-                menuSetNo = rs.getInt(1);
-                con.setAutoCommit(false);
+                int menuSetNo = rs.getInt(1);
                 sql = "INSERT INTO Menu_MenuSet(menuSetNo,menuNo,amount) VALUES(?,?,?)";
                 ps = con.prepareStatement(sql);
                 for (Map.Entry<Integer, Integer> entry : menuNo.entrySet()) {
@@ -146,20 +148,21 @@ public class MenuSet {
                     ps.setInt(3, entry.getValue()); // amount
                     ps.addBatch();
                 }
-
                 ps.executeBatch();
-                con.commit();
-                if (success > 0) {
-                    addMenuSetToBranch(menuSetNo, branchNo, isAvailable, price);
+                success = addMenuSetToBranch(menuSetNo, branchNo, isAvailable, price);
+                if (success) {
+                    con.commit();
                 }
             }
-        } catch (SQLException ex) {
+            con.close();
+        } catch (Exception ex) {
             System.out.println(ex);
         }
-        return menuSetNo;
+        return success;
     }
 
-    public static void addMenuSetToBranch(int menuSetNo, int branchNo, int isAvailable, double price) {
+    public static boolean addMenuSetToBranch(int menuSetNo, int branchNo, int isAvailable, double price) {
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "INSERT INTO Branch_MenuSet(branchNo,menuSetNo,isAvailable,price) VALUES(?,?,?,?)";
@@ -168,15 +171,19 @@ public class MenuSet {
             ps.setInt(2, menuSetNo);
             ps.setInt(3, isAvailable);
             ps.setDouble(4, price);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
+            success = ps.executeUpdate() > 0;
+            con.close();
+        } catch (Exception ex) {
             System.out.println(ex);
         }
+        return success;
     }
 
-    public void editMenuSet(Map<Integer, Integer> menuNo, int isAvailable) {
+    public boolean editMenuSet(Map<Integer, Integer> menuNo, int isAvailable) {
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
+            con.setAutoCommit(false);
             // #ลบรูปด้วย อนาคตมาทำด้วยนะ
             String sql = "UPDATE MenuSet SET menuSetNameTH = ?,menuSetNameEN = ?,menuSetDesc = ?,menuSetPrice = ?,menuSetPicPath = ?";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -185,11 +192,10 @@ public class MenuSet {
             ps.setString(3, menuSetDesc);
             ps.setDouble(4, menuSetPrice);
             ps.setString(5, menuSetPicPath);
-            int success = ps.executeUpdate();
-            if (success == 1) {
-                success = editMenuSetInBranch(isAvailable, menuSetPrice, branchNo, menuSetNo);
-                if (success == 1) {
-                    con.setAutoCommit(false);
+            boolean successInSQL = ps.executeUpdate() == 1;
+            if (successInSQL) {
+                successInSQL = editMenuSetInBranch(isAvailable, menuSetPrice, branchNo, menuSetNo);
+                if (successInSQL) {
                     sql = "INSERT INTO Menu_MenuSet(menuSetNo,menuNo,amount) VALUES(?,?,?) ON DUPLICATE KEY UPDATE amount = ?)";
                     for (Map.Entry<Integer, Integer> entry : menuNo.entrySet()) {
                         ps.setInt(1, menuSetNo);
@@ -200,15 +206,18 @@ public class MenuSet {
                     }
                     ps.executeBatch();
                     con.commit();
+                    success = true;
                 }
             }
+            con.close();
         } catch (Exception ex) {
             System.out.println(ex);
         }
+        return success;
     }
 
-    public static int editMenuSetInBranch(int isAvailable, double price, int branchNo, int menuSetNo) {
-        int success = 0;
+    public static boolean editMenuSetInBranch(int isAvailable, double price, int branchNo, int menuSetNo) {
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "UPDATE Branch_MenuSet SET isAvailable = ?,price = ? WHERE branchNo = ? AND menuSetNo = ?";
@@ -217,16 +226,19 @@ public class MenuSet {
             ps.setDouble(2, price);
             ps.setInt(3, branchNo);
             ps.setInt(4, menuSetNo);
-            success = ps.executeUpdate();
+            success = ps.executeUpdate() > 0;
+            con.close();
         } catch (Exception ex) {
             System.out.println(ex);
         }
         return success;
     }
 
-    public static void delMenuSet(int menuSetNo, int branchNo) {
+    public static boolean delMenuSet(int menuSetNo, int branchNo) {
+        boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
+            con.setAutoCommit(false);
             String sql = "SELECT * FROM MenuSet WHERE menuSetNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, menuSetNo);
@@ -242,8 +254,8 @@ public class MenuSet {
                     ps = con.prepareStatement(sql);
                     ps.setInt(1, menuSetNo);
                     ps.setInt(2, branchNo);
-                    int success = ps.executeUpdate();
-                    if (success == 1) {
+                    boolean successInSQL = ps.executeUpdate() == 1;
+                    if (successInSQL) {
                         sql = "SELECT * FROM Branch_MenuSet WHERE menuSetNo = ?";
                         ps = con.prepareStatement(sql);
                         ps.setInt(1, menuSetNo);
@@ -257,14 +269,17 @@ public class MenuSet {
                         }
                     }
                 }
+                con.commit();
+                success = true;
             }
             con.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println(ex);
         }
+        return success;
     }
 
-    private static void orm(ResultSet rs, MenuSet ms) throws SQLException {
+    private static void orm(ResultSet rs, MenuSet ms) throws Exception {
         ms.setIsOfficialMenuSet(rs.getInt("isOfficialMenuSet"));
         ms.setMenuSetDesc(rs.getString("menuSetDesc"));
         ms.setMenuSetNameEN(rs.getString("menuSetNameEN"));
