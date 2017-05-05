@@ -36,6 +36,7 @@ model\Menu.class
 model\MenuSet.class
 controller\LogoutServlet.class
 ajaxcontroller\SetEmpAjaxServlet.class
+controller\ToMenuSetServlet.class
 controller\ToMenuServlet.class
 ajaxcontroller\DelEmpPosAjaxServlet.class
 ajaxcontroller\DelMenuSetAjaxServlet.class

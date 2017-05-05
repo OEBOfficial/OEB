@@ -110,6 +110,18 @@
                                                 <tbody id=workhisttable>
                                                 </tbody>	 
                                             </table>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="table-rows">วันที่เบิก</th>
+                                                        <th class="table-rows">จำนวนเงินที่เบิก</th>
+                                                        <th class="table-rows">คงเหลือ</th>
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody id=workhisttable>
+                                                </tbody>	 
+                                            </table>
                                         </div>
                                         <form>
                                             <div class="modal-footer">
