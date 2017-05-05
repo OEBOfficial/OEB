@@ -18,6 +18,8 @@ public class LogoutServlet extends HttpServlet {
         Cookie[] cookies = request.getCookies();
         for (int i = 0; i < cookies.length; i++) {
             cookies[i].setMaxAge(0);
+            cookies[i].setValue(null);
+            System.out.println("setmaxage(0) : "+cookies[i].getName());
             response.addCookie(cookies[i]);
         }
         

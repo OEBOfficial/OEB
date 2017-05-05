@@ -152,8 +152,13 @@ public class EmployeePosition {
         boolean success = false;
         try{
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "DELETE FROM EmployeePosition WHERE positionNo = ?";
+            String sql = "UPDATE Employee SET constraintNo = 0 WHERE constraintNo IN "
+                    + " (SELECT constraintNo FROM `Constraint` WHERE positionNo = ?)";
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,positionNo);
+            ps.executeUpdate();
+            sql = "DELETE FROM EmployeePosition WHERE positionNo = ?";
+            ps = con.prepareStatement(sql);
             ps.setInt(1, positionNo);
             int i = ps.executeUpdate();
             if(i > 0){

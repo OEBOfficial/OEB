@@ -36,6 +36,8 @@
         <servlet-name>EditMenuTypeServlet</servlet-name>
         <servlet-name>DelMenuSetAjaxServlet</servlet-name>
         <servlet-name>DelMenuAjaxServlet</servlet-name>
+        <servlet-name>ToMenuSetServlet</servlet-name>
+        <servlet-name>ToMenuCustServlet</servlet-name>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>

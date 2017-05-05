@@ -74,8 +74,12 @@ $("#addEmpPos").change(function () {
     $("#addspecpay").attr('disabled', true);
     var val = $(this).val();
     var empTypeNo = empTypeConstraint[val];
-    for (var i = 0; i < empTypeNo.length; i++) {
-        $("#" + empTypeNo[i]).attr('disabled', false);
+    if (empTypeNo != null) {
+        for (var i = 0; i < empTypeNo.length; i++) {
+            $("#" + empTypeNo[i]).attr('disabled', false);
+        }
+    } else {
+        alert('ตำแหน่งนี้ไม่มีการกำหนดประเภทการทำงาน');
     }
 });
 
@@ -140,8 +144,12 @@ $("#empPos").change(function () {
     $("#specpay").attr('disabled', true);
     var val = $(this).val();
     var empTypeNo = empTypeConstraint[val];
-    for (var i = 0; i < empTypeNo.length; i++) {
-        $("#e" + empTypeNo[i]).attr('disabled', false);
+    if (empTypeNo != null) {
+        for (var i = 0; i < empTypeNo.length; i++) {
+            $("#e" + empTypeNo[i]).attr('disabled', false);
+        }
+    } else {
+        alert('ตำแหน่งนี้ไม่มีการกำหนดประเภทการทำงาน');
     }
 });
 

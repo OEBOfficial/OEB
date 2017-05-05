@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.sql.Connection;
@@ -10,10 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- *
- * @author USER
- */
 public class Branch {
     private int branchNo;
     private String branchName;
@@ -117,3 +108,5 @@ public class Branch {
         b.setAddressNo(rs.getInt("addressNo"));
     }
 }
+
+//check code 1

@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    $("#menutab").parent().addClass('active');
-    $("#menutab").parent().find('ul').css('display', 'block');
-    $("#menuset").parent().addClass('active');
+//    $("#menutab").parent().addClass('active');
+//    $("#menutab").parent().find('ul').css('display', 'block');
+//    $("#menuset").parent().addClass('active');
     $("#thisbranchmenuset").DataTable();
     $("#otherbranchmenuset").DataTable();
 });

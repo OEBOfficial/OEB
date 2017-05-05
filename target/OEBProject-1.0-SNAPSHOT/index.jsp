@@ -1,9 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : Mar 17, 2017, 7:04:19 PM
-    Author     : USER
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
