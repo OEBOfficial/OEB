@@ -23,8 +23,8 @@ public class ToEmpServlet extends HttpServlet {
         HttpSession hs = request.getSession();
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
         
-        Map<Integer,Employee> employees = Employee.getEmpByBranch(ro.getBranchNo());
-        Map<Integer,EmployeePosition> empPos = EmployeePosition.getAllEmpPos(ro.getBranchNo());
+        List employees = Employee.getEmpByBranch(ro.getBranchNo());
+        List empPos = EmployeePosition.getAllEmpPos(ro.getBranchNo());
         Map<String,String> constraintMap = Constraint.getMapConstraint(ro.getBranchNo());
         
         request.setAttribute("employees", employees);

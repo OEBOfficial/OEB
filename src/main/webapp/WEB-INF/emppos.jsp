@@ -73,13 +73,13 @@
                                             </thead>
                                             <tbody>
                                                 <c:forEach items="${emppos}" var="e" varStatus="vs">
-                                                    <tr id="tr${e.key}">
-                                                        <td>${e.value.positionName}</td>
+                                                    <tr id="tr${e.positionNo}">
+                                                        <td>${e.positionName}</td>
                                                         <td>
-                                                            <a href="javascript:void(0)" onclick="setConstraint(${e.value.positionNo})" data-toggle="modal" data-target="#editEmpPos">
+                                                            <a href="javascript:void(0)" onclick="setConstraint(${e.positionNo})" data-toggle="modal" data-target="#editEmpPos">
                                                                 <i class="fa fa-plus-circle"></i> แก้ไข Position นี้
                                                             </a>
-                                                            <a href="javascript:void(0)" onclick="delPosition('${e.value.positionName}',${e.value.positionNo})">
+                                                            <a href="javascript:void(0)" onclick="delPosition('${e.positionName}',${e.positionNo})">
                                                                 <i class="fa fa-trash"></i> ลบ Position นี้
                                                             </a>
                                                         </td>

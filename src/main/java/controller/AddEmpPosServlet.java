@@ -1,3 +1,4 @@
+//check code I
 package controller;
 
 import java.io.IOException;
@@ -37,5 +38,6 @@ public class AddEmpPosServlet extends HttpServlet {
         }
 
         response.sendRedirect(target);
+        return ;
     }
 }

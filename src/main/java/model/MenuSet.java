@@ -196,15 +196,21 @@ public class MenuSet {
             if (successInSQL) {
                 successInSQL = editMenuSetInBranch(isAvailable, menuSetPrice, branchNo, menuSetNo);
                 if (successInSQL) {
-                    sql = "INSERT INTO Menu_MenuSet(menuSetNo,menuNo,amount) VALUES(?,?,?) ON DUPLICATE KEY UPDATE amount = ?)";
+                    sql = "DELETE FROM Menu_MenuSet WHERE menuSetNo = ?";
+                    ps = con.prepareStatement(sql);
+                    ps.setInt(1, menuSetNo);
+                    ps.executeUpdate();
+
+                    sql = "INSERT INTO Menu_MenuSet(menuSetNo,menuNo,amount) VALUES(?,?,?))";
+                    ps = con.prepareStatement(sql);
                     for (Map.Entry<Integer, Integer> entry : menuNo.entrySet()) {
                         ps.setInt(1, menuSetNo);
                         ps.setInt(2, entry.getKey()); // menuNo
                         ps.setInt(3, entry.getValue()); // amount
-                        ps.setInt(4, entry.getValue()); // amount
                         ps.addBatch();
                     }
                     ps.executeBatch();
+
                     con.commit();
                     success = true;
                 }
@@ -265,6 +271,11 @@ public class MenuSet {
                             ps = con.prepareStatement(sql);
                             ps.setInt(1, rs.getInt("branchNo"));
                             ps.setInt(2, menuSetNo);
+                            ps.executeUpdate();
+                        } else {
+                            sql = "DELETE FROM MenuSet WHERE menuSetNo = ?";
+                            ps = con.prepareStatement(sql);
+                            ps.setInt(1, menuSetNo);
                             ps.executeUpdate();
                         }
                     }

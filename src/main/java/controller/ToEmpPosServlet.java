@@ -20,7 +20,7 @@ public class ToEmpPosServlet extends HttpServlet {
         HttpSession hs = request.getSession();
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
         
-        Map<Integer,EmployeePosition> emppos = EmployeePosition.getAllEmpPos(ro.getBranchNo());
+        List<EmployeePosition> emppos = EmployeePosition.getAllEmpPos(ro.getBranchNo());
         
         request.setAttribute("emppos", emppos);
         request.setAttribute("target", "emppos");
