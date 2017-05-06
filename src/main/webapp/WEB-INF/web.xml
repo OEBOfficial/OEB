@@ -177,6 +177,14 @@
         <servlet-name>ToMenuCustServlet</servlet-name>
         <servlet-class>controller.ToMenuCustServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddMenuSetToBranchServlet</servlet-name>
+        <servlet-class>controller.AddMenuSetToBranchServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageMenuSetServlet</servlet-name>
+        <servlet-class>controller.ManageMenuSetServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -308,6 +316,14 @@
     <servlet-mapping>
         <servlet-name>ToMenuCustServlet</servlet-name>
         <url-pattern>/ToMenuCustServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddMenuSetToBranchServlet</servlet-name>
+        <url-pattern>/AddMenuSetToBranchServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageMenuSetServlet</servlet-name>
+        <url-pattern>/ManageMenuSetServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

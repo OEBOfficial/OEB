@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Menu;
+import model.MenuSet;
 import model.RestaurantOwner;
 
 public class SetMenuSetAjaxServlet extends HttpServlet {
@@ -25,7 +26,8 @@ public class SetMenuSetAjaxServlet extends HttpServlet {
         RestaurantOwner ro = (RestaurantOwner) hs.getAttribute("restowner");
         PrintWriter out = response.getWriter();
         JsonObjectBuilder JOB = Json.createObjectBuilder();
-        JsonObject JO = JOB.add("menuset", Menu.getMenuByMenuSetJson(menuSetNo , ro.getBranchNo())).build();
+        JsonObject JO = JOB.add("menuset", Menu.getMenuByMenuSetJson(menuSetNo , ro.getBranchNo()))
+                           .add("menusetinfo", MenuSet.getMenuSetJson(menuSetNo)).build();
         out.print(JO);
         out.flush();
         out.close();

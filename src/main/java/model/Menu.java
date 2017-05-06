@@ -2,6 +2,7 @@
 package model;
 
 import com.mysql.cj.api.jdbc.Statement;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,11 +21,38 @@ public class Menu {
     private String menuNameTH;
     private String menuNameEN;
     private String menuDesc;
+    private String menuPicPath;
     private Double menuPrice;
     private int isOfficialMenu;
     private boolean isThisBranchMenu;
+    private boolean isAvailable;
     private int branchNo;
+    private int amount;
 
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public String getMenuPicPath() {
+        return menuPicPath;
+    }
+
+    public void setMenuPicPath(String menuPicPath) {
+        this.menuPicPath = menuPicPath;
+    }
+    
+    public boolean isIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+    
     public int getBranchNo() {
         return branchNo;
     }
@@ -147,6 +175,7 @@ public class Menu {
                     .add("isOfficialMenu", m.getIsOfficialMenu())
                     .add("isThisBranchMenu", m.isIsThisBranchMenu())
                     .add("branchNo", m.getBranchNo())
+                    .add("menuPicPath", m.getMenuPicPath())
                     .build();
         }
         return menuJO;
@@ -171,6 +200,7 @@ public class Menu {
                 if (rs.getInt("bm_branchNo") == branchNo) {
                     m.setIsThisBranchMenu(true);
                 }
+                m.setAmount(rs.getInt("amount"));
                 menus.add(m);
             }
             con.close();
@@ -197,6 +227,8 @@ public class Menu {
                         .add("isOfficialMenu", menus.get(i).getIsOfficialMenu())
                         .add("isThisBranchMenu", menus.get(i).isIsThisBranchMenu())
                         .add("branchNo", menus.get(i).getBranchNo())
+                        .add("menuPicPath", ""+menus.get(i).getMenuPicPath())
+                        .add("amount",menus.get(i).getAmount())
                         .build();
                 JAB.add(jo);
             }
@@ -411,10 +443,12 @@ public class Menu {
         m.setMenuPrice(rs.getDouble("menuPrice"));
         m.setIsOfficialMenu(rs.getInt("isOfficialMenu"));
         m.setBranchNo(rs.getInt("branchNo"));
+        m.setIsAvailable(rs.getInt("isAvailable")==1);
+        m.setMenuPicPath(rs.getString("menuPicPath"));
     }
 
     @Override
     public String toString() {
-        return "Menu{" + "menuNo=" + menuNo + ", menuNameTH=" + menuNameTH + ", menuNameEN=" + menuNameEN + ", menuDesc=" + menuDesc + ", menuPrice=" + menuPrice + ", isOfficialMenu=" + isOfficialMenu + ", isThisBranchMenu=" + isThisBranchMenu + ", branchNo=" + branchNo + '}';
+        return "Menu{" + "menuNo=" + menuNo + ", menuNameTH=" + menuNameTH + ", menuNameEN=" + menuNameEN + ", menuDesc=" + menuDesc + ", menuPicPath=" + menuPicPath + ", menuPrice=" + menuPrice + ", isOfficialMenu=" + isOfficialMenu + ", isThisBranchMenu=" + isThisBranchMenu + ", isAvailable=" + isAvailable + ", branchNo=" + branchNo + '}';
     }
 }
