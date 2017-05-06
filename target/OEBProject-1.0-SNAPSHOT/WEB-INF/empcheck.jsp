@@ -9,7 +9,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>เช็คเวลาเข้าทำงาน</title>
+        <title>เช็คชื่อพนักงาน</title>
         <!-- Bootstrap -->
         <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -92,12 +92,12 @@
                                                                             เสร็จแล้วอะ
                                                                         </c:when>
                                                                         <c:otherwise>
-                                                                            <button type="button" class="btn btn-warning" onclick="clockOut(${wh.workNo},${wh.empNo})">ออกงาน</button>
+                                                                            <button type="button" class="btn btn-warning btn-sm" onclick="clockOut(${wh.workNo},${wh.empNo})"><i class="fa fa-sign-out"></i>&nbsp; ออกงาน</button>
                                                                         </c:otherwise>
                                                                     </c:choose>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <button type="button" class="btn btn-success" onclick="clockIn(${wh.empNo})">เข้างาน</button>
+                                                                    <button type="button" class="btn btn-primary btn-sm" onclick="clockIn(${wh.empNo})"><i class="fa fa-sign-in"></i>&nbsp; เข้างาน</button>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </td>
@@ -144,7 +144,6 @@
         <!-- <script src="vendors/sweetalert/sweetalert.min.js"></script> -->    
         <!-- Custom Theme Scripts -->
         <script src="build/js/custom.min.js"></script>
-        <script src="handmade/empcheck.js"></script>
         <script>
             function clockIn(empNo){
                 $.ajax({

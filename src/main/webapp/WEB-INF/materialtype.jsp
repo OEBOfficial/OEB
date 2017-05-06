@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>ประเภทเมนู</title>
+        <title>ประเภทวัตถุดิบ</title>
         <!-- Bootstrap -->
         <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -47,11 +47,11 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="x_panel">
                                     <div class="x_title">
-                                        <h4>ประเภทเมนูอาหาร</h4>
+                                        <h4>ประเภทวัตถุดิบ</h4>
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-                                        <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addMenuType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มประเภท</a></p>
+                                        <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addMaterialType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มประเภท</a></p>
                                         <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
@@ -60,12 +60,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach items="${menuTypes}" var="mt" varStatus="vs">
-                                                    <tr id="tr${mt.menuTypeNo}">
-                                                        <td><span id="menuTypeNo${mt.menuTypeNo}">${mt.menuTypeName}</span></td>
+                                                <c:forEach items="${matTypes}" var="mt" varStatus="vs">
+                                                    <tr id="tr${mt.matTypeNo}">
+                                                        <td><span id="materialTypeNo${mt.matTypeNo}">${mt.matTypeName}</span></td>
                                                         <td>
-                                                            <a href="javascript:void(0)" onclick="setMenuTypeName(${mt.menuTypeNo})" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenuType"><i class="fa fa-pencil"></i>&nbsp; แก้ไข</a>
-                                                            <a href="javascript:void(0)" onclick="delMenuType(${mt.menuTypeNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>
+                                                            <a href="javascript:void(0)" onclick="setMaterialTypeName(${mt.matTypeNo})" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMaterialType"><i class="fa fa-pencil"></i>&nbsp; แก้ไข</a>
+                                                            <a href="javascript:void(0)" onclick="delMaterialType(${mt.matTypeNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -76,8 +76,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Modal Content (ADD Menu Type)-->
-                    <div class="modal fade" id="addMenuType" role="dialog">
+                    <!-- Modal Content (ADD Material Type)-->
+                    <div class="modal fade" id="addMaterialType" role="dialog">
                         <div class="modal-dialog">
                             <!-- เนือหาของ Modal ทั้งหมด -->
                             <div class="modal-content">
@@ -85,13 +85,13 @@
                                 <div class="modal-header">
                                     <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">เพิ่มประเภทอาหาร</h4>
+                                    <h4 class="modal-title">เพิ่มประเภทวัตถุดิบ</h4>
                                 </div>
                                 <!-- ส่วนเนื้อหาของ Modal -->
                                 <div class="modal-body">
-                                    <form class="form-horizontal form-label-left input_mask" id="addmenutype" action="AddMenuTypeServlet" method="post">
+                                    <form class="form-horizontal form-label-left input_mask" action="AddMaterialTypeServlet" method="post">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <input type="text" class="form-control" name="menuType" placeholder="ประเภทเมนูอาหาร" required>
+                                            <input type="text" class="form-control" name="materialType" placeholder="ประเภทวัตถุดิบ" required>
                                             <span class="fa fa-cutlery form-control-feedback right" aria-hidden="true"></span>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-6">
@@ -103,9 +103,9 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /Modal Content (ADD MenuType)-->
-                    <!-- Modal Content (Edit MenuType)-->
-                    <div class="modal fade" id="editMenuType" role="dialog">
+                    <!-- /Modal Content (ADD MaterialType)-->
+                    <!-- Modal Content (Edit MaterialType)-->
+                    <div class="modal fade" id="editMaterialType" role="dialog">
                         <div class="modal-dialog">
                             <!-- เนือหาของ Modal ทั้งหมด -->
                             <div class="modal-content">
@@ -113,14 +113,14 @@
                                 <div class="modal-header">
                                     <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">แก้ไขชื่อประเภทอาหาร : <span class="editMenuTypeName"></span></h4>
+                                    <h4 class="modal-title">แก้ไขชื่อประเภทวัตถุดิบ : <span class="editMaterialTypeName"></span></h4>
                                 </div>
                                 <!-- ส่วนเนื้อหาของ Modal -->
                                 <div class="modal-body">
-                                    <form class="form-horizontal form-label-left input_mask" id="editmenutype" action="EditMenuTypeServlet" method="post">
+                                    <form class="form-horizontal form-label-left input_mask" id="editmaterialtype" action="EditMaterialTypeServlet" method="post">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <input type="text" class="form-control editMenuTypeName" name="menuTypeName" placeholder="ประเภทเมนูอาหาร" required>
-                                            <input type="hidden" name="menuTypeNo" id="editMenuTypeNo">
+                                            <input type="text" class="form-control editMaterialTypeName" name="materialTypeName" placeholder="ประเภทเมนูอาหาร" required>
+                                            <input type="hidden" name="matTypeNo" id="editMaterialTypeNo">
                                             <span class="fa fa-cutlery form-control-feedback right" aria-hidden="true"></span>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-6">
@@ -132,7 +132,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /Modal Content (Edit MenuType)-->
+                    <!-- /Modal Content (Edit MaterialType)-->
                 </div>
             </div>
         </div>
@@ -167,6 +167,6 @@
         <!-- <script src="vendors/sweetalert/sweetalert.min.js"></script> -->    
         <!-- Custom Theme Scripts -->
         <script src="build/js/custom.min.js"></script>
-        <script src="handmade/menutype.js"></script>
+        <script src="handmade/materialtype.js"></script>
     </body>
 </html>

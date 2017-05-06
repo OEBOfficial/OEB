@@ -13,7 +13,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>จัดการพนักงาน</title>
+        <title>ข้อมูลพนักงาน</title>
         <!-- Bootstrap -->
         <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -51,16 +51,10 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="x_panel">
                                     <div class="x_title">
-                                        <h4>จัดการข้อมูลพนักงาน</h4>
-                                    </div>     
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#addEmp" class="plusemp">
-                                        <i class="fa fa-plus-circle"></i> เพิ่มพนักงาน
-                                    </a>
-                                    <!--                                    <div class="x_title">
-                                                                            <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#addEmp">เพิ่มพนักงาน</button>
-                                                                            <div class="clearfix"></div>
-                                                                        </div>-->
+                                        <h4>ข้อมูลพนักงาน</h4>
+                                    </div>
                                     <div class="x_content">
+                                        <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addEmp"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มพนักงาน</a></p>
                                         <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
@@ -79,8 +73,8 @@
                                                     <td>${e.constraint.employmentType.empTypeName}</td>
                                                     <td><fmt:formatNumber value="${e.specPay!=null?e.specPay:e.constraint.pay}" pattern="#,###,###.##"/> บาท/${e.constraint.payType.payTypeName} ${e.specPay!=null?'':'(ตามตำแหน่ง)'}</td>
                                                     <td>
-                                                        <a onclick="editEmp(${e.empNo})" href="javascript:void(0)" data-toggle="modal" data-target="#editEmpBtn"><i class="fa fa-edit"></i> </a> 
-                                                        <a onclick="delEmp(${e.empNo}, '${e.empName}')" href="javascript:void(0)"><i class="fa fa-trash"></i></a>
+                                                        <a onclick="editEmp(${e.empNo})" class="btn btn-warning btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#editEmpBtn"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a> 
+                                                        <a onclick="delEmp(${e.empNo}, '${e.empName}')" class="btn btn-danger btn-sm" href="javascript:void(0)"><i class="fa fa-trash"></i>&nbsp; ลบ</a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

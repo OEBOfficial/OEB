@@ -13,7 +13,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>ประวัติการจ่ายเงิน</title>
+        <title>จ่ายเงินพนักงาน</title>
         <!-- Bootstrap -->
         <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -52,7 +52,7 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="x_panel">
                                     <div class="x_title">
-                                        <h4>ประวัติการจ่ายเงิน</h4>
+                                        <h4>จ่ายเงินพนักงาน</h4>
                                     </div>  
                                     <div class="x_content">
                                         <table id="datatable" class="table table-striped table-bordered">
@@ -73,7 +73,7 @@
                                                     <td>${e.constraint.employmentType.empTypeName} ราย${e.constraint.payType.payTypeName}</td>
                                                     <td><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${e.SUMPAY}"/> ฿</td>
                                                     <td>
-                                                        <button type="submit" class="btn btn-success" data-toggle="modal"  data-target="#paidDetail" onclick="setemppaid(${e.empNo})">รายละเอียด</button>
+                                                        <button class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#paidDetail" onclick="setemppaid(${e.empNo})"><i class="fa fa-money"></i>&nbsp; จ่ายเงิน</button>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

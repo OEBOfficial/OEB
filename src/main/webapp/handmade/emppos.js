@@ -1,9 +1,3 @@
-$(document).ready(function () {
-    $("#emptab").parent().addClass('active');
-    $("#emptab").parent().find('ul').css('display', 'block');
-    $("#emppos").parent().addClass('active');
-});
-
 // for add emp pos modal
 $(".emptype").click(function () {
     var paytype = $(".paytype" + $(this).val());

@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>ประเภทเมนู</title>
+        <title>ข้อมูลวัตถุดิบ</title>
         <!-- Bootstrap -->
         <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -47,11 +47,11 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="x_panel">
                                     <div class="x_title">
-                                        <h4>ประเภทเมนูอาหาร</h4>
+                                        <h4>ข้อมูลวัตถุดิบ</h4>
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-                                        <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addMenuType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มประเภท</a></p>
+                                        <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addMenuType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มวัตถุดิบ</a></p>
                                         <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
@@ -167,6 +167,5 @@
         <!-- <script src="vendors/sweetalert/sweetalert.min.js"></script> -->    
         <!-- Custom Theme Scripts -->
         <script src="build/js/custom.min.js"></script>
-        <script src="handmade/menutype.js"></script>
     </body>
 </html>

@@ -65,6 +65,5 @@ public class Branch {
         b.setBranchNo(rs.getInt("branchNo"));
         b.setRestOwnerNo(rs.getInt("restOwnerNo"));
         b.setBranchNo(rs.getInt("branchNo"));
-        b.setAddressNo(rs.getInt("addressNo"));
     }
 }

@@ -228,7 +228,7 @@ public class WorkingHistory {
             String sql = "SELECT * FROM WorkingHistory wh "
                     + " JOIN Employee e ON e.empNo = wh.empNo "
                     + " WHERE wh.empNo = ? AND wh.toTime IS NOT NULL "
-                    + " ORDER BY wh.fromDate DESC,wh.toTime DESC";
+                    + " ORDER BY wh.workNo DESC";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, empNo);
             ResultSet rs = ps.executeQuery();

@@ -219,46 +219,46 @@ $(document).ready(function() {
 
 // Table
 $('table input').on('ifChecked', function () {
-    checkState = '';
+    checkState1 = '';
     $(this).parent().parent().parent().addClass('selected');
-    countChecked();
+    countChecked1();
 });
 $('table input').on('ifUnchecked', function () {
-    checkState = '';
+    checkState1 = '';
     $(this).parent().parent().parent().removeClass('selected');
-    countChecked();
+    countChecked1();
 });
 
-var checkState = '';
+var checkState1 = '';
 
-$('.bulk_action input').on('ifChecked', function () {
-    checkState = '';
+$('.bulk_action1 input').on('ifChecked', function () {
+    checkState1 = '';
     $(this).parent().parent().parent().addClass('selected');
-    countChecked();
+    countChecked1();
 });
-$('.bulk_action input').on('ifUnchecked', function () {
-    checkState = '';
+$('.bulk_action1 input').on('ifUnchecked', function () {
+    checkState1 = '';
     $(this).parent().parent().parent().removeClass('selected');
-    countChecked();
+    countChecked1();
 });
-$('.bulk_action input#check-all').on('ifChecked', function () {
-    checkState = 'all';
-    countChecked();
+$('.bulk_action1 input#check-all-1').on('ifChecked', function () {
+    checkState1 = 'all';
+    countChecked1();
 });
-$('.bulk_action input#check-all').on('ifUnchecked', function () {
-    checkState = 'none';
-    countChecked();
+$('.bulk_action1 input#check-all-1').on('ifUnchecked', function () {
+    checkState1 = 'none';
+    countChecked1();
 });
 
-function countChecked() {
-    if (checkState === 'all') {
-        $(".bulk_action input[name='table_records']").iCheck('check');
+function countChecked1() {
+    if (checkState1 === 'all') {
+        $(".bulk_action1 input[name='table_records']").iCheck('check');
     }
-    if (checkState === 'none') {
-        $(".bulk_action input[name='table_records']").iCheck('uncheck');
+    if (checkState1 === 'none') {
+        $(".bulk_action1 input[name='table_records']").iCheck('uncheck');
     }
 
-    var checkCount = $(".bulk_action input[name='table_records']:checked").length;
+    var checkCount = $(".bulk_action1 input[name='table_records']:checked").length;
 
     if (checkCount) {
         $('.column-title').hide();
@@ -270,7 +270,59 @@ function countChecked() {
     }
 }
 
+//Table2
 
+$('table input').on('ifChecked', function () {
+    checkState2 = '';
+    $(this).parent().parent().parent().addClass('selected');
+    countChecked2();
+});
+$('table input').on('ifUnchecked', function () {
+    checkState2 = '';
+    $(this).parent().parent().parent().removeClass('selected');
+    countChecked2();
+});
+
+var checkState2 = '';
+
+$('.bulk_action2 input').on('ifChecked', function () {
+    checkState2 = '';
+    $(this).parent().parent().parent().addClass('selected');
+    countChecked2();
+});
+$('.bulk_action2 input').on('ifUnchecked', function () {
+    checkState2 = '';
+    $(this).parent().parent().parent().removeClass('selected');
+    countChecked2();
+});
+$('.bulk_action2 input#check-all-2').on('ifChecked', function () {
+    checkState2 = 'all';
+    countChecked2();
+});
+$('.bulk_action2 input#check-all-2').on('ifUnchecked', function () {
+    checkState2 = 'none';
+    countChecked2();
+});
+
+function countChecked2() {
+    if (checkState2 === 'all') {
+        $(".bulk_action2 input[name='table_records']").iCheck('check');
+    }
+    if (checkState2 === 'none') {
+        $(".bulk_action2 input[name='table_records']").iCheck('uncheck');
+    }
+
+    var checkCount = $(".bulk_action2 input[name='table_records']:checked").length;
+
+    if (checkCount) {
+        $('.column-title').hide();
+        $('.bulk-actions').show();
+        $('.action-cnt').html(checkCount + ' Records Selected');
+    } else {
+        $('.column-title').show();
+        $('.bulk-actions').hide();
+    }
+}
 
 // Accordion
 $(document).ready(function() {

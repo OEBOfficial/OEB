@@ -46,9 +46,9 @@
                     <li>
                         <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="ToMaterial">ข้อมูลวัตถุดิบ</a></li>
-                            <li><a href="ToMaterialType">ประเภทวัตถุดิบ</a></li>
-                            <li><a href="ToMaterialStock">สต็อกวัตถุดิบ</a></li>
+                            <li><a href="ToMaterialServlet">ข้อมูลวัตถุดิบ</a></li>
+                            <li><a href="ToMaterialTypeServlet">ประเภทวัตถุดิบ</a></li>
+                            <!--<li><a href="ToMaterialStock">สต็อกวัตถุดิบ</a></li>-->
                         </ul>
                     </li>
                 </ul>

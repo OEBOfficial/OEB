@@ -9,7 +9,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>จัดการชุดเมนู</title>
+        <title>เมนูอาหารแบบชุด</title>
         <!-- Bootstrap -->
         <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
@@ -47,7 +47,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>เมนูอาหารแบบชุดของสาขานี้</h2>          
+                                    <h4>เมนูอาหารแบบชุดของสาขานี้</h4>          
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
@@ -58,13 +58,13 @@
                                             <button type="submit" name="submit" value="open" href="javascript:void(0)" class="btn btn-info btn-sm"><i class="fa fa-check-circle"></i>&nbsp; เปิดที่เลือก</button>
                                             <button type="submit" name="submit" value="close" href="javascript:void(0)" class="btn btn-info btn-sm"><i class="fa fa-times-circle"></i>&nbsp; ปิดที่เลือก</button>
                                         </p>
-                                        <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action">
+                                        <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action1">
                                             <thead>
                                                 <tr>
-                                                    <th><input type="checkbox" class="flat"> &nbsp; เลือก</th>
+                                                    <th><input type="checkbox" class="flat" id="check-all-1"> &nbsp; เลือก</th>
                                                     <th>ชื่อชุดอาหาร</th>
                                                     <th>ราคา</th>
-                                                    <th>สถานะ</th>
+                                                    <th>ให้บริการ</th>
                                                     <th>ตัวเลือก</th>
                                                 </tr>
                                             </thead>
@@ -74,18 +74,20 @@
                                                     <c:if test="${ms.isThisBranchMenu}">
                                                         <tr id="trthis${ms.menuSetNo}">
                                                             <td>
-                                                                <input type="checkbox" name="checkforedit" value="${ms.menuSetNo}" class="flat">
+                                                                <input type="checkbox" name="table_records" value="${ms.menuSetNo}" class="flat">
                                                             </td>
-                                                            <td valign="center">${ms.menuSetNameTH} / ${ms.menuSetNameEN}</td>
+                                                            <td valign="center"><a href="javascript:void(0)" onclick="getMenuByMenuSet(${ms.menuSetNo}, 2)" data-toggle="modal" data-target="#showset">${ms.menuSetNameTH} / ${ms.menuSetNameEN}</a></td>
                                                             <td valign="center"><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${ms.menuSetPrice}"/> ฿</td>
                                                             <td valign="center">${ms.isAvailable?'<i class="fa fa-check-circle"></i>':'<i class="fa fa-times-circle"></i>'}</td>
                                                             <c:choose>
                                                                 <c:when test="${ms.branchNo == restowner.branchNo}">
                                                                     <td valign="center">
                                                                         <a href="javascript:void(0)" onclick="getMenuByMenuSet(${ms.menuSetNo})" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editSet">
-                                                                            <i class="fa fa-pencil-square"></i>&nbsp; แก้ไข
+                                                                            <i class="fa fa-pencil"></i>&nbsp; แก้ไข
                                                                         </a>
-                                                                        <a href="javascript:void(0)" onclick="delMenuSet(${ms.menuSetNo})" class="btn btn-danger btn-sm"><i class="fa fa-minus-square"></i>&nbsp; ลบ</a>
+                                                                        <a href="javascript:void(0)" onclick="delMenuSet(${ms.menuSetNo})" class="btn btn-danger btn-sm">
+                                                                            <i class="fa fa-trash"></i>&nbsp; ลบ
+                                                                        </a>
                                                                     </td>
                                                                 </c:when>
                                                                 <c:otherwise>
@@ -93,7 +95,9 @@
                                                                         <a href="javascript:void(0)" onclick="getMenuByMenuSet(${ms.menuSetNo}, 2)" data-toggle="modal" data-target="#showset"  class="btn btn-dark btn-sm">
                                                                             <i class="fa fa-search"></i>&nbsp; ดูรายละเอียด
                                                                         </a>
-                                                                        <a href="javascript:void(0)" onclick="delMenuSet(${ms.menuSetNo})" class="btn btn-danger btn-sm"><i class="fa fa-minus-square"></i>&nbsp; ลบ</a>
+                                                                        <a href="javascript:void(0)" onclick="delMenuSet(${ms.menuSetNo})" class="btn btn-danger btn-sm">
+                                                                            <i class="fa fa-trash"></i>&nbsp; ลบ
+                                                                        </a>
                                                                     </td>
                                                                 </c:otherwise>
                                                             </c:choose>
@@ -112,7 +116,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>เมนูอาหารแบบชุดของสาขาอื่น</h2>          
+                                    <h4>เมนูอาหารแบบชุดของสาขาอื่น</h4>          
                                     <h6>
                                         &nbsp;&nbsp;<i>*สามารถเลือกอาหารชุด เพื่อนำไปใช้กับสาขาอื่นได้</i>
                                     </h6>
@@ -123,10 +127,10 @@
                                         <p>
                                             <button type="addtobranch" class="btn btn-success btn-sm" name="submit" value="addtobranch"><i class="fa fa-arrow-up"></i>&nbsp; เพิ่มเข้าสาขา</button>
                                         </p>  
-                                        <table id="datatable" class="table table-striped table-bordered">
+                                        <table id="datatable" class="table table-striped table-bordered bulk_action2">
                                             <thead>
                                                 <tr>
-                                                    <th>เลือก</th>
+                                                    <th><input type="checkbox" class="flat" id="check-all-2"> &nbsp; เลือก</th>
                                                     <th>ชื่อชุดอาหาร</th>
                                                     <th>ราคา</th>
                                                     <th>ตัวเลือก</th>
@@ -139,7 +143,7 @@
                                                     <c:if test="${!ms.isThisBranchMenu && ms.isOfficialMenuSet == 1}">
                                                         <tr id="tr${ms.menuSetNo}">
                                                             <td>
-                                                                <input type="checkbox" name="checkforedit" value="${ms.menuSetNo}" class="flat">
+                                                                <input type="checkbox" name="table_records" value="${ms.menuSetNo}" class="flat">
                                                             </td>
                                                             <td><a href="javascript:void(0)" onclick="getMenuByMenuSet(${ms.menuSetNo}, 3)" data-toggle="modal" data-target="#showset" >${ms.menuSetNameTH} / ${ms.menuSetNameEN}</a></td>                                                                
                                                             <td><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${ms.menuSetPrice}"/> ฿</td>
@@ -199,22 +203,24 @@
                                                 <thead>
                                                     <tr>
                                                         <th>เลือก</th>
+                                                        <th>รูปอาหาร</th>
                                                         <th>ชื่ออาหาร</th>
                                                         <th>ราคา</th>
-                                                        <th>รายละเอียด</th>
+                                                        <th>จำนวน</th>
                                                     </tr>
                                                 </thead>
 
 
                                                 <tbody>
-                                                    <tr>
-                                                        <td class="a-center ">
-                                                            <input type="checkbox" class="flat" name="table_records">
-                                                        </td>
-                                                        <td>System Architect</td>
-                                                        <td>Edinburgh</td>
-                                                        <td>61</td>
+                                                    <c:forEach items="${menus}" var="m">
+                                                        <tr>
+                                                            <td><input type="checkbox" name="table_records" value="${m.menuNo}" class="flat"></td>
+                                                            <td><center><img src="${m.menuPicPath!=null?m.menuPicPath:'https://img.clipartfest.com/1c20817e0b1203f771effa178ccc6b66_cloud-upload-2-icon-upload-clipart_512-512.png'}" style="width:100px;"  alt="your image"  class="img-thumbnail" /></center></td>
+                                                    <td>${m.menuNameTH} / ${m.menuNameEN}</td>
+                                                    <td><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${m.menuPrice}"/> ฿</td>
+                                                    <td><input type="number"></td>
                                                     </tr>
+                                                </c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -223,8 +229,12 @@
 
                                 <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback">
                                     <div class="form-group">    
-                                        <input type="text" class="form-control" name="price" placeholder="ราคา">
+                                        <input type="text" class="form-control" name="price" placeholder="ราคา (บาท)">
                                     </div>
+                                </div>
+                                <div class="col-md-9 col-sm-9 col-xs-9 form-group has-feedback">
+                                    <input type="checkbox" name="isOfficialMenuSet" value="1"> แชร์ชุดเมนูนี้ร่วมกับสาขาอื่น 
+                                    <input type="checkbox" name="isAvailable" value="1"> เปิดบริการชุดเมนูนี้โดยทันที
                                 </div>
                             </div>
                             <div class="modal-footer">

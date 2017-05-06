@@ -19,7 +19,7 @@ public class ManageMenuSetServlet extends HttpServlet {
         String target = "ToMenuSetServlet";
         RestaurantOwner ro = (RestaurantOwner) hs.getAttribute("restowner");
         String type = request.getParameter("submit");
-        String[] stMenuSetNo = request.getParameterValues("checkforedit");
+        String[] stMenuSetNo = request.getParameterValues("table_records");
         if (stMenuSetNo != null) {
             if (type.equalsIgnoreCase("del")) {
                 MenuSet.delAllMenuSet(stMenuSetNo, ro.getBranchNo());

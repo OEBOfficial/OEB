@@ -1,4 +1,3 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -48,78 +47,96 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="x_panel">
                                     <div class="x_title">
-                                        <h4>เมนูอาหารแบบเดี่ยว</h4>
+                                        <h4>ประเภทเมนูอาหาร</h4>
                                         <div class="clearfix"></div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="col-lg-12" style="text-align:center">เมนูสาขานี้</div>
-                                        <div class="x_content">
-                                            <table id="thisbranchmenu" class="table table-striped table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="table-rows">ชื่ออาหาร</th>
-                                                        <th class="table-rows">ราคา</th>
-                                                        <th class="table-rows">ตัวเลือก</th>
+                                    <div class="x_content">
+                                        <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addMenuType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มประเภท</a></p>
+                                        <table id="datatable" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="table-rows">ชื่อประเภท</th>
+                                                    <th class="table-rows">ตัวเลือก</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="${menuTypes}" var="mt" varStatus="vs">
+                                                    <tr id="tr${mt.menuTypeNo}">
+                                                        <td><span id="menuTypeNo${mt.menuTypeNo}">${mt.menuTypeName}</span></td>
+                                                        <td>
+                                                            <a href="javascript:void(0)" onclick="setMenuTypeName(${mt.menuTypeNo})" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenuType"><i class="fa fa-pencil"></i>&nbsp; แก้ไข</a>
+                                                            <a href="javascript:void(0)" onclick="delMenuType(${mt.menuTypeNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>
+                                                        </td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach items="${menus}" var="m">
-                                                        <c:if test="${m.isThisBranchMenu}">
-                                                            <tr id="trthis${m.menuNo}">
-                                                                <td>${m.menuNameTH} / ${m.menuNameEN}</td>
-                                                                <td><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${m.menuPrice}"/> ฿</td>
-                                                                <c:choose>
-                                                                    <c:when test="${m.branchNo == restowner.branchNo}">
-                                                                        <td>
-                                                                            <a href="javascript:void(0)" onclick="getMenu(${m.menuNo})">แก้ไข</a>
-                                                                            <a href="javascript:void(0)" onclick="delMenu(${m.menuNo})">ลบ</a>
-                                                                        </td>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        <td>
-                                                                            <a href="javascript:void(0)" onclick="getMenu(${m.menuNo})">ดูรายละเอียด + แก้ไขราคา</a>
-                                                                        </td>
-                                                                    </c:otherwise>
-                                                                </c:choose>
-                                                            </tr>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="col-lg-12" style="text-align:center">เมนูสาขาอื่นที่เป็น Official</div>
-                                        <div class="x_content">
-                                            <table id="otherbranchmenu" class="table table-striped table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="table-rows">ชื่ออาหาร</th>
-                                                        <th class="table-rows">ราคา</th>
-                                                        <th class="table-rows">ตัวเลือก</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach items="${menus}" var="m">
-                                                        <c:if test="${!m.isThisBranchMenu && m.isOfficialMenu == 1}">
-                                                            <tr id="tr${m.menuNo}">
-                                                                <td>${m.menuNameTH} / ${m.menuNameEN}</td>
-                                                                <td><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${m.menuPrice}"/> ฿</td>
-                                                                <td><a href="javascript:void(0)" onclick="getMenu(${m.menuNo})">ดูรายละเอียด</a></td>
-                                                            </tr>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- Modal Content (ADD Menu Type)-->
+                    <div class="modal fade" id="addMenuType" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- เนือหาของ Modal ทั้งหมด -->
+                            <div class="modal-content">
+                                <!-- ส่วนหัวของ Modal -->
+                                <div class="modal-header">
+                                    <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">เพิ่มประเภทอาหาร</h4>
+                                </div>
+                                <!-- ส่วนเนื้อหาของ Modal -->
+                                <div class="modal-body">
+                                    <form class="form-horizontal form-label-left input_mask" id="addmenutype" action="AddMenuTypeServlet" method="post">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                            <input type="text" class="form-control" name="menuType" placeholder="ประเภทเมนูอาหาร" required>
+                                            <span class="fa fa-cutlery form-control-feedback right" aria-hidden="true"></span>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Modal Content (ADD MenuType)-->
+                    <!-- Modal Content (Edit MenuType)-->
+                    <div class="modal fade" id="editMenuType" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- เนือหาของ Modal ทั้งหมด -->
+                            <div class="modal-content">
+                                <!-- ส่วนหัวของ Modal -->
+                                <div class="modal-header">
+                                    <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">แก้ไขชื่อประเภทอาหาร : <span class="editMenuTypeName"></span></h4>
+                                </div>
+                                <!-- ส่วนเนื้อหาของ Modal -->
+                                <div class="modal-body">
+                                    <form class="form-horizontal form-label-left input_mask" id="editmenutype" action="EditMenuTypeServlet" method="post">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                            <input type="text" class="form-control editMenuTypeName" name="menuTypeName" placeholder="ประเภทเมนูอาหาร" required>
+                                            <input type="hidden" name="menuTypeNo" id="editMenuTypeNo">
+                                            <span class="fa fa-cutlery form-control-feedback right" aria-hidden="true"></span>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Modal Content (Edit MenuType)-->
                 </div>
             </div>
         </div>
+
         <!-- jQuery -->
         <script src="vendors/jquery/dist/jquery.min.js"></script>
         <!-- Bootstrap -->
@@ -150,6 +167,5 @@
         <!-- <script src="vendors/sweetalert/sweetalert.min.js"></script> -->    
         <!-- Custom Theme Scripts -->
         <script src="build/js/custom.min.js"></script>
-        <script src="handmade/menucust.js"></script>
     </body>
 </html>

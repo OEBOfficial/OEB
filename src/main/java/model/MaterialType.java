@@ -78,7 +78,7 @@ public class MaterialType {
         return success;
     }
     
-    public boolean delMaterialType(int matTypeno){
+    public static boolean delMaterialType(int matTypeNo){
         boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();

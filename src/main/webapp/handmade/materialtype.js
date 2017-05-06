@@ -1,4 +1,4 @@
-function delMenuType(menuTypeNo) {
+function delMaterialType(matTypeNo) {
     swal({
         title: "คุณต้องการลบใช่หรือไม่ ?",
         type: "warning",
@@ -11,19 +11,19 @@ function delMenuType(menuTypeNo) {
             function () {
                 $.ajax({
                     type: "Post",
-                    url: "DelMenuTypeAjaxServlet",
+                    url: "DelMaterialTypeAjaxServlet",
                     dataType: "text",
-                    data: "menuTypeNo=" + encodeURIComponent(menuTypeNo),
+                    data: "matTypeNo=" + encodeURIComponent(matTypeNo),
                     success: function (result) {
                         swal("เรียบร้อย", "ข้อมูลประเภทอาหารถูกลบแล้ว", "success");
-                        $("#datatable").DataTable().row("#tr" + menuTypeNo).remove().draw();
+                        $("#datatable").DataTable().row("#tr" + matTypeNo).remove().draw();
                     }
                 });
             });
 }
 
-function setMenuTypeName(menuTypeNo) {
-    $(".editMenuTypeName").html($("#menuTypeNo" + menuTypeNo).text());
-    $(".editMenuTypeName").val($("#menuTypeNo" + menuTypeNo).text());
-    $("#editMenuTypeNo").val(menuTypeNo);
+function setMaterialTypeName(materialTypeNo) {
+    $(".editMaterialTypeName").html($("#materialTypeNo" + materialTypeNo).text());
+    $(".editMaterialTypeName").val($("#materialTypeNo" + materialTypeNo).text());
+    $("#editMaterialTypeNo").val(materialTypeNo);
 }

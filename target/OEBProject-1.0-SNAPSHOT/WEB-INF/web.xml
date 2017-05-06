@@ -38,12 +38,23 @@
         <servlet-name>DelMenuAjaxServlet</servlet-name>
         <servlet-name>ToMenuSetServlet</servlet-name>
         <servlet-name>ToMenuCustServlet</servlet-name>
+        <servlet-name>AddMenuSetToBranchServlet</servlet-name>
+        <servlet-name>ManageMenuSetServlet</servlet-name>
+        <servlet-name>ToMaterialServlet</servlet-name>
+        <servlet-name>ToMaterialTypeServlet</servlet-name>
+        <servlet-name>AddMaterialTypeServlet</servlet-name>
+        <servlet-name>DelMaterialTypeAjaxServlet</servlet-name>
+        <servlet-name>EditMaterialTypeServlet</servlet-name>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>controller.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>controller.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ToEmpServlet</servlet-name>
@@ -166,10 +177,6 @@
         <servlet-class>ajaxcontroller.DelMenuAjaxServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>controller.LogoutServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ToMenuSetServlet</servlet-name>
         <servlet-class>controller.ToMenuSetServlet</servlet-class>
     </servlet>
@@ -184,6 +191,26 @@
     <servlet>
         <servlet-name>ManageMenuSetServlet</servlet-name>
         <servlet-class>controller.ManageMenuSetServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ToMaterialServlet</servlet-name>
+        <servlet-class>controller.ToMaterialServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ToMaterialTypeServlet</servlet-name>
+        <servlet-class>controller.ToMaterialTypeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddMaterialTypeServlet</servlet-name>
+        <servlet-class>controller.AddMaterialTypeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DelMaterialTypeAjaxServlet</servlet-name>
+        <servlet-class>ajaxcontroller.DelMaterialTypeAjaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditMaterialTypeServlet</servlet-name>
+        <servlet-class>controller.EditMaterialTypeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -324,6 +351,26 @@
     <servlet-mapping>
         <servlet-name>ManageMenuSetServlet</servlet-name>
         <url-pattern>/ManageMenuSetServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToMaterialServlet</servlet-name>
+        <url-pattern>/ToMaterialServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToMaterialTypeServlet</servlet-name>
+        <url-pattern>/ToMaterialTypeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddMaterialTypeServlet</servlet-name>
+        <url-pattern>/AddMaterialTypeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DelMaterialTypeAjaxServlet</servlet-name>
+        <url-pattern>/DelMaterialTypeAjaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditMaterialTypeServlet</servlet-name>
+        <url-pattern>/EditMaterialTypeServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

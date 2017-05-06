@@ -1,9 +1,3 @@
-$(document).ready(function () {
-    $("#emptab").parent().addClass('active');
-    $("#emptab").parent().find('ul').css('display', 'block');
-    $("#empdata").parent().addClass('active');
-});
-
 function editEmp(empNo) {
     $.ajax({
         type: "POST",

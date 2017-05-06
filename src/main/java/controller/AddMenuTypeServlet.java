@@ -20,6 +20,7 @@ public class AddMenuTypeServlet extends HttpServlet {
         RestaurantOwner ro = (RestaurantOwner)hs.getAttribute("restowner");
         MenuType m = new MenuType();
         m.setMenuTypeName(menuType);
+        System.out.println(menuType);
         m.addMenuType(ro.getBranchNo());
         response.sendRedirect(target);
         return ;

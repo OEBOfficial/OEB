@@ -65,7 +65,7 @@ public class MenuType {
                 ResultSet rs = ps.getGeneratedKeys();
                 rs.next();
                 menuTypeNo = rs.getInt(1);
-                success = addMenuTypeIntoBranch(menuTypeNo,branchNo);
+                success = addMenuTypeIntoBranch(menuTypeNo,branchNo,con);
             }
             if(success){
                 con.commit();
@@ -77,17 +77,15 @@ public class MenuType {
         return success;
     }
     
-    public static boolean addMenuTypeIntoBranch(int menuTypeNo,int branchNo){
+    public static boolean addMenuTypeIntoBranch(int menuTypeNo,int branchNo,Connection con){
         boolean success = false;
         try {
-            Connection con = ConnectionBuilder.getConnection();
             String sql = "INSERT INTO Branch_MenuType(menuTypeNo,branchNo) "
                     + "VALUES(?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, menuTypeNo);
             ps.setInt(2, branchNo);
             success = ps.executeUpdate() > 0;
-            con.close();
         } catch (Exception e) {
             System.out.println(e);
         }

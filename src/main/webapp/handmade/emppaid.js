@@ -38,12 +38,6 @@ function setemppaid(empNo) {
     });
 }
 
-$(document).ready(function () {
-    $("#emptab").parent().addClass('active');
-    $("#emptab").parent().find('ul').css('display', 'block');
-    $("#emppaid").parent().addClass('active');
-});
-
 $("#css-irow").click(function () {
     inputwd = $("#input-withdraw").val();
     empno = $("#empno").val();

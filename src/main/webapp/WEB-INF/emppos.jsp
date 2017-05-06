@@ -59,10 +59,11 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="x_panel">
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#addEmp" style="font-size:25px;">
-                                        <i class="fa fa-plus-circle"></i> เพิ่มตำแหน่ง
-                                    </a>
+                                    <div class="x_title">
+                                        <h4>ตำแหน่งพนักงาน</h4>
+                                    </div>
                                     <div class="x_content">
+                                        <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addEmp"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มตำแหน่ง</a></p>
                                         <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
@@ -76,11 +77,11 @@
                                                     <tr id="tr${e.positionNo}">
                                                         <td>${e.positionName}</td>
                                                         <td>
-                                                            <a href="javascript:void(0)" onclick="setConstraint(${e.positionNo})" data-toggle="modal" data-target="#editEmpPos">
-                                                                <i class="fa fa-plus-circle"></i> แก้ไข Position นี้
+                                                            <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="setConstraint(${e.positionNo})" data-toggle="modal" data-target="#editEmpPos">
+                                                                <i class="fa fa-pencil"></i>&nbsp; แก้ไข
                                                             </a>
-                                                            <a href="javascript:void(0)" onclick="delPosition('${e.positionName}',${e.positionNo})">
-                                                                <i class="fa fa-trash"></i> ลบ Position นี้
+                                                            <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="delPosition('${e.positionName}',${e.positionNo})">
+                                                                <i class="fa fa-trash"></i>&nbsp; ลบ
                                                             </a>
                                                         </td>
                                                     </tr>
