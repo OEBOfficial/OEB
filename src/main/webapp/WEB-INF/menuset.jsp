@@ -66,7 +66,7 @@
                                                     </th>
                                                     <th style="text-align:center;">ชื่อชุดอาหาร</th>
                                                     <th style="text-align:center;">ราคา</th>
-                                                    <th style="text-align:center;">ให้บริการ</th>
+                                                    <th style="text-align:center;">พร้อมขาย</th>
                                                     <th style="text-align:center;">ตัวเลือก</th>
                                                 </tr>
                                             </thead>
@@ -268,6 +268,7 @@
                             <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                 <center><img id="showsetpic" src="https://img.clipartfest.com/1c20817e0b1203f771effa178ccc6b66_cloud-upload-2-icon-upload-clipart_512-512.png" style="width: 250px;height: 250px"  alt="your image"  class="img-thumbnail" /></center>
                             </div>
+                            <h4 style="text-align:center;">รายละเอียด : <span id="showsetdesc"></span></h4>
                             <div class="form-group">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="x_panel">

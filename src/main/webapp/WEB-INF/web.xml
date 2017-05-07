@@ -48,6 +48,15 @@
         <servlet-name>AddMaterialServlet</servlet-name>
         <servlet-name>DelMaterialAjaxServlet</servlet-name>
         <servlet-name>EditMaterialServlet</servlet-name>
+        <servlet-name>ManageEmpServlet</servlet-name>
+        <servlet-name>ManageEmpPosServlet</servlet-name>
+        <servlet-name>ManageMaterialTypeServlet</servlet-name>
+        <servlet-name>ManageMaterialServlet</servlet-name>
+        <servlet-name>ManageMenuTypeServlet</servlet-name>
+        <servlet-name>ManageMenuServlet</servlet-name>
+        <servlet-name>AddMenuCustServlet</servlet-name>
+        <servlet-name>ManageMenuCustServlet</servlet-name>
+        <servlet-name>DelMenuConfigAjaxServlet</servlet-name>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
@@ -251,6 +260,18 @@
         <servlet-name>ManageMenuServlet</servlet-name>
         <servlet-class>controller.ManageMenuServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddMenuCustServlet</servlet-name>
+        <servlet-class>controller.AddMenuCustServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageMenuCustServlet</servlet-name>
+        <servlet-class>controller.ManageMenuCustServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DelMenuConfigAjaxServlet</servlet-name>
+        <servlet-class>ajaxcontroller.DelMenuConfigAjaxServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -446,6 +467,18 @@
     <servlet-mapping>
         <servlet-name>ManageMenuServlet</servlet-name>
         <url-pattern>/ManageMenuServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddMenuCustServlet</servlet-name>
+        <url-pattern>/AddMenuCustServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageMenuCustServlet</servlet-name>
+        <url-pattern>/ManageMenuCustServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DelMenuConfigAjaxServlet</servlet-name>
+        <url-pattern>/DelMenuConfigAjaxServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

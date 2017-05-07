@@ -55,8 +55,10 @@
                                     </div>
                                     <div class="x_content">
                                         <form action="ManageEmpServlet" method="POST">
-                                            <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addEmp"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มพนักงาน</a>
-                                                <button type="submit" name="submit" value="del" href="javascript:void(0)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบที่เลือก</button></p>
+                                            <p>
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#addEmp"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มพนักงาน</a>
+                                                <button type="submit" name="submit" value="del" href="javascript:void(0)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบที่เลือก</button>
+                                            </p>
                                             <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action1">
                                                 <thead>
                                                     <tr>

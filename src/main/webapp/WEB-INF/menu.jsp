@@ -64,7 +64,7 @@
                                                     <th style="width:3%;"><center><input type="checkbox" class="flat" id="check-all-1"></center></th>
                                             <th style="text-align:center;">ชื่ออาหาร</th>
                                             <th style="text-align:center;">ราคา</th>
-                                            <th style="text-align:center;">ให้บริการ</th>
+                                            <th style="text-align:center;">พร้อมขาย</th>
                                             <th style="text-align:center;">ตัวเลือก</th>
                                             </tr>
                                             </thead>
@@ -305,7 +305,6 @@
                     </div>
                 </div>
                 <!-- /Modal Content (ADD MENU)--> 
-
 
                 <!-- Modal Content (ADD MATERIAL)-->
                 <div class="modal fade" id="addMenuMat" role="dialog">

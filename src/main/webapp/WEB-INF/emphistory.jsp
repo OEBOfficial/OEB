@@ -57,69 +57,68 @@
                                             <!-- <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#addEmp">เพิ่มพนักงาน</button> -->
                                         </div>
                                         <div class="x_content">
-                                                <form class="form-horizontal" action="FilterWorkByDateServlet" method="POST">
-                                                    <fieldset >
-                                                        <div class="control-group show-grid">
+                                            <form class="form-horizontal" action="FilterWorkByDateServlet" method="POST">
+                                                <fieldset >
+                                                    <div class="control-group show-grid">
                                                         <p id="text-before-calendar">เลือกวันที่ต้องการแสดง</p>
-                                                            <div class="controls">
-                                                                <div class="input-prepend input-group col-md-6 col-md-offset-4">
-                                                                    <span class="add-on input-group-addon">
-                                                                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                                                    </span>
-                                                                    <input type="text" name="date" id="reservation" class="form-control datepicker" value="${daterange}" />
-                                                                    <button type="submit" class="btn btn-default">
-                                                                        <span class="glyphicon glyphicon-search"></span> ค้นหา
-                                                                    </button>
-                                                                </div>   
-                                                            </div>
+                                                        <div class="controls">
+                                                            <div class="input-prepend input-group col-md-6 col-md-offset-4">
+                                                                <span class="add-on input-group-addon">
+                                                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                                                </span>
+                                                                <input type="text" name="date" id="reservation" class="form-control datepicker" value="${daterange}" />
+                                                                <button type="submit" class="btn btn-default">
+                                                                    <span class="glyphicon glyphicon-search"></span> ค้นหา
+                                                                </button>
+                                                            </div>   
                                                         </div>
-                                                    </fieldset>                                              
-                                                </form>
+                                                    </div>
+                                                </fieldset>                                              
+                                            </form>
                                         </div>
-                                            <!--                                            <div class="col-md-3">
-                                                                                            <input type="checkbox" name="clockin"> เวลาเข้างาน 
-                                                                                            <input type="checkbox" name="clockout"> เวลาออกงาน
-                                                                                        </div>-->
-                                            <table id="datatable" class="table table-striped table-bordered">
-                                                <thead>
+                                        <!--                                            <div class="col-md-3">
+                                                                                        <input type="checkbox" name="clockin"> เวลาเข้างาน 
+                                                                                        <input type="checkbox" name="clockout"> เวลาออกงาน
+                                                                                    </div>-->
+                                        <table id="datatable" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="table-rows" style="width:16.67%;">วัน/เดือน/ปี</th>
+                                                    <th class="table-rows" style="width:16.67%;">ชื่อ</th>
+                                                    <th class="table-rows" style="width:16.67%;">เวลาเข้างาน</th>
+                                                    <th class="table-rows" style="width:16.67%;">เวลาออกงาน</th>
+                                                    <th class="table-rows" style="width:16.67%;">ชั่วโมงงาน</th>
+                                                    <th class="table-rows" style="width:16.67%;">ค่าจ้างวันนี้</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <c:forEach items="${workhist}" var="wh">
                                                     <tr>
-                                                        <th class="table-rows" style="width:16.67%;">วัน/เดือน/ปี</th>
-                                                        <th class="table-rows" style="width:16.67%;">ชื่อ</th>
-                                                        <th class="table-rows" style="width:16.67%;">เวลาเข้างาน</th>
-                                                        <th class="table-rows" style="width:16.67%;">เวลาออกงาน</th>
-                                                        <th class="table-rows" style="width:16.67%;">ชั่วโมงงาน</th>
-                                                        <th class="table-rows" style="width:16.67%;">ค่าจ้างวันนี้</th>
-
+                                                        <td style="text-align:center;">
+                                                            <fmt:formatDate pattern="dd/MM/yyyy" value="${wh.fromDate}" />
+                                                        </td>
+                                                        <td style="text-align:center;">
+                                                            ${wh.empName}
+                                                        </td>
+                                                        <td>
+                                                            <fmt:formatNumber type="number" pattern="00.00" value="${Math.floor(wh.fromTime/60)+(wh.fromTime%60)/100}" /> น.
+                                                        </td style="text-align:center;">
+                                                        <td>
+                                                            <fmt:formatNumber type="number" pattern="00.00" value="${Math.floor(wh.toTime/60)+(wh.toTime%60)/100}" /> น.
+                                                        </td>
+                                                        <td style="text-align:center;">
+                                                            <fmt:formatNumber type="number" pattern="#0" value="${Math.floor(((wh.toTime - wh.fromTime)/60))}"/> ชั่วโมง
+                                                            <fmt:formatNumber type="number" pattern="#0" value="${Math.floor(((wh.toTime - wh.fromTime)%60))}"/> นาที
+                                                        </td>
+                                                        <td style="text-align:center;">
+                                                            <fmt:formatNumber type="number" pattern="##,###0.00" value="${wh.workingPay}"/> ฿
+                                                        </td>
                                                     </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    <c:forEach items="${workhist}" var="wh">
-                                                        <tr>
-                                                            <td style="text-align:center;">
-                                                                <fmt:formatDate pattern="dd/MM/yyyy" value="${wh.fromDate}" />
-                                                            </td>
-                                                            <td style="text-align:center;">
-                                                                ${wh.empName}
-                                                            </td>
-                                                            <td>
-                                                                <fmt:formatNumber type="number" pattern="00.00" value="${Math.floor(wh.fromTime/60)+(wh.fromTime%60)/100}" /> น.
-                                                            </td style="text-align:center;">
-                                                            <td>
-                                                                <fmt:formatNumber type="number" pattern="00.00" value="${Math.floor(wh.toTime/60)+(wh.toTime%60)/100}" /> น.
-                                                            </td>
-                                                            <td style="text-align:center;">
-                                                                <fmt:formatNumber type="number" pattern="#0" value="${Math.floor(((wh.toTime - wh.fromTime)/60))}"/> ชั่วโมง
-                                                                <fmt:formatNumber type="number" pattern="#0" value="${Math.floor(((wh.toTime - wh.fromTime)%60))}"/> นาที
-                                                            </td>
-                                                            <td style="text-align:center;">
-                                                                <fmt:formatNumber type="number" pattern="##,###0.00" value="${wh.workingPay}"/> ฿
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -128,41 +127,48 @@
                 </div>
             </div>
         </div>
-        <!-- jQuery -->
-        <script src="vendors/jquery/dist/jquery.min.js"></script>
-        <!-- Bootstrap -->
-        <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- bootstrap-daterangepicker -->
-        <script src="vendors/moment/min/moment.min.js"></script>
-        <script src="vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-        <!-- FastClick -->
-        <script src="vendors/fastclick/lib/fastclick.js"></script>
-        <!-- NProgress -->
-        <script src="vendors/nprogress/nprogress.js"></script>
-        <!-- iCheck -->
-        <script src="vendors/iCheck/icheck.min.js"></script>
-        <!-- Datatables -->
-        <script src="vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-        <script src="vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-        <script src="vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-        <script src="vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-        <script src="vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-        <script src="vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-        <script src="vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-        <script src="vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-        <script src="vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-        <script src="vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-        <script src="vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-        <script src="vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-        <script src="vendors/jszip/dist/jszip.min.js"></script>
-        <script src="vendors/pdfmake/build/pdfmake.min.js"></script>
-        <script src="vendors/pdfmake/build/vfs_fonts.js"></script>
-        <!-- Custom Theme Scripts -->
-        <script src="build/js/custom.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('#datatable').DataTable().order([0,'desc'],[3,'desc']).draw();
-            });
-        </script>
-    </body>
+    </div>
+    <!-- jQuery -->
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="vendors/moment/min/moment.min.js"></script>
+    <script src="vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- FastClick -->
+    <script src="vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="vendors/nprogress/nprogress.js"></script>
+    <!-- iCheck -->
+    <script src="vendors/iCheck/icheck.min.js"></script>
+    <!-- Datatables -->
+    <script src="vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="vendors/jszip/dist/jszip.min.js"></script>
+    <script src="vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="build/js/custom.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#datatable').DataTable().order([0, 'desc'], [3, 'desc']).draw();
+        });
+
+        $(document).ready(function () {
+            $("#emptab").parent().addClass('active');
+            $("#emptab").parent().find('ul').css('display', 'block');
+            $("#workhist").parent().addClass('active');
+        });
+    </script>
+</body>
 </html>

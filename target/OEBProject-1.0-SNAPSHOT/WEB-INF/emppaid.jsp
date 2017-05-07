@@ -96,7 +96,7 @@
                                         </div>
                                         <!-- ส่วนเนื้อหาของ Modal -->
                                         <div class="modal-body">
-                                            <table class="table table-striped">
+                                            <table id="datatable-checkbox" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>
                                                         <th class="table-rows">วันที่</th>
@@ -107,19 +107,19 @@
                                                     </tr>
 
                                                 </thead>
-                                                <tbody id=workhisttable>
+                                                <tbody style="text-align: center;">
                                                 </tbody>	 
                                             </table>
-                                            <table class="table table-striped">
+                                            <table id="withdrawtable" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th class="table-rows">วันที่เบิก</th>
-                                                        <th class="table-rows">จำนวนเงินที่เบิก</th>
-                                                        <th class="table-rows">คงเหลือ</th>
+                                                        <th style="text-align:center;">ครั้งที่</th>
+                                                        <th style="text-align:center;">วัน/เวลาที่เบิก</th>
+                                                        <th style="text-align:center;">จำนวนเงินที่เบิก</th>
                                                     </tr>
 
                                                 </thead>
-                                                <tbody id=workhisttable>
+                                                <tbody style="text-align: center;">                                                    
                                                 </tbody>	 
                                             </table>
                                         </div>

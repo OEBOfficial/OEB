@@ -51,26 +51,33 @@
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-                                        <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addMenuType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; ปรับแต่ง</a></p>
-                                        <table id="datatable" class="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th class="table-rows">ชื่อการปรับแต่ง</th>
-                                                    <th class="table-rows">ตัวเลือก</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${menuTypes}" var="mt" varStatus="vs">
-                                                    <tr id="tr${mt.menuTypeNo}">
-                                                        <td><span id="menuTypeNo${mt.menuTypeNo}">${mt.menuTypeName}</span></td>
-                                                        <td>
-                                                            <a href="javascript:void(0)" onclick="setMenuTypeName(${mt.menuTypeNo})" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenuType"><i class="fa fa-pencil"></i>&nbsp; แก้ไข</a>
-                                                            <a href="javascript:void(0)" onclick="delMenuType(${mt.menuTypeNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>
-                                                        </td>
+                                        <form action="ManageMenuCustServlet" method="POST">
+                                            <p>
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#addMenuType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; ปรับแต่ง</a>
+                                                <button type="submit" name="submit" value="del" href="javascript:void(0)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบที่เลือก</button>
+                                            </p>
+                                            <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action1">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="text-align:center;width:3%;"><input type="checkbox" class="flat" id="check-all-1"></th>
+                                                        <th style="text-align:center;">ชื่อการปรับแต่ง</th>
+                                                        <th style="text-align:center;">ตัวเลือก</th>
                                                     </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${menucust}" var="mc">
+                                                        <tr id="tr${mt.menuTypeNo}">
+                                                            <td style="text-align:center;"><input type="checkbox" name="table_records" value="${mc.menuConfigNo}" class="flat"></td>
+                                                            <td style="text-align:center;"><span id="menuTypeNo${mc.menuConfigNo}">${mc.menuConfigName}</span></td>
+                                                            <td style="text-align:center;">
+                                                                <a href="javascript:void(0)" onclick="setMenuConfig(${mc.menuConfigNo})" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenuType"><i class="fa fa-pencil"></i>&nbsp; แก้ไข</a>
+                                                                <a href="javascript:void(0)" onclick="delMenuConfig(${mc.menuConfigNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -85,15 +92,26 @@
                                 <div class="modal-header">
                                     <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">เพิ่มประเภทอาหาร</h4>
+                                    <h4 class="modal-title">เพิ่มการปรับแต่งเมนูอาหาร</h4>
                                 </div>
                                 <!-- ส่วนเนื้อหาของ Modal -->
                                 <div class="modal-body">
-                                    <form class="form-horizontal form-label-left input_mask" id="addmenutype" action="AddMenuTypeServlet" method="post">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <input type="text" class="form-control" name="menuType" placeholder="ประเภทเมนูอาหาร" required>
+                                    <form class="form-horizontal form-label-left input_mask" action="AddMenuCustServlet" method="post">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                            <input type="text" class="form-control" name="menuCustName" placeholder="ชื่อการปรับแต่งเมนูอาหาร" required>
                                             <span class="fa fa-cutlery form-control-feedback right" aria-hidden="true"></span>
                                         </div>
+                                        <c:forEach var="i" begin="1" end="5">
+                                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                                <div class="col-md-3">
+                                                    ระดับที่ ${i} &nbsp;<input type="checkbox" value="${i}" class="flat" name="checklevel">
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" name="menuConfig${i}" placeholder="ชื่อการปรับแต่งระดับ ${i}">
+                                                </div>
+
+                                            </div>
+                                        </c:forEach>
                                         <div class="col-md-6 col-sm-6 col-xs-6">
                                             <button type="submit" class="btn btn-success">ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
@@ -167,5 +185,6 @@
         <!-- <script src="vendors/sweetalert/sweetalert.min.js"></script> -->    
         <!-- Custom Theme Scripts -->
         <script src="build/js/custom.min.js"></script>
+        <script src="handmade/menucust.js"></script>
     </body>
 </html>

@@ -40,6 +40,7 @@ function getMenuByMenuSet(menuSetNo, showType) {
                 $("#showsettoprice").html(json.menusetinfo.menuSetPrice);
                 $("#showsetname").html(json.menusetinfo.menuSetNameTH + " / " + json.menusetinfo.menuSetNameEN);
                 $("#showsetmenusetno").val(json.menusetinfo.menuSetNo);
+                $("#showsetdesc").html(json.menusetinfo.menuSetDesc);
                 $("#showsetpic").attr('src', json.menusetinfo.menuSetPicPath === 'null' ? 'https://img.clipartfest.com/1c20817e0b1203f771effa178ccc6b66_cloud-upload-2-icon-upload-clipart_512-512.png' : json.menusetinfo.menuSetPicPath);
                 $("#showsetfooter").css('display', 'block');
                 if (showType === 2) {
