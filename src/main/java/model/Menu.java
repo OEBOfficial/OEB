@@ -2,11 +2,9 @@
 package model;
 
 import com.mysql.cj.api.jdbc.Statement;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import java.util.LinkedList;
 import java.util.List;
 import javax.json.Json;
@@ -28,6 +26,8 @@ public class Menu {
     private boolean isAvailable;
     private int branchNo;
     private int amount;
+    private int menuTypeNo;
+    private String menuTypeName;
 
     public int getAmount() {
         return amount;
@@ -117,12 +117,29 @@ public class Menu {
         this.isOfficialMenu = isOfficialMenu;
     }
 
+    public int getMenuTypeNo() {
+        return menuTypeNo;
+    }
+
+    public void setMenuTypeNo(int menuTypeNo) {
+        this.menuTypeNo = menuTypeNo;
+    }
+
+    public String getMenuTypeName() {
+        return menuTypeName;
+    }
+
+    public void setMenuTypeName(String menuTypeName) {
+        this.menuTypeName = menuTypeName;
+    }
+
     public static LinkedList<Menu> getAllMenu(int branchNo) {
         LinkedList<Menu> menus = null;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT *,bm.branchNo AS bm_branchNo FROM Menu m "
-                    + " LEFT JOIN Branch_Menu bm ON m.menuNo = bm.menuNo AND bm.branchNo = ?";
+                    + " LEFT JOIN Branch_Menu bm ON m.menuNo = bm.menuNo AND bm.branchNo = ?"
+                    + " JOIN MenuType mt ON m.menuTypeNo = mt.menuTypeNo";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, branchNo);
             ResultSet rs = ps.executeQuery();
@@ -130,6 +147,7 @@ public class Menu {
             while (rs.next()) {
                 Menu m = new Menu();
                 orm(rs, m);
+                m.setIsAvailable(rs.getInt("isAvailable") == 1);
                 if (rs.getInt("bm_branchNo") == branchNo) {
                     m.setIsThisBranchMenu(true);
                 }
@@ -146,7 +164,9 @@ public class Menu {
         Menu m = null;
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "SELECT * FROM Menu WHERE menuNo = ?";
+            String sql = "SELECT * FROM Menu m "
+                    + " JOIN MenuType mt ON m.menuTypeNo = mt.menuTypeNo "
+                    + " WHERE m.menuNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, menuNo);
             ResultSet rs = ps.executeQuery();
@@ -175,7 +195,8 @@ public class Menu {
                     .add("isOfficialMenu", m.getIsOfficialMenu())
                     .add("isThisBranchMenu", m.isIsThisBranchMenu())
                     .add("branchNo", m.getBranchNo())
-                    .add("menuPicPath", m.getMenuPicPath())
+                    .add("menuPicPath", "" + m.getMenuPicPath())
+                    .add("amount", m.getAmount())
                     .build();
         }
         return menuJO;
@@ -188,6 +209,7 @@ public class Menu {
             String sql = "SELECT *,bm.branchNo AS bm_branchNo FROM Menu m "
                     + " JOIN Menu_MenuSet mms ON m.menuNo = mms.menuNo "
                     + " LEFT JOIN Branch_Menu bm ON m.menuNo = bm.menuNo AND bm.branchNo = ? "
+                    + " JOIN MenuType mt ON m.menuTypeNo = mt.menuTypeNo "
                     + " WHERE menuSetNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, branchNo);
@@ -367,8 +389,8 @@ public class Menu {
         try {
             Connection con = ConnectionBuilder.getConnection();
             con.setAutoCommit(false);
-            String sql = "INSERT INTO Menu(menuNameTH,menuNameEN,menuDesc,menuPrice,isOfficialMenu,branchNo) "
-                    + "VALUES(?,?,?,?,?,?)";
+            String sql = "INSERT INTO Menu(menuNameTH,menuNameEN,menuDesc,menuPrice,isOfficialMenu,branchNo,menuTypeNo,menuTypeNo) "
+                    + "VALUES(?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, menuNameTH);
             ps.setString(2, menuNameEN);
@@ -376,19 +398,13 @@ public class Menu {
             ps.setDouble(4, menuPrice);
             ps.setInt(5, isOfficialMenu);
             ps.setInt(6, branchNo);
+            ps.setInt(7, menuTypeNo);
+            ps.setInt(8, menuTypeNo);
             boolean successInSQL = ps.executeUpdate() == 1;
             if (successInSQL) {
                 ResultSet rs = ps.executeQuery();
                 rs.next();
                 int menuNo = rs.getInt(1);
-                sql = "INSERT INTO Menu_MenuType(menuNo,menuTypeNo) VALUES(?,?)";
-                ps = con.prepareStatement(sql);
-                ps.setInt(1, menuNo);
-                for (int mt : menuType) {
-                    ps.setInt(2, mt);
-                    ps.addBatch();
-                }
-                ps.executeBatch();
                 sql = "INSERT INTO Menu_Material(menuNo,materialNo,quantity,unit) VALUES(?,?,?,?)";
                 ps = con.prepareStatement(sql);
                 for (MenuMaterial mm : menuMat) {
@@ -416,7 +432,7 @@ public class Menu {
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "INSERT INTO Branch_Menu(menuNo,branchNo,isAvailable) "
-                    + "VALUES(?,?,?,?)";
+                    + "VALUES(?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, menuNo);
             ps.setInt(2, branchNo);
@@ -443,7 +459,7 @@ public class Menu {
                 ps.addBatch();
             }
             ps.executeBatch();
-            
+
             con.commit();
             success = true;
             con.close();
@@ -470,20 +486,6 @@ public class Menu {
             if (successInSQL) {
                 successInSQL = editMenuInBranch(isAvailable, menuPrice, branchNo, menuNo);
                 if (successInSQL) {
-                    sql = "DELETE FROM Menu_MenuType WHERE menuNo = ?";
-                    ps = con.prepareStatement(sql);
-                    ps.setInt(1, menuNo);
-                    ps.executeUpdate();
-
-                    sql = "INSERT INTO Menu_MenuType(menuNo,menuTypeNo) VALUES(?,?)";
-                    ps = con.prepareStatement(sql);
-                    for (int mtn : menuTypeNo) {
-                        ps.setInt(1, menuNo);
-                        ps.setInt(2, mtn);
-                        ps.addBatch();
-                    }
-                    ps.executeBatch();
-
                     sql = "DELETE FROM Menu_Material WHERE menuNo = ?";
                     ps = con.prepareStatement(sql);
                     ps.setInt(1, menuNo);
@@ -515,7 +517,7 @@ public class Menu {
         boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "UPDATE Branch_Menu SET isAvailable = ?,price = ? WHERE branchNo = ? AND menuNo = ?";
+            String sql = "UPDATE Branch_Menu SET isAvailable = ? WHERE branchNo = ? AND menuNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, isAvailable);
             ps.setDouble(2, price);
@@ -537,8 +539,9 @@ public class Menu {
         m.setMenuPrice(rs.getDouble("menuPrice"));
         m.setIsOfficialMenu(rs.getInt("isOfficialMenu"));
         m.setBranchNo(rs.getInt("branchNo"));
-        m.setIsAvailable(rs.getInt("isAvailable") == 1);
         m.setMenuPicPath(rs.getString("menuPicPath"));
+        m.setMenuTypeNo(rs.getInt("menuTypeNo"));
+        m.setMenuTypeName(rs.getString("menuTypeName"));
     }
 
     @Override

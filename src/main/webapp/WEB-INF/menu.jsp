@@ -73,30 +73,30 @@
                                                     <c:if test="${m.isThisBranchMenu}">
                                                         <tr id="trthis${m.menuNo}">
                                                             <td style="text-align:center;">
-                                                    <center><input type="checkbox" name="table_records" value="${m.menuNo}" class="flat"></center>
-                                                    </td>
-                                                    <td style="text-align:center;">${m.menuNameTH} / ${m.menuNameEN}</td>
-                                                    <td style="text-align:center;"><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${m.menuPrice}"/> ฿</td>
-                                                    <td style="text-align:center;">${m.isAvailable?'<i class="fa fa-check-circle"></i>':'<i class="fa fa-times-circle"></i>'}</td>
-                                                    <c:choose>
-                                                        <c:when test="${m.branchNo == restowner.branchNo}">
-                                                            <td valign="center" style="text-align:center;">
-                                                                <a href="javascript:void(0)" onclick="getMenuByMenuSet(${ms.menuSetNo})" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>&nbsp;แก้ไข</a>
-                                                                <a href="javascript:void(0)" onclick="delMenu(${m.menuNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp;ลบ</a>
+                                                                <input type="checkbox" name="table_records" value="${m.menuNo}" class="flat">
                                                             </td>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <td valign="center" style="text-align:center;">
-                                                                <a href="javascript:void(0)" onclick="getMenuByMenuSet(${ms.menuSetNo}, 2)" data-toggle="modal" data-target="#showset"  class="btn btn-dark btn-sm">
-                                                                    <i class="fa fa-search"></i>&nbsp; รายละเอียด
-                                                                </a>
-                                                                <a href="javascript:void(0)" onclick="delMenu(${m.menuNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp;ลบ</a>
-                                                            </td>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                    </tr>
-                                                </c:if>
-                                            </c:forEach>
+                                                            <td style="text-align:center;"><a href="javascript:void(0)" onclick="showMenu(${m.menuNo}, 2)" data-toggle="modal" data-target="#showmenu">${m.menuNameTH} / ${m.menuNameEN}</a></td>
+                                                            <td style="text-align:center;"><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${m.menuPrice}"/> ฿</td>
+                                                            <td style="text-align:center;">${m.isAvailable?'<i class="fa fa-check-circle"></i>':'<i class="fa fa-times-circle"></i>'}</td>
+                                                            <c:choose>
+                                                                <c:when test="${m.branchNo == restowner.branchNo}">
+                                                                    <td valign="center" style="text-align:center;">
+                                                                        <a href="javascript:void(0)" onclick="getMenuByMenuSet(${ms.menuSetNo})" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>&nbsp;แก้ไข</a>
+                                                                        <a href="javascript:void(0)" onclick="delMenu(${m.menuNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp;ลบ</a>
+                                                                    </td>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <td valign="center" style="text-align:center;">
+                                                                        <a href="javascript:void(0)" onclick="showMenu(${m.menuNo}, 2)" data-toggle="modal" data-target="#showmenu" class="btn btn-dark btn-sm">
+                                                                            <i class="fa fa-search"></i>&nbsp; รายละเอียด
+                                                                        </a>
+                                                                        <a href="javascript:void(0)" onclick="delMenu(${m.menuNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp;ลบ</a>
+                                                                    </td>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </tr>
+                                                    </c:if>
+                                                </c:forEach>
                                             </tbody>
                                         </table>
                                     </form>
@@ -130,10 +130,10 @@
                                                     <c:if test="${!m.isThisBranchMenu && m.isOfficialMenu == 1}">
                                                         <tr id="tr${m.menuNo}">
                                                             <td style="text-align:center;"><input type="checkbox" name="table_records" value="${m.menuNo}" class="flat"></td>
-                                                            <td style="text-align:center;">${m.menuNameTH} / ${m.menuNameEN}</td>
+                                                            <td style="text-align:center;"><a href="javascript:void(0)" onclick="showMenu(${m.menuNo}, 3)" data-toggle="modal" data-target="#showmenu">${m.menuNameTH} / ${m.menuNameEN}</a></td>
                                                             <td style="text-align:center;"><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${m.menuPrice}"/> ฿</td>
                                                             <td style="text-align:center;" valign="center">
-                                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#editSetOfficial"  class="btn btn-dark btn-sm"><i class="fa fa-search"></i>&nbsp; รายละเอียด</a>
+                                                                <a href="javascript:void(0)" onclick="showMenu(${m.menuNo}, 3)" data-toggle="modal" data-target="#showmenu"  class="btn btn-dark btn-sm"><i class="fa fa-search"></i>&nbsp; รายละเอียด</a>
                                                             </td>
                                                         </tr>
                                                     </c:if>
@@ -162,7 +162,7 @@
                             <div class="modal-body ">
                                 <form class="form-horizontal form-label-left input_mask" id="addemp" action="#" method="post">
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <center><img id="blah" src="https://img.clipartfest.com/1c20817e0b1203f771effa178ccc6b66_cloud-upload-2-icon-upload-clipart_512-512.png" style="width: 250px;height: 250px"  alt="your image"  class="img-thumbnail" />
+                                        <center><img id="blah" src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t34.0-12/18360467_674544166065326_1398146494_n.png?oh=ccb78e42d450920d59b901c35e9c33ad&oe=5911167A" style="width: 250px;height: 250px"  alt="your image"  class="img-thumbnail" />
                                             <input type='file' id="imgInp" /></center>
                                     </div>
                                     <div class="form-group">
@@ -388,17 +388,64 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Modal Content (ADD CUST)-->             
+                <!-- /Modal Content (ADD CUST)-->
 
+                <!-- Modal Content (Show Menu Set)-->
+                <div class="modal fade" id="showmenu" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- เนือหาของ Modal ทั้งหมด -->
+                        <div class="modal-content modal-body-forMenuSet">
+                            <!-- ส่วนหัวของ Modal -->
+                            <div class="modal-header">
+                                <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">รายละเอียดของเมนู <span class="showmenuname">ชื่อเมนู</span> ราคา <span id="showmenuprice">$$</span> บาท</h4>
+                            </div>
+                            <!-- ส่วนเนื้อหาของ Modal -->
+                            <div class="modal-body ">
+                                <form class="form-horizontal form-label-left input_mask" action="AddMenuToBranchServlet" id="addmenutobranchservlet" method="post">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                        <center><img id="showmenupic" src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t34.0-12/18360467_674544166065326_1398146494_n.png?oh=ccb78e42d450920d59b901c35e9c33ad&oe=5911167A" style="width: 250px;height: 250px"  alt="your image"  class="img-thumbnail" /></center>
+                                    </div>
+                                    <h4 style="text-align:center;">รายละเอียด : <span id="showmenudesc"></span></h4>
+                                    <div class="form-group">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <div class="x_panel">
+                                                <div class="x_title">
+                                                    <h2>รายการวัตถุดิบของเมนู <font class="showmenuname"></font></h2>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <div class="x_content">
+                                                    <table id="showmenutable" class="table table-striped table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="text-align:center;">ชื่อวัตถุดิบ</th>
+                                                                <th style="text-align:center;">จำนวน</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style="text-align:center;">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" id="showmenufooter">
+                                        <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                            <input type="checkbox" name="isAvailable" value="1"> เปิดบริการชุดเมนูนี้โดยทันที 
+                                            <button type="button" onclick="confirmmenuset()" class="btn btn-success btn-sm"><i class="fa fa-arrow-up"></i>&nbsp; เพิ่มเข้าสาขา</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="showmenuno" name="menuNo">
+                                </form>
 
-
-
-
-
-
-
-
-
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Modal Content (Show Menu Set)-->
             </div>
         </div>
         <!-- jQuery -->
@@ -433,21 +480,21 @@
         <script src="build/js/custom.min.js"></script>
         <script src="handmade/menu.js"></script>
         <script>
-                                                                    function readURL(input) {
-                                                                        if (input.files && input.files[0]) {
-                                                                            var reader = new FileReader();
+                                                function readURL(input) {
+                                                    if (input.files && input.files[0]) {
+                                                        var reader = new FileReader();
 
-                                                                            reader.onload = function (e) {
-                                                                                $('#blah').attr('src', e.target.result);
-                                                                            }
+                                                        reader.onload = function (e) {
+                                                            $('#blah').attr('src', e.target.result);
+                                                        }
 
-                                                                            reader.readAsDataURL(input.files[0]);
-                                                                        }
-                                                                    }
+                                                        reader.readAsDataURL(input.files[0]);
+                                                    }
+                                                }
 
-                                                                    $("#imgInp").change(function () {
-                                                                        readURL(this);
-                                                                    });
+                                                $("#imgInp").change(function () {
+                                                    readURL(this);
+                                                });
         </script>
         <style>
             .modal-body-forMenuSet {

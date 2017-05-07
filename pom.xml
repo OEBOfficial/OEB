@@ -42,7 +42,11 @@
             <version>1.2</version>
             <scope>provided</scope>
         </dependency>
- 
+        <dependency>
+            <groupId>servlets.com</groupId>
+            <artifactId>cos</artifactId>
+            <version>05Nov2002</version>
+        </dependency>
 
     </dependencies>
 

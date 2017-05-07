@@ -1,12 +1,15 @@
 ajaxcontroller\SetMenuSetAjaxServlet.class
 controller\AddMaterialServlet.class
+ajaxcontroller\DelMenuConfigAjaxServlet.class
 model\Branch.class
 model\RestaurantOwner.class
 ajaxcontroller\SetEmpPosAjaxServlet.class
 controller\ToEmpWorkHistServlet.class
 ajaxcontroller\ClockInAjaxServlet.class
 controller\AddMaterialTypeServlet.class
+controller\AddMenuCustServlet.class
 ajaxcontroller\ClockOutAjaxServlet.class
+controller\ManageMenuServlet.class
 controller\AddEmpServlet.class
 controller\EditMaterialTypeServlet.class
 ajaxcontroller\DelMenuAjaxServlet.class
@@ -15,6 +18,7 @@ controller\AddMenuTypeServlet.class
 model\MaterialType.class
 ajaxcontroller\DelMenuTypeAjaxServlet.class
 controller\ToEmpServlet.class
+ajaxcontroller\SetMenuMaterialAjaxServlet.class
 controller\ToMenuCustServlet.class
 controller\ToEmpPosServlet.class
 controller\EditEmpServlet.class
@@ -34,8 +38,10 @@ model\PayType.class
 model\WorkingHistory.class
 filter\SessionFilter.class
 model\Restaurant.class
+controller\AddMenuToBranchServlet.class
 model\ConnectionBuilder.class
 controller\ManageMaterialServlet.class
+controller\ManageMenuCustServlet.class
 ajaxcontroller\PayEmpAjaxServlet.class
 ajaxcontroller\SetEmpPaidServlet.class
 controller\ToEmpPaidServlet.class
@@ -45,6 +51,7 @@ controller\ToEmpCheckServlet.class
 controller\ToMenuTypeServlet.class
 controller\AddEmpPosServlet.class
 controller\AddMenuSetToBranchServlet.class
+controller\ManageMenuTypeServlet.class
 model\MenuCustomization.class
 controller\LoginServlet.class
 controller\EditMaterialServlet.class
@@ -56,6 +63,7 @@ model\ActorManagement.class
 model\MenuMaterial.class
 ajaxcontroller\DelMaterialAjaxServlet.class
 ajaxcontroller\DelEmpAjaxServlet.class
+controller\AddMenuSetServlet.class
 model\MenuSet.class
 controller\ManageEmpServlet.class
 ajaxcontroller\SetEmpAjaxServlet.class
@@ -63,3 +71,4 @@ controller\ToMenuServlet.class
 ajaxcontroller\DelEmpPosAjaxServlet.class
 ajaxcontroller\DelMenuSetAjaxServlet.class
 controller\ToMaterialTypeServlet.class
+controller\EditMenuSetServlet.class

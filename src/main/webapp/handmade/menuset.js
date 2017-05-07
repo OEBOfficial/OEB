@@ -11,6 +11,32 @@ $(document).ready(function () {
             {orderable: false, targets: [0]}
         ]
     });
+    $("#editmenuset").DataTable({
+        'order': [[1, 'asc']],
+        'columnDefs': [
+            {orderable: false, targets: [0]}
+        ]
+    });
+});
+
+$(".choosemenu").click(function () {
+    var amountinput = $(this).parent().parent().find("td:last-child").children();
+    var isCheck = $(this).is(':checked');
+    if (!isCheck) {
+        amountinput.attr('disabled', true);
+    } else {
+        amountinput.attr('disabled', false);
+    }
+});
+
+$(".editchoosemenu").click(function () {
+    var amountinput = $(this).parent().parent().find("td:last-child").children();
+    var isCheck = $(this).is(':checked');
+    if (!isCheck) {
+        amountinput.attr('disabled', true);
+    } else {
+        amountinput.attr('disabled', false);
+    }
 });
 
 function getMenuByMenuSet(menuSetNo, showType) {
@@ -20,18 +46,35 @@ function getMenuByMenuSet(menuSetNo, showType) {
         dataType: "json",
         data: "menuSetNo=" + encodeURIComponent(menuSetNo),
         success: function (json) {
-            if (showType === 2 || showType === 3) {
+            if (showType === 1){
+                $(".editMenuSetName").html(json.menusetinfo.menuSetNameTH + " / " + json.menusetinfo.menuSetNameEN);
+                $(".editMenuSetNameTH").val(json.menusetinfo.menuSetNameTH);
+                $(".editMenuSetNameEN").val(json.menusetinfo.menuSetNameEN);
+                $("#editDesc").val(json.menusetinfo.menuSetDesc);
+                $("#editPic").attr('src', json.menusetinfo.menuSetPicPath === 'null' ? 'https://scontent.fbkk14-1.fna.fbcdn.net/v/t34.0-12/18360467_674544166065326_1398146494_n.png?oh=ccb78e42d450920d59b901c35e9c33ad&oe=5911167A' : json.menusetinfo.menuSetPicPath);
+                $("#editPrice").val(json.menusetinfo.menuSetPrice);
+                $("#editOfficialMenuSet").prop('checked',json.menusetinfo.isOfficialMenuSet==1);
+                $("#editAvailable").prop('checked',false);
+                $(".editchoosemenu").prop('checked',false);
+                $(".editmenuamount").attr('disabled',true);
+                $(".editmenuamount").val('');
+                $("#editMenuSetNo").val(menuSetNo);
+                for(i = 0; i < json.menuset.length; i++){
+                    var ms = json.menuset[i];
+                    $("#editmenuamount"+ms.menuNo).val(ms.amount);
+                    $("#editmenuamount"+ms.menuNo).attr('disabled', false);
+                    $("#choose"+ms.menuNo).prop('checked', true);
+                }
+            }else if (showType === 2 || showType === 3) {
                 var fromPrice = 0;
                 var showsetdtb = $("#showsetdatatable").DataTable();
                 showsetdtb.clear();
                 for (i = 0; i < json.menuset.length; i++) {
                     var ms = json.menuset[i];
                     showsetdtb.row.add({
-                        0: ms.menuPicPath === 'null' ? '<center><img id="showsetpic" src="https://img.clipartfest.com/1c20817e0b1203f771effa178ccc6b66_cloud-upload-2-icon-upload-clipart_512-512.png" style="width:50px;"  alt="your image"  class="img-thumbnail" /></center>'
-                                : '<center><img id="showsetpic" src="' + ms.menuPicPath + '" style="width:50px;"  alt="your image"  class="img-thumbnail" /></center>',
-                        1: ms.menuNameTH + " / " + ms.menuNameEN,
-                        2: ms.menuPrice + " ฿",
-                        3: ms.amount
+                        0: ms.menuNameTH + " / " + ms.menuNameEN,
+                        1: ms.menuPrice + " ฿",
+                        2: ms.amount
                     });
                     fromPrice += ms.menuPrice * ms.amount;
                 }
@@ -41,7 +84,7 @@ function getMenuByMenuSet(menuSetNo, showType) {
                 $("#showsetname").html(json.menusetinfo.menuSetNameTH + " / " + json.menusetinfo.menuSetNameEN);
                 $("#showsetmenusetno").val(json.menusetinfo.menuSetNo);
                 $("#showsetdesc").html(json.menusetinfo.menuSetDesc);
-                $("#showsetpic").attr('src', json.menusetinfo.menuSetPicPath === 'null' ? 'https://img.clipartfest.com/1c20817e0b1203f771effa178ccc6b66_cloud-upload-2-icon-upload-clipart_512-512.png' : json.menusetinfo.menuSetPicPath);
+                $("#showsetpic").attr('src', json.menusetinfo.menuSetPicPath === 'null' ? 'https://scontent.fbkk14-1.fna.fbcdn.net/v/t34.0-12/18360467_674544166065326_1398146494_n.png?oh=ccb78e42d450920d59b901c35e9c33ad&oe=5911167A' : json.menusetinfo.menuSetPicPath);
                 $("#showsetfooter").css('display', 'block');
                 if (showType === 2) {
                     $("#showsetfooter").css('display', 'none');
@@ -65,6 +108,22 @@ function confirmmenuset() {
         $("#addmenutobranchservlet").submit();
     }
     );
+}
+
+function checkInput() {
+    var pass = true;
+    $(".menuamount").each(function () {
+        if ($(this).attr('disabled') !== 'disabled') {
+            if($(this).val() === '0' || $(this).val() === '' || $(this).val() < 0){
+                pass = false;
+            }
+        }
+    });
+    if(pass){
+        $("#addmenuset").submit();
+    }else{
+        alert('ค่าจำนวนเป็นค่าว่าง 0 หรือน้อยกว่า');
+    }
 }
 
 function delMenuSet(menuSetNo) {

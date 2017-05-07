@@ -84,7 +84,7 @@
                                                             <c:choose>
                                                                 <c:when test="${ms.branchNo == restowner.branchNo}">
                                                                     <td valign="center" style="text-align:center;">
-                                                                        <a href="javascript:void(0)" onclick="getMenuByMenuSet(${ms.menuSetNo})" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editSet">
+                                                                        <a href="javascript:void(0)" onclick="getMenuByMenuSet(${ms.menuSetNo}, 1)" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editSet">
                                                                             <i class="fa fa-pencil"></i>&nbsp; แก้ไข
                                                                         </a>
                                                                         <a href="javascript:void(0)" onclick="delMenuSet(${ms.menuSetNo})" class="btn btn-danger btn-sm">
@@ -178,18 +178,23 @@
                     </div>
                     <!-- ส่วนเนื้อหาของ Modal -->
                     <div class="modal-body ">
-                        <form class="form-horizontal form-label-left input_mask" id="addemp" action="#" method="post">
+                        <form class="form-horizontal form-label-left input_mask" id="addmenuset" action="AddMenuSetServlet" method="post" enctype="multipart/form-data">
                             <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                <center><img id="blah" src="https://img.clipartfest.com/1c20817e0b1203f771effa178ccc6b66_cloud-upload-2-icon-upload-clipart_512-512.png" style="width: 250px;height: 250px"  alt="your image"  class="img-thumbnail" />
-                                    <input type='file' id="imgInp" /></center>
+                                <center><img id="blah" src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t34.0-12/18360467_674544166065326_1398146494_n.png?oh=ccb78e42d450920d59b901c35e9c33ad&oe=5911167A" style="width: 250px;"  alt="your image"  class="img-thumbnail" />
+                                    <input type='file' id="imgInp" name="addImgPicPath" /></center>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-
-                                    <input type="text" class="form-control" name="ชื่อชุด" placeholder="ชื่อชุดเมนู">
-
+                                    <input type="text" class="form-control" name="menuSetNameTH" placeholder="ชื่อชุดเมนูภาษาไทย">
                                 </div>
-
+                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" name="menuSetNameEN" placeholder="ชื่อชุดเมนูภาษาอังกฤษ">
+                                </div>
+                                
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <textarea placeholder="รายละเอียดของชุดเมนูนี้" class="form-control" name="menuDesc" rows="3" required></textarea>
+                                </div>
+                                
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="x_panel">
                                         <div class="x_title">
@@ -201,7 +206,6 @@
                                                 <thead>
                                                     <tr>
                                                         <th>เลือก</th>
-                                                        <th>รูปอาหาร</th>
                                                         <th>ชื่ออาหาร</th>
                                                         <th>ราคา</th>
                                                         <th>จำนวน</th>
@@ -212,13 +216,12 @@
                                                 <tbody>
                                                     <c:forEach items="${menus}" var="m">
                                                         <tr>
-                                                            <td><input type="checkbox" name="table_records" value="${m.menuNo}" class="flat"></td>
-                                                            <td><center><img src="${m.menuPicPath!=null?m.menuPicPath:'https://img.clipartfest.com/1c20817e0b1203f771effa178ccc6b66_cloud-upload-2-icon-upload-clipart_512-512.png'}" style="width:100px;"  alt="your image"  class="img-thumbnail" /></center></td>
-                                                    <td>${m.menuNameTH} / ${m.menuNameEN}</td>
-                                                    <td><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${m.menuPrice}"/> ฿</td>
-                                                    <td><input type="number"></td>
-                                                    </tr>
-                                                </c:forEach>
+                                                            <td><input type="checkbox" name="table_records" value="${m.menuNo}" class="choosemenu"></td>
+                                                            <td>${m.menuNameTH} / ${m.menuNameEN}</td>
+                                                            <td><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${m.menuPrice}"/> ฿</td>
+                                                            <td><input type="number" name="amount" class="menuamount" disabled value="0"></td>
+                                                        </tr>
+                                                    </c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -238,7 +241,7 @@
                             <div class="modal-footer">
                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                    <button type="submit" class="btn btn-success">ตกลง</button>
+                                    <button type="button" onclick="checkInput()" class="btn btn-success">ตกลง</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
                                 </div>
                             </div>
@@ -250,7 +253,7 @@
         </div>
         <!-- /Modal Content (ADD SET)--> 
 
-        <!-- Modal Content (SHOW SET OFFICIAL)-->
+        <!-- Modal Content (Show Menu Set)-->
         <div class="modal fade" id="showset" role="dialog">
             <div class="modal-dialog">
                 <!-- เนือหาของ Modal ทั้งหมด -->
@@ -266,7 +269,7 @@
                     <div class="modal-body ">
                         <form class="form-horizontal form-label-left input_mask" action="AddMenuSetToBranchServlet" id="addmenutobranchservlet" method="post">
                             <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                <center><img id="showsetpic" src="https://img.clipartfest.com/1c20817e0b1203f771effa178ccc6b66_cloud-upload-2-icon-upload-clipart_512-512.png" style="width: 250px;height: 250px"  alt="your image"  class="img-thumbnail" /></center>
+                                <center><img id="showsetpic" src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t34.0-12/18360467_674544166065326_1398146494_n.png?oh=ccb78e42d450920d59b901c35e9c33ad&oe=5911167A" style="width: 250px;"  alt="your image"  class="img-thumbnail" /></center>
                             </div>
                             <h4 style="text-align:center;">รายละเอียด : <span id="showsetdesc"></span></h4>
                             <div class="form-group">
@@ -280,21 +283,17 @@
                                             <table id="showsetdatatable" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th>รูปอาหาร</th>
-                                                        <th>ชื่ออาหาร</th>
-                                                        <th>ราคา</th>
-                                                        <th>จำนวน</th>
+                                                        <th style="text-align:center;">ชื่ออาหาร</th>
+                                                        <th style="text-align:center;">ราคา</th>
+                                                        <th style="text-align:center;">จำนวน</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody style="text-align:center;">
                                                     <tr>
-                                                        <td>
-                                                <center><img id="showsetpic" src="https://img.clipartfest.com/1c20817e0b1203f771effa178ccc6b66_cloud-upload-2-icon-upload-clipart_512-512.png" style="width:50px;"  alt="your image"  class="img-thumbnail" /></center>
-                                                </td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>3</td>
-                                                </tr>
+                                                        <td>Edinburgh</td>
+                                                        <td>61</td>
+                                                        <td>3</td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -316,7 +315,7 @@
                 </div>
             </div>
         </div>
-        <!-- /Modal Content (SHOW SET OFFICIAL)-->            
+        <!-- /Modal Content (Show Menu Set)-->
 
         <!-- Modal Content (EDIT SET)-->
         <div class="modal fade" id="editSet" role="dialog">
@@ -327,22 +326,29 @@
                     <div class="modal-header">
                         <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">รายละเอียดของ *ชื่อชุด*</h4>
+                        <h4 class="modal-title">รายละเอียดของ <span class="editMenuSetName">*ชื่อชุด*</span></h4>
                     </div>
                     <!-- ส่วนเนื้อหาของ Modal -->
                     <div class="modal-body ">
-                        <form class="form-horizontal form-label-left input_mask" id="addemp" action="#" method="post">
+                        <form class="form-horizontal form-label-left input_mask" enctype="multipart/form-data" action="EditMenuSetServlet" method="POST">
                             <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                <center><img id="blah" src="https://img.clipartfest.com/1c20817e0b1203f771effa178ccc6b66_cloud-upload-2-icon-upload-clipart_512-512.png" style="width: 250px;height: 250px"  alt="your image"  class="img-thumbnail" />
-                                    <input type='file' id="imgInp" /></center>
+                                <center><img id="editPic" src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t34.0-12/18360467_674544166065326_1398146494_n.png?oh=ccb78e42d450920d59b901c35e9c33ad&oe=5911167A" style="width: 250px;"  alt="your image"  class="img-thumbnail" />
+                                    <input type='file' id="editImg" name="editMenuSetImg" /></center>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                     <div class="form-group">    
-                                        <input type="text" class="form-control" name="ชื่อชุด" placeholder="ชื่อชุดเมนู">
+                                        <input type="text" class="form-control editMenuSetNameTH" name="menuSetNameTH" placeholder="ชื่อชุดเมนูภาษาไทย">
                                     </div>
                                 </div>
-
+                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                    <div class="form-group">    
+                                        <input type="text" class="form-control editMenuSetNameEN" name="menuSetNameEN" placeholder="ชื่อชุดเมนูภาษาอังกฤษ">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <textarea placeholder="รายละเอียดของชุดเมนูนี้" class="form-control" name="menuDesc" id="editDesc" rows="3" required></textarea>
+                                </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="x_panel">
                                         <div class="x_title">
@@ -350,27 +356,24 @@
                                             <div class="clearfix"></div>
                                         </div>
                                         <div class="x_content">
-                                            <table id="datatable-fixed-header" class="table table-striped table-bordered">
+                                            <table id="editmenuset" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th>ชื่ออาหาร</th>
-                                                        <th>ราคา</th>
-                                                        <th>รายละเอียด</th>
-                                                        <th>ตัวเลือก</th>
-
+                                                        <th style="text-align:center;">เลือก</th>
+                                                        <th style="text-align:center;">ชื่ออาหาร</th>
+                                                        <th style="text-align:center;">ราคา</th>
+                                                        <th style="text-align:center;">จำนวน</th>
                                                     </tr>
                                                 </thead>
-
-
-                                                <tbody>
-                                                    <tr>
-                                                        <td>System Architect</td>
-                                                        <td>Edinburgh</td>
-                                                        <td>61</td>
-                                                        <td>
-                                                            <a href="javascript:void(0)" onclick="#" class="btn btn-danger btn-sm"><i class="fa fa-minus-square"></i>&nbsp;ลบ</a>
-                                                        </td>
-                                                    </tr>
+                                                <tbody style="text-align:center;">
+                                                    <c:forEach items="${menus}" var="m">
+                                                        <tr>
+                                                            <td><input type="checkbox" name="table_records" value="${m.menuNo}" class="editchoosemenu" id="choose${m.menuNo}"></td>
+                                                            <td>${m.menuNameTH} / ${m.menuNameEN}</td>
+                                                            <td><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${m.menuPrice}"/></td>
+                                                            <td><input type="number" class="editmenuamount" disabled id="editmenuamount${m.menuNo}" name="amount"></td>
+                                                        </tr>
+                                                    </c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -379,8 +382,12 @@
 
                                 <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
                                     <div class="form-group">    
-                                        <input type="text" class="form-control" name="price" placeholder="ราคา">
+                                        <input type="text" class="form-control" name="price" id="editPrice" placeholder="ราคา (บาท)" >
                                     </div>
+                                </div>
+                                <div class="col-md-9 col-sm-9 col-xs-9 form-group has-feedback">
+                                    <input type="checkbox" name="isOfficialMenuSet" id="editOfficialMenuSet" value="1"> แชร์ชุดเมนูนี้ร่วมกับสาขาอื่น 
+                                    <input type="checkbox" name="isAvailable" id="editAvailable" value="1"> เปิดบริการชุดเมนูนี้โดยทันที
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -390,27 +397,14 @@
                                     <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
                                 </div>
                             </div>
+                            <input type="hidden" name="menuSetNo" id="editMenuSetNo">
                         </form>
 
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /Modal Content (EDIT SET)-->      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <!-- /Modal Content (EDIT SET)-->   
         <!-- jQuery -->
         <script src="vendors/jquery/dist/jquery.min.js"></script>
         <!-- Bootstrap -->
@@ -454,9 +448,25 @@
                                                                         reader.readAsDataURL(input.files[0]);
                                                                     }
                                                                 }
+                                                                
+                                                                function readURL2(input) {
+                                                                    if (input.files && input.files[0]) {
+                                                                        var reader = new FileReader();
+
+                                                                        reader.onload = function (e) {
+                                                                            $('#editPic').attr('src', e.target.result);
+                                                                        }
+
+                                                                        reader.readAsDataURL(input.files[0]);
+                                                                    }
+                                                                }
 
                                                                 $("#imgInp").change(function () {
                                                                     readURL(this);
+                                                                });
+                                                                
+                                                                $("#editImg").change(function () {
+                                                                    readURL2(this);
                                                                 });
         </script>
         <style>
