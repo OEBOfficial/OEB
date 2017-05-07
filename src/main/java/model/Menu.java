@@ -44,7 +44,7 @@ public class Menu {
     public void setMenuPicPath(String menuPicPath) {
         this.menuPicPath = menuPicPath;
     }
-    
+
     public boolean isIsAvailable() {
         return isAvailable;
     }
@@ -52,7 +52,7 @@ public class Menu {
     public void setIsAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
     }
-    
+
     public int getBranchNo() {
         return branchNo;
     }
@@ -227,8 +227,8 @@ public class Menu {
                         .add("isOfficialMenu", menus.get(i).getIsOfficialMenu())
                         .add("isThisBranchMenu", menus.get(i).isIsThisBranchMenu())
                         .add("branchNo", menus.get(i).getBranchNo())
-                        .add("menuPicPath", ""+menus.get(i).getMenuPicPath())
-                        .add("amount",menus.get(i).getAmount())
+                        .add("menuPicPath", "" + menus.get(i).getMenuPicPath())
+                        .add("amount", menus.get(i).getAmount())
                         .build();
                 JAB.add(jo);
             }
@@ -287,6 +287,81 @@ public class Menu {
         return success;
     }
 
+    public static boolean delAllMenu(String[] stMenuNo, int branchNo) {
+        boolean success = false;
+        try {
+            Connection con = ConnectionBuilder.getConnection();
+            con.setAutoCommit(false);
+            for (String menuNo : stMenuNo) {
+                int iMenuNo = Integer.parseInt(menuNo);
+                String sql = "SELECT * FROM Menu WHERE menuNo = ?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setInt(1, iMenuNo);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    if (rs.getInt("isOfficialMenu") == 0) {  // Menu of this branch only
+                        sql = "DELETE FROM Menu WHERE menuNo = ?";
+                        ps = con.prepareStatement(sql);
+                        ps.setInt(1, iMenuNo);
+                        ps.executeUpdate();
+                    } else {
+                        sql = "DELETE FROM Branch_Menu WHERE menuNo = ? AND branchNo = ?";  // Delete Branch_Menu
+                        ps = con.prepareStatement(sql);
+                        ps.setInt(1, iMenuNo);
+                        ps.setInt(2, branchNo);
+                        int successInSQL = ps.executeUpdate();
+                        if (successInSQL == 1) {
+                            sql = "SELECT * FROM Branch_Menu WHERE menuNo = ?"; // check if menu is in other branch
+                            ps = con.prepareStatement(sql);
+                            ps.setInt(1, iMenuNo);
+                            rs = ps.executeQuery();
+                            if (rs.next()) {
+                                sql = "UPDATE Menu SET branchNo = ? WHERE menuNo = ?";
+                                ps = con.prepareStatement(sql);
+                                ps.setInt(1, rs.getInt("branchNo"));
+                                ps.setInt(2, iMenuNo);
+                                ps.executeUpdate();
+                            } else {
+                                sql = "DELETE FROM Menu WHERE menuNo = ?";
+                                ps = con.prepareStatement(sql);
+                                ps.setInt(1, iMenuNo);
+                                ps.executeUpdate();
+                            }
+                        }
+                    }
+                }
+            }
+            con.commit();
+            con.close();
+            success = true;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return success;
+    }
+
+    public static boolean manageAvailableAllMenu(String[] stMenuNo, int branchNo, int isAvailable) {
+        boolean success = false;
+        try {
+            Connection con = ConnectionBuilder.getConnection();
+            con.setAutoCommit(false);
+            String sql = "UPDATE Branch_Menu SET isAvailable = ? WHERE menuNo = ? AND branchNo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            for (String mn : stMenuNo) {
+                ps.setInt(1, isAvailable);
+                ps.setInt(2, Integer.parseInt(mn));
+                ps.setInt(3, branchNo);
+                ps.addBatch();
+            }
+            ps.executeBatch();
+            con.commit();
+            con.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return success;
+    }
+
     public boolean addMenu(List<Integer> menuType, List<MenuMaterial> menuMat) {
         boolean success = false;
         try {
@@ -324,7 +399,7 @@ public class Menu {
                     ps.addBatch();
                 }
                 ps.executeBatch();
-                success = addMenuIntoBranch(menuNo, branchNo, 0, null);
+                success = addMenuIntoBranch(menuNo, branchNo, 0);
             }
             if (success) {
                 con.commit();
@@ -336,22 +411,41 @@ public class Menu {
         return success;
     }
 
-    public static boolean addMenuIntoBranch(int menuNo, int branchNo, int isAvailable, Double price) {
+    public static boolean addMenuIntoBranch(int menuNo, int branchNo, int isAvailable) {
         boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "INSERT INTO Branch_Menu(menuNo,branchNo,isAvailable,price) "
+            String sql = "INSERT INTO Branch_Menu(menuNo,branchNo,isAvailable) "
                     + "VALUES(?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, menuNo);
             ps.setInt(2, branchNo);
             ps.setInt(3, isAvailable);
-            if (price == null) {
-                ps.setNull(branchNo, java.sql.Types.DOUBLE);
-            } else {
-                ps.setDouble(4, price);
-            }
             success = ps.executeUpdate() > 0;
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return success;
+    }
+
+    public static boolean addAllMenuIntoBranch(String[] stMenuNo, int branchNo) {
+        boolean success = false;
+        try {
+            Connection con = ConnectionBuilder.getConnection();
+            con.setAutoCommit(false);
+            String sql = "INSERT INTO Branch_Menu(menuNo,branchNo,isAvailable) "
+                    + "VALUES(?,?,0)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            for (String mn : stMenuNo) {
+                ps.setInt(1, Integer.parseInt(mn));
+                ps.setInt(2, branchNo);
+                ps.addBatch();
+            }
+            ps.executeBatch();
+            
+            con.commit();
+            success = true;
             con.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -405,7 +499,7 @@ public class Menu {
                         ps.addBatch();
                     }
                     ps.executeBatch();
-                    
+
                     con.commit();
                     success = true;
                 }
@@ -443,7 +537,7 @@ public class Menu {
         m.setMenuPrice(rs.getDouble("menuPrice"));
         m.setIsOfficialMenu(rs.getInt("isOfficialMenu"));
         m.setBranchNo(rs.getInt("branchNo"));
-        m.setIsAvailable(rs.getInt("isAvailable")==1);
+        m.setIsAvailable(rs.getInt("isAvailable") == 1);
         m.setMenuPicPath(rs.getString("menuPicPath"));
     }
 

@@ -96,23 +96,23 @@
                                                 <tbody>
                                                     <c:forEach items="${workhist}" var="wh">
                                                         <tr>
-                                                            <td>
+                                                            <td style="text-align:center;">
                                                                 <fmt:formatDate pattern="dd/MM/yyyy" value="${wh.fromDate}" />
                                                             </td>
-                                                            <td>
+                                                            <td style="text-align:center;">
                                                                 ${wh.empName}
                                                             </td>
                                                             <td>
                                                                 <fmt:formatNumber type="number" pattern="00.00" value="${Math.floor(wh.fromTime/60)+(wh.fromTime%60)/100}" /> น.
-                                                            </td>
+                                                            </td style="text-align:center;">
                                                             <td>
                                                                 <fmt:formatNumber type="number" pattern="00.00" value="${Math.floor(wh.toTime/60)+(wh.toTime%60)/100}" /> น.
                                                             </td>
-                                                            <td>
+                                                            <td style="text-align:center;">
                                                                 <fmt:formatNumber type="number" pattern="#0" value="${Math.floor(((wh.toTime - wh.fromTime)/60))}"/> ชั่วโมง
                                                                 <fmt:formatNumber type="number" pattern="#0" value="${Math.floor(((wh.toTime - wh.fromTime)%60))}"/> นาที
                                                             </td>
-                                                            <td>
+                                                            <td style="text-align:center;">
                                                                 <fmt:formatNumber type="number" pattern="##,###0.00" value="${wh.workingPay}"/> ฿
                                                             </td>
                                                         </tr>

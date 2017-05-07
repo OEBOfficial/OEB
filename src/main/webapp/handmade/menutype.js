@@ -16,7 +16,7 @@ function delMenuType(menuTypeNo) {
                     data: "menuTypeNo=" + encodeURIComponent(menuTypeNo),
                     success: function (result) {
                         swal("เรียบร้อย", "ข้อมูลประเภทอาหารถูกลบแล้ว", "success");
-                        $("#datatable").DataTable().row("#tr" + menuTypeNo).remove().draw();
+                        $("#datatable-checkbox").DataTable().row("#tr" + menuTypeNo).remove().draw();
                     }
                 });
             });

@@ -51,33 +51,42 @@
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-                                        <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addMenuType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มวัตถุดิบ</a></p>
-                                        <table id="datatable" class="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th class="table-rows">ชื่อประเภท</th>
-                                                    <th class="table-rows">ตัวเลือก</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${menuTypes}" var="mt" varStatus="vs">
-                                                    <tr id="tr${mt.menuTypeNo}">
-                                                        <td><span id="menuTypeNo${mt.menuTypeNo}">${mt.menuTypeName}</span></td>
-                                                        <td>
-                                                            <a href="javascript:void(0)" onclick="setMenuTypeName(${mt.menuTypeNo})" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenuType"><i class="fa fa-pencil"></i>&nbsp; แก้ไข</a>
-                                                            <a href="javascript:void(0)" onclick="delMenuType(${mt.menuTypeNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>
-                                                        </td>
+                                        <form action="ManageMaterialServlet" method="POST">
+                                            <p>
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#addMatType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มวัตถุดิบ</a>
+                                                <button type="submit" name="submit" value="del" href="javascript:void(0)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบที่เลือก</button>
+                                            </p>
+                                            <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action1">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:3%;text-align: center;"><input type="checkbox" class="flat" id="check-all-1"></th>
+                                                        <th style="text-align:center;">ชื่อวัตถุดิบ</th>
+                                                        <th style="text-align:center;">ชื่อประเภท</th>
+                                                        <th style="text-align:center;">ตัวเลือก</th>
                                                     </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${materials}" var="m" varStatus="vs">
+                                                        <tr id="tr${m.matNo}">
+                                                            <td style="text-align:center;"><input type="checkbox" name="table_records" value="${m.matNo}" class="flat"></td>
+                                                            <td style="text-align:center;"><span id="materialNo${m.matNo}">${m.matName}</span></td>
+                                                            <td style="text-align:center;"><span id="matType${m.matNo}" >${matTypes[m.matTypeNo].matTypeName}</span></td>
+                                                            <td style="text-align:center;">
+                                                                <a href="javascript:void(0)" onclick="setMaterial(${m.matNo})" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMaterial"><i class="fa fa-pencil"></i>&nbsp; แก้ไข</a>
+                                                                <a href="javascript:void(0)" onclick="delMaterial(${m.matNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Modal Content (ADD Menu Type)-->
-                    <div class="modal fade" id="addMenuType" role="dialog">
+                    <!-- Modal Content (ADD Mat Type)-->
+                    <div class="modal fade" id="addMatType" role="dialog">
                         <div class="modal-dialog">
                             <!-- เนือหาของ Modal ทั้งหมด -->
                             <div class="modal-content">
@@ -89,23 +98,34 @@
                                 </div>
                                 <!-- ส่วนเนื้อหาของ Modal -->
                                 <div class="modal-body">
-                                    <form class="form-horizontal form-label-left input_mask" id="addmenutype" action="AddMenuTypeServlet" method="post">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <input type="text" class="form-control" name="menuType" placeholder="ประเภทเมนูอาหาร" required>
-                                            <span class="fa fa-cutlery form-control-feedback right" aria-hidden="true"></span>
+                                    <form class="form-horizontal form-label-left input_mask" action="AddMaterialServlet" method="post">
+                                        <div class="form-group">
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <input type="text" class="form-control" name="matName" placeholder="ชื่อวัตถุดิบ" required>
+                                                <span class="fa fa-cutlery form-control-feedback right" aria-hidden="true"></span>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" >
+                                                <select name="matTypeNo" class="form-control" required>
+                                                    <c:forEach items="${matTypes}" var="mt">
+                                                        <option value="${mt.key}">${mt.value.matTypeName}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                        <div class="modal-footer">
+                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                                <button type="submit" class="btn btn-success">ตกลง</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- /Modal Content (ADD MenuType)-->
-                    <!-- Modal Content (Edit MenuType)-->
-                    <div class="modal fade" id="editMenuType" role="dialog">
+                    <!-- /Modal Content (ADD MatType)-->
+                    <!-- Modal Content (Edit MatType)-->
+                    <div class="modal fade" id="editMaterial" role="dialog">
                         <div class="modal-dialog">
                             <!-- เนือหาของ Modal ทั้งหมด -->
                             <div class="modal-content">
@@ -113,26 +133,37 @@
                                 <div class="modal-header">
                                     <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">แก้ไขชื่อประเภทอาหาร : <span class="editMenuTypeName"></span></h4>
+                                    <h4 class="modal-title">แก้ไขวัตถุดิบ : <span class="editMaterialName"></span></h4>
                                 </div>
                                 <!-- ส่วนเนื้อหาของ Modal -->
                                 <div class="modal-body">
-                                    <form class="form-horizontal form-label-left input_mask" id="editmenutype" action="EditMenuTypeServlet" method="post">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <input type="text" class="form-control editMenuTypeName" name="menuTypeName" placeholder="ประเภทเมนูอาหาร" required>
-                                            <input type="hidden" name="menuTypeNo" id="editMenuTypeNo">
-                                            <span class="fa fa-cutlery form-control-feedback right" aria-hidden="true"></span>
+                                    <form class="form-horizontal form-label-left input_mask" action="EditMaterialServlet" method="post">
+                                        <div class="form-group">
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <input type="text" class="form-control editMaterialName" name="matName" placeholder="ชื่อวัตถุดิบ" required>
+                                                <span class="fa fa-cutlery form-control-feedback right" aria-hidden="true"></span>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" >
+                                                <select name="matTypeNo" id="editMatTypeNo" class="form-control" required>
+                                                    <c:forEach items="${matTypes}" var="mt">
+                                                        <option value="${mt.key}">${mt.value.matTypeName}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                        <div class="modal-footer">
+                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                                <button type="submit" class="btn btn-success">ตกลง</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                            </div>
                                         </div>
+                                        <input type="hidden" id="editMaterialNo" name="matNo">
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- /Modal Content (Edit MenuType)-->
+                    <!-- /Modal Content (Edit MatType)-->
                 </div>
             </div>
         </div>
@@ -167,5 +198,6 @@
         <!-- <script src="vendors/sweetalert/sweetalert.min.js"></script> -->    
         <!-- Custom Theme Scripts -->
         <script src="build/js/custom.min.js"></script>
+        <script src="handmade/material.js"></script>
     </body>
 </html>

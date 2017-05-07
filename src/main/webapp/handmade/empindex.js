@@ -49,7 +49,7 @@ function delEmp(empNo, empName) {
                     data: "empno=" + encodeURIComponent(empNo),
                     success: function (result) {
                         swal("เรียบร้อย", "ข้อมูลพนักงานถูกลบแล้ว", "success");
-                        $("#datatable").DataTable().row("#tr" + empNo).remove().draw();
+                        $("#datatable-checkbox").DataTable().row("#tr" + empNo).remove().draw();
                     }
                 });
             });

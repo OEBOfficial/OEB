@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Material {
+
     private int matNo;
     private String matName;
     private int matTypeNo;
@@ -36,8 +37,8 @@ public class Material {
     public void setMatTypeNo(int matTypeNo) {
         this.matTypeNo = matTypeNo;
     }
-    
-    public static List<Material> getAllMaterial(){
+
+    public static List<Material> getAllMaterial() {
         List<Material> mats = null;
         try {
             Connection con = ConnectionBuilder.getConnection();
@@ -45,9 +46,9 @@ public class Material {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             mats = new LinkedList<Material>();
-            while(rs.next()){
+            while (rs.next()) {
                 Material m = new Material();
-                orm(rs,m);
+                orm(rs, m);
                 mats.add(m);
             }
             con.close();
@@ -56,15 +57,15 @@ public class Material {
         }
         return mats;
     }
-    
-    public boolean addMaterialType(){
+
+    public boolean addMaterial() {
         boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "INSERT INTO Material(matName,matTypeNo) VALUES(?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1,matName);
-            ps.setInt(2,matTypeNo);
+            ps.setString(1, matName);
+            ps.setInt(2, matTypeNo);
             success = ps.executeUpdate() > 0;
             con.close();
         } catch (Exception ex) {
@@ -72,16 +73,16 @@ public class Material {
         }
         return success;
     }
-    
-    public boolean editMaterialType(){
+
+    public boolean editMaterial() {
         boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "UPDATE Material SET matName = ?, matTypeNo = ? WHERE matNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1,matName);
-            ps.setInt(2,matTypeNo);
-            ps.setInt(3,matNo);
+            ps.setString(1, matName);
+            ps.setInt(2, matTypeNo);
+            ps.setInt(3, matNo);
             success = ps.executeUpdate() > 0;
             con.close();
         } catch (Exception ex) {
@@ -89,14 +90,14 @@ public class Material {
         }
         return success;
     }
-    
-    public boolean delMaterialType(int matNo){
+
+    public static boolean delMaterial(int matNo) {
         boolean success = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "DELETE FROM Material WHERE matNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1,matNo);
+            ps.setInt(1, matNo);
             success = ps.executeUpdate() > 0;
             con.close();
         } catch (Exception ex) {
@@ -104,8 +105,29 @@ public class Material {
         }
         return success;
     }
-    
-    private static void orm(ResultSet rs,Material m) throws Exception{
+
+    public static boolean delAllMaterial(String[] stMatNo) {
+        boolean success = false;
+        try {
+            Connection con = ConnectionBuilder.getConnection();
+            con.setAutoCommit(false);
+            String sql = "DELETE FROM Material WHERE matNo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            for (String mn : stMatNo) {
+                ps.setInt(1, Integer.parseInt(mn));
+                ps.addBatch();
+            }
+            ps.executeBatch();
+            con.commit();
+            success = true;
+            con.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return success;
+    }
+
+    private static void orm(ResultSet rs, Material m) throws Exception {
         m.setMatName(rs.getString("matName"));
         m.setMatNo(rs.getInt("matNo"));
         m.setMatTypeNo(rs.getInt("matTypeNo"));

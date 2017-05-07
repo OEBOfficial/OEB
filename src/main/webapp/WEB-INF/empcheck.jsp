@@ -64,9 +64,9 @@
                                             <tbody>
                                                 <c:forEach items="${workhist}" var="wh" varStatus="vs">
                                                     <tr id="tr${wh.empNo}">
-                                                        <td>${wh.empName}</td>
-                                                        <td>${wh.fromDate != null ? wh.toDate != null ? "ทำงานเสร็จแล้ว" : "กำลังทำงานอยู่" : "ยังไม่เข้างาน"}</td>
-                                                        <td>
+                                                        <td style="text-align:center;">${wh.empName}</td>
+                                                        <td style="text-align:center;">${wh.fromDate != null ? wh.toDate != null ? "ทำงานเสร็จแล้ว" : "กำลังทำงานอยู่" : "ยังไม่เข้างาน"}</td>
+                                                        <td style="text-align:center;">
                                                             <c:choose>
                                                                 <c:when test="${wh.fromDate != null}">
                                                                     <c:choose>
@@ -84,12 +84,12 @@
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </td>
-                                                        <td>
+                                                        <td style="text-align:center;">
                                                             <c:choose>
                                                                 <c:when test="${wh.fromDate != null}">
                                                                     <c:choose>
                                                                         <c:when test="${wh.toDate != null}">
-                                                                            เสร็จแล้วอะ
+                                                                            ทำงานเสร็จเรียบร้อย
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                             <button type="button" class="btn btn-warning btn-sm" onclick="clockOut(${wh.workNo},${wh.empNo})"><i class="fa fa-sign-out"></i>&nbsp; ออกงาน</button>

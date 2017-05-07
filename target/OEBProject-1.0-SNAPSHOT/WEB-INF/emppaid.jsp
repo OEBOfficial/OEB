@@ -68,11 +68,11 @@
                                             <tbody>
                                             <c:forEach items="${employees}" var="e" varStatus="vs">
                                                 <tr id="tr${e.empNo}">
-                                                    <td>${e.empName}</td>
-                                                    <td>${e.constraint.employeePosition.positionName}</td>
-                                                    <td>${e.constraint.employmentType.empTypeName} ราย${e.constraint.payType.payTypeName}</td>
-                                                    <td><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${e.SUMPAY}"/> ฿</td>
-                                                    <td>
+                                                    <td style="text-align:center;">${e.empName}</td>
+                                                    <td style="text-align:center;">${e.constraint.employeePosition.positionName}</td>
+                                                    <td style="text-align:center;">${e.constraint.employmentType.empTypeName} ราย${e.constraint.payType.payTypeName}</td>
+                                                    <td style="text-align:center;"><fmt:formatNumber type="number" pattern="#,###,##0.00" value="${e.SUMPAY}"/> ฿</td>
+                                                    <td style="text-align:center;">
                                                         <button class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#paidDetail" onclick="setemppaid(${e.empNo})"><i class="fa fa-money"></i>&nbsp; จ่ายเงิน</button>
                                                     </td>
                                                 </tr>

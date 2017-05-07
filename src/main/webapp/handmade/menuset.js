@@ -1,6 +1,16 @@
 $(document).ready(function () {
-    $("#thisbranchmenuset").DataTable();
-    $("#otherbranchmenuset").DataTable();
+    $("#thisbranchmenuset").DataTable({
+        'order': [[1, 'asc']],
+        'columnDefs': [
+            {orderable: false, targets: [0]}
+        ]
+    });
+    $("#otherbranchmenuset").DataTable({
+        'order': [[1, 'asc']],
+        'columnDefs': [
+            {orderable: false, targets: [0]}
+        ]
+    });
 });
 
 function getMenuByMenuSet(menuSetNo, showType) {
@@ -31,9 +41,9 @@ function getMenuByMenuSet(menuSetNo, showType) {
                 $("#showsetname").html(json.menusetinfo.menuSetNameTH + " / " + json.menusetinfo.menuSetNameEN);
                 $("#showsetmenusetno").val(json.menusetinfo.menuSetNo);
                 $("#showsetpic").attr('src', json.menusetinfo.menuSetPicPath === 'null' ? 'https://img.clipartfest.com/1c20817e0b1203f771effa178ccc6b66_cloud-upload-2-icon-upload-clipart_512-512.png' : json.menusetinfo.menuSetPicPath);
-                $("#showsetfooter").css('display','block');
+                $("#showsetfooter").css('display', 'block');
                 if (showType === 2) {
-                    $("#showsetfooter").css('display','none');
+                    $("#showsetfooter").css('display', 'none');
                 }
             }
         }

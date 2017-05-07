@@ -15,8 +15,8 @@ function delMaterialType(matTypeNo) {
                     dataType: "text",
                     data: "matTypeNo=" + encodeURIComponent(matTypeNo),
                     success: function (result) {
-                        swal("เรียบร้อย", "ข้อมูลประเภทอาหารถูกลบแล้ว", "success");
-                        $("#datatable").DataTable().row("#tr" + matTypeNo).remove().draw();
+                        swal("เรียบร้อย", "ข้อมูลประเภทวัตถุดิบถูกลบแล้ว", "success");
+                        $("#datatable-checkbox").DataTable().row("#tr" + matTypeNo).remove().draw();
                     }
                 });
             });

@@ -45,6 +45,9 @@
         <servlet-name>AddMaterialTypeServlet</servlet-name>
         <servlet-name>DelMaterialTypeAjaxServlet</servlet-name>
         <servlet-name>EditMaterialTypeServlet</servlet-name>
+        <servlet-name>AddMaterialServlet</servlet-name>
+        <servlet-name>DelMaterialAjaxServlet</servlet-name>
+        <servlet-name>EditMaterialServlet</servlet-name>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
@@ -212,6 +215,42 @@
         <servlet-name>EditMaterialTypeServlet</servlet-name>
         <servlet-class>controller.EditMaterialTypeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddMaterialServlet</servlet-name>
+        <servlet-class>controller.AddMaterialServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DelMaterialAjaxServlet</servlet-name>
+        <servlet-class>ajaxcontroller.DelMaterialAjaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditMaterialServlet</servlet-name>
+        <servlet-class>controller.EditMaterialServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageEmpServlet</servlet-name>
+        <servlet-class>controller.ManageEmpServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageEmpPosServlet</servlet-name>
+        <servlet-class>controller.ManageEmpPosServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageMaterialTypeServlet</servlet-name>
+        <servlet-class>controller.ManageMaterialTypeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageMaterialServlet</servlet-name>
+        <servlet-class>controller.ManageMaterialServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageMenuTypeServlet</servlet-name>
+        <servlet-class>controller.ManageMenuTypeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageMenuServlet</servlet-name>
+        <servlet-class>controller.ManageMenuServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -371,6 +410,42 @@
     <servlet-mapping>
         <servlet-name>EditMaterialTypeServlet</servlet-name>
         <url-pattern>/EditMaterialTypeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddMaterialServlet</servlet-name>
+        <url-pattern>/AddMaterialServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DelMaterialAjaxServlet</servlet-name>
+        <url-pattern>/DelMaterialAjaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditMaterialServlet</servlet-name>
+        <url-pattern>/EditMaterialServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageEmpServlet</servlet-name>
+        <url-pattern>/ManageEmpServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageEmpPosServlet</servlet-name>
+        <url-pattern>/ManageEmpPosServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageMaterialTypeServlet</servlet-name>
+        <url-pattern>/ManageMaterialTypeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageMaterialServlet</servlet-name>
+        <url-pattern>/ManageMaterialServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageMenuTypeServlet</servlet-name>
+        <url-pattern>/ManageMenuTypeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageMenuServlet</servlet-name>
+        <url-pattern>/ManageMenuServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

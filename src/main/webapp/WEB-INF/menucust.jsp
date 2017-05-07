@@ -47,15 +47,15 @@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="x_panel">
                                     <div class="x_title">
-                                        <h4>ประเภทเมนูอาหาร</h4>
+                                        <h4>ปรับแต่งเมนูอาหาร</h4>
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-                                        <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addMenuType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มประเภท</a></p>
+                                        <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addMenuType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; ปรับแต่ง</a></p>
                                         <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th class="table-rows">ชื่อประเภท</th>
+                                                    <th class="table-rows">ชื่อการปรับแต่ง</th>
                                                     <th class="table-rows">ตัวเลือก</th>
                                                 </tr>
                                             </thead>

@@ -127,7 +127,7 @@ public class Employee {
                     .add("payTypeName", e.getConstraint().getPayType().getPayTypeName())
                     .add("pay", e.getConstraint().getPay())
                     .add("gender", e.getGender())
-                    .add("specPay", ""+e.getSpecPay())
+                    .add("specPay", "" + e.getSpecPay())
                     .add("telNo", e.getTelNo())
                     .build();
         }
@@ -160,7 +160,7 @@ public class Employee {
         }
         return employees;
     }
-    
+
     public static List<Employee> getEmpByBranchWithSUMPAY(int branchNo) {
         List<Employee> employees = null;
         try {
@@ -258,6 +258,27 @@ public class Employee {
             if (i > 0) {
                 success = true;
             }
+            con.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return success;
+    }
+
+    public static boolean delAllEmp(String[] stEmpNo) {
+        boolean success = false;
+        try {
+            Connection con = ConnectionBuilder.getConnection();
+            con.setAutoCommit(success);
+            String sql = "DELETE FROM Employee WHERE empNo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            for (String empNo : stEmpNo) {
+                ps.setInt(1, Integer.parseInt(empNo));
+                ps.addBatch();
+            }
+            ps.executeBatch();
+            success = true;
+            con.commit();
             con.close();
         } catch (Exception ex) {
             System.out.println(ex);

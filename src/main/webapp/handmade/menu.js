@@ -1,6 +1,17 @@
 $(document).ready(function () {
-    $("#thisbranchmenu").DataTable();
-    $("#otherbranchmenu").DataTable();
+    $("#thisbranchmenu").DataTable({
+        'order': [[1, 'asc']],
+        'columnDefs': [
+            {orderable: false, targets: [0]}
+        ]
+    });
+
+    $("#otherbranchmenu").DataTable({
+        'order': [[1, 'asc']],
+        'columnDefs': [
+            {orderable: false, targets: [0]}
+        ]
+    });
 });
 
 function getMenu(menuNo) {
@@ -32,8 +43,8 @@ function delMenu(menuNo) {
                     dataType: "text",
                     data: "menuNo=" + encodeURIComponent(menuNo),
                     success: function (result) {
-                        swal("เรียบร้อย", "เมนูอาหารถูกลบออกเรียบร้อยแล้ว", "success");
-                        $("#thisbranchmenu").DataTable().row("#trthis" + menuNo).remove().draw();
+//                        swal("เรียบร้อย", "เมนูอาหารถูกลบออกเรียบร้อยแล้ว", "success");
+                        location.reload();
                     }
                 });
             });

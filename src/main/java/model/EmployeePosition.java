@@ -12,19 +12,20 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 public class EmployeePosition {
+
     private int positionNo;
     private int branchNo;
     private String positionName;
 
     public EmployeePosition() {
     }
-    
+
     public EmployeePosition(int positionNo, int branchNo, String positionName) {
         this.positionNo = positionNo;
         this.branchNo = branchNo;
         this.positionName = positionName;
     }
-    
+
     public int getPositionNo() {
         return positionNo;
     }
@@ -48,126 +49,158 @@ public class EmployeePosition {
     public void setBranchNo(int branchNo) {
         this.branchNo = branchNo;
     }
-    
-    public static EmployeePosition getEmpPos(int posNo){
+
+    public static EmployeePosition getEmpPos(int posNo) {
         EmployeePosition ep = null;
-        try{
+        try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT * FROM EmployeePosition WHERE positionNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1,posNo);
+            ps.setInt(1, posNo);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 ep = new EmployeePosition();
-                orm(rs,ep);
+                orm(rs, ep);
             }
             con.close();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return ep;
     }
-    
-    public static JsonObject getEmpPosJson(int positionNo){
+
+    public static JsonObject getEmpPosJson(int positionNo) {
         JsonObjectBuilder JOB = Json.createObjectBuilder();
         EmployeePosition ep = getEmpPos(positionNo);
         JsonObject empJO = null;
-        if(ep != null){
+        if (ep != null) {
             empJO = JOB
-                .add("positionName",ep.getPositionName())
-                .add("positionNo", ep.getPositionNo())
-                .add("branchNo", ep.getBranchNo())
-                .build();
+                    .add("positionName", ep.getPositionName())
+                    .add("positionNo", ep.getPositionNo())
+                    .add("branchNo", ep.getBranchNo())
+                    .build();
         }
         return empJO;
     }
-    
-    public static List<EmployeePosition> getAllEmpPos(int branchNo){
+
+    public static List<EmployeePosition> getAllEmpPos(int branchNo) {
         List<EmployeePosition> empPos = null;
-        try{
+        try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "SELECT * FROM EmployeePosition WHERE branchNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1,branchNo);
+            ps.setInt(1, branchNo);
             ResultSet rs = ps.executeQuery();
             empPos = new LinkedList<EmployeePosition>();
-            while(rs.next()){
+            while (rs.next()) {
                 EmployeePosition ep = new EmployeePosition();
-                orm(rs,ep);
+                orm(rs, ep);
                 empPos.add(ep);
             }
             con.close();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return empPos;
     }
-    
-    public Integer addEmpPosName(){
+
+    public Integer addEmpPosName() {
         Integer posNo = null;
-        try{
+        try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "INSERT INTO EmployeePosition(positionName,branchNo) "
                     + " VALUES(?,?) ";
-            PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, positionName);
             ps.setInt(2, branchNo);
             int i = ps.executeUpdate();
-            if(i > 0){
+            if (i > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
                 rs.next();
                 posNo = rs.getInt(1);
             }
             con.close();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return posNo;
     }
-    
-    public boolean editEmpPosName(){
+
+    public boolean editEmpPosName() {
         boolean success = false;
-        try{
+        try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "UPDATE EmployeePosition SET positionName = ? WHERE positionNo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, positionName);
             ps.setInt(2, positionNo);
             int i = ps.executeUpdate();
-            if(i > 0){
+            if (i > 0) {
                 success = true;
             }
             con.close();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return success;
     }
-        
-    public static boolean delEmpPos(int positionNo){
+
+    public static boolean delEmpPos(int positionNo) {
         boolean success = false;
-        try{
+        try {
             Connection con = ConnectionBuilder.getConnection();
+            con.setAutoCommit(false);
             String sql = "UPDATE Employee SET constraintNo = 0 WHERE constraintNo IN "
                     + " (SELECT constraintNo FROM `Constraint` WHERE positionNo = ?)";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1,positionNo);
+            ps.setInt(1, positionNo);
             ps.executeUpdate();
             sql = "DELETE FROM EmployeePosition WHERE positionNo = ?";
             ps = con.prepareStatement(sql);
             ps.setInt(1, positionNo);
             int i = ps.executeUpdate();
-            if(i > 0){
+            if (i > 0) {
                 success = true;
+                con.commit();
             }
             con.close();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         return success;
     }
-    
-    public static void orm(ResultSet rs,EmployeePosition ep) throws Exception{
+
+    public static boolean delAllEmpPos(String[] stPositionNo) {
+        boolean success = false;
+        try {
+            Connection con = ConnectionBuilder.getConnection();
+            con.setAutoCommit(false);
+            String sql = "UPDATE Employee SET constraintNo = 0 WHERE constraintNo IN "
+                    + " (SELECT constraintNo FROM `Constraint` WHERE positionNo = ?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            for (String pn : stPositionNo) {
+                ps.setInt(1, Integer.parseInt(pn));
+                ps.addBatch();
+            }
+            ps.executeBatch();
+            
+            sql = "DELETE FROM EmployeePosition WHERE positionNo = ?";
+            ps = con.prepareStatement(sql);
+            for (String pn : stPositionNo) {
+                ps.setInt(1, Integer.parseInt(pn));
+                ps.addBatch();
+            }
+            ps.executeBatch();
+            con.commit();
+            success = true;
+            con.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return success;
+    }
+
+    public static void orm(ResultSet rs, EmployeePosition ep) throws Exception {
         ep.setBranchNo(rs.getInt("branchNo"));
         ep.setPositionNo(rs.getInt("positionNo"));
         ep.setPositionName(rs.getString("positionName"));
@@ -177,5 +210,5 @@ public class EmployeePosition {
     public String toString() {
         return "EmployeePosition{" + "positionNo=" + positionNo + ", branchNo=" + branchNo + ", positionName=" + positionName + '}';
     }
-    
+
 }

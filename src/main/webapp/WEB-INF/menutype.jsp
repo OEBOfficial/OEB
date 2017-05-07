@@ -51,26 +51,33 @@
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-                                        <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addMenuType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มประเภท</a></p>
-                                        <table id="datatable" class="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th class="table-rows">ชื่อประเภท</th>
-                                                    <th class="table-rows">ตัวเลือก</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${menuTypes}" var="mt" varStatus="vs">
-                                                    <tr id="tr${mt.menuTypeNo}">
-                                                        <td><span id="menuTypeNo${mt.menuTypeNo}">${mt.menuTypeName}</span></td>
-                                                        <td>
-                                                            <a href="javascript:void(0)" onclick="setMenuTypeName(${mt.menuTypeNo})" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenuType"><i class="fa fa-pencil"></i>&nbsp; แก้ไข</a>
-                                                            <a href="javascript:void(0)" onclick="delMenuType(${mt.menuTypeNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>
-                                                        </td>
+                                        <form action="ManageMenuTypeServlet" method="POST">
+                                            <p>
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#addMenuType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มประเภท</a>
+                                                <button type="submit" name="submit" value="del" href="javascript:void(0)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบที่เลือก</button>
+                                            </p>
+                                            <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action1">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:3%;text-align:center;"><input type="checkbox" class="flat" id="check-all-1"></th>
+                                                        <th style="width:50%;text-align:center;">ชื่อประเภท</th>
+                                                        <th style='text-align:center'>ตัวเลือก</th>
                                                     </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${menuTypes}" var="mt" varStatus="vs">
+                                                        <tr id="tr${mt.menuTypeNo}">
+                                                            <td style='text-align:center'><input type="checkbox" name="table_records" value="${mt.menuTypeNo}" class="flat"></td>
+                                                            <td style='text-align:center'><span id="menuTypeNo${mt.menuTypeNo}">${mt.menuTypeName}</span></td>
+                                                            <td style='text-align:center'>
+                                                                <a href="javascript:void(0)" onclick="setMenuTypeName(${mt.menuTypeNo})" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenuType"><i class="fa fa-pencil"></i>&nbsp; แก้ไข</a>
+                                                                <a href="javascript:void(0)" onclick="delMenuType(${mt.menuTypeNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

@@ -63,31 +63,37 @@
                                         <h4>ตำแหน่งพนักงาน</h4>
                                     </div>
                                     <div class="x_content">
-                                        <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addEmp"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มตำแหน่ง</a></p>
-                                        <table id="datatable" class="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>ชื่อ</th>
-
-                                                    <th>ตัวเลือก</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${emppos}" var="e" varStatus="vs">
-                                                    <tr id="tr${e.positionNo}">
-                                                        <td>${e.positionName}</td>
-                                                        <td>
-                                                            <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="setConstraint(${e.positionNo})" data-toggle="modal" data-target="#editEmpPos">
-                                                                <i class="fa fa-pencil"></i>&nbsp; แก้ไข
-                                                            </a>
-                                                            <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="delPosition('${e.positionName}',${e.positionNo})">
-                                                                <i class="fa fa-trash"></i>&nbsp; ลบ
-                                                            </a>
-                                                        </td>
+                                        <form action="ManageEmpPosServlet" method="POST">
+                                            <p>
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#addEmp"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มตำแหน่ง</a>
+                                                <button type="submit" name="submit" value="del" href="javascript:void(0)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบที่เลือก</button>
+                                            </p>
+                                            <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action1">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:3%;text-align:center;"><input type="checkbox" class="flat" id="check-all-1"></th>
+                                                        <th style="width:50%;text-align:center;">ชื่อ</th>
+                                                        <th style="text-align:center;">ตัวเลือก</th>
                                                     </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${emppos}" var="e" varStatus="vs">
+                                                        <tr id="tr${e.positionNo}">
+                                                            <td style="text-align:center;"><input type="checkbox" name="table_records" value="${e.positionNo}" class="flat"></td>
+                                                            <td style="text-align:center;">${e.positionName}</td>
+                                                            <td style="text-align:center;">
+                                                                <a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="setConstraint(${e.positionNo})" data-toggle="modal" data-target="#editEmpPos">
+                                                                    <i class="fa fa-pencil"></i>&nbsp; แก้ไข
+                                                                </a>
+                                                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="delPosition('${e.positionName}',${e.positionNo})">
+                                                                    <i class="fa fa-trash"></i>&nbsp; ลบ
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

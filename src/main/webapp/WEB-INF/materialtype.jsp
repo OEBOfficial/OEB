@@ -51,26 +51,31 @@
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-                                        <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addMaterialType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มประเภท</a></p>
-                                        <table id="datatable" class="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th class="table-rows">ชื่อประเภท</th>
-                                                    <th class="table-rows">ตัวเลือก</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${matTypes}" var="mt" varStatus="vs">
-                                                    <tr id="tr${mt.matTypeNo}">
-                                                        <td><span id="materialTypeNo${mt.matTypeNo}">${mt.matTypeName}</span></td>
-                                                        <td>
-                                                            <a href="javascript:void(0)" onclick="setMaterialTypeName(${mt.matTypeNo})" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMaterialType"><i class="fa fa-pencil"></i>&nbsp; แก้ไข</a>
-                                                            <a href="javascript:void(0)" onclick="delMaterialType(${mt.matTypeNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>
-                                                        </td>
+                                        <form action="ManageMaterialTypeServlet" method="POST">
+                                            <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addMaterialType"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มประเภท</a>
+                                                <button type="submit" name="submit" value="del" href="javascript:void(0)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบที่เลือก</button></p>
+                                            <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action1">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:3%;text-align: center;"><input type="checkbox" class="flat" id="check-all-1"></th>
+                                                        <th style="width:50%;text-align:center;">ชื่อประเภท</th>
+                                                        <th style="text-align:center;">ตัวเลือก</th>
                                                     </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${matTypes}" var="mt" varStatus="vs">
+                                                        <tr id="tr${mt.matTypeNo}">
+                                                            <td style="text-align:center;"><input type="checkbox" name="table_records" value="${mt.matTypeNo}" class="flat"></td>
+                                                            <td style="text-align:center;"><a href="javascript:void(0)" onclick="setMaterialTypeName(${mt.matTypeNo})" data-toggle="modal" data-target="#editMaterialType"><span id="materialTypeNo${mt.matTypeNo}">${mt.matTypeName}</span></a></td>
+                                                            <td style="text-align:center;">
+                                                                <a href="javascript:void(0)" onclick="setMaterialTypeName(${mt.matTypeNo})" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMaterialType"><i class="fa fa-pencil"></i>&nbsp; แก้ไข</a>
+                                                                <a href="javascript:void(0)" onclick="delMaterialType(${mt.matTypeNo})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +124,7 @@
                                 <div class="modal-body">
                                     <form class="form-horizontal form-label-left input_mask" id="editmaterialtype" action="EditMaterialTypeServlet" method="post">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <input type="text" class="form-control editMaterialTypeName" name="materialTypeName" placeholder="ประเภทเมนูอาหาร" required>
+                                            <input type="text" class="form-control editMaterialTypeName" name="materialTypeName" placeholder="ประเภทวัตถุดิบ" required>
                                             <input type="hidden" name="matTypeNo" id="editMaterialTypeNo">
                                             <span class="fa fa-cutlery form-control-feedback right" aria-hidden="true"></span>
                                         </div>
