@@ -23,6 +23,6 @@ public class ToMenuServlet extends HttpServlet {
         request.setAttribute("menus",menus);
         request.setAttribute("menuTypes",menuTypes);
         request.setAttribute("target","menu");
-        getServletContext().getRequestDispatcher(target).forward(request, response);
+        request.getServletContext().getRequestDispatcher(target).forward(request, response);
     }
 }

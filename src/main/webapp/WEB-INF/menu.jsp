@@ -29,6 +29,15 @@
         <!-- <link href="vendors/sweetalert/sweetalert.css" rel="stylesheet"> -->        
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
         <link rel="stylesheet" href="build/css/OEB_style.css">
+        <style>
+            .modal-body-forMenuSet {
+                position: relative;
+                overflow-y: auto;
+                width: 1000px;
+                right: 30%;
+                height: 700px
+            }
+        </style>
     </head>
     <body class="nav-md">
         <div class="container body">
@@ -147,165 +156,6 @@
                     </div>
                 </div>
 
-                <!-- Modal Content (ADD MENU)-->
-                <div class="modal fade" id="addMenu" role="dialog">
-                    <div class="modal-dialog">
-                        <!-- เนือหาของ Modal ทั้งหมด -->
-                        <div class="modal-content modal-body-forMenuSet">
-                            <!-- ส่วนหัวของ Modal -->
-                            <div class="modal-header">
-                                <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">เพิ่มชุดอาหาร</h4>
-                            </div>
-                            <!-- ส่วนเนื้อหาของ Modal -->
-                            <div class="modal-body ">
-                                <form class="form-horizontal form-label-left input_mask" id="addemp" action="#" method="post">
-                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <center><img id="blah" src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t34.0-12/18360467_674544166065326_1398146494_n.png?oh=ccb78e42d450920d59b901c35e9c33ad&oe=5911167A" style="width: 250px;height: 250px"  alt="your image"  class="img-thumbnail" />
-                                            <input type='file' id="imgInp" /></center>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-6 form-group has-feedback">
-                                            <input type="text" class="form-control" name="ชื่อชุด" placeholder="ชื่อชุดเมนู">
-                                        </div>
-                                        <div class="col-md-3 col-sm-3 col-xs-6 form-group has-feedback">
-                                            <input type="text" class="form-control" name="ราคา" placeholder="ราคา">
-                                        </div>
-                                        <div class="col-md-3 col-sm-3 col-xs-6 form-group has-feedback">
-                                            <select name="#" class="form-control" id="#" required>
-                                                <option value="">---เลือกประเภทอาหาร---</option>
-                                                <c:forEach items="#" var="#">
-                                                    <option value="${#}">${#}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6 form-group has-feedback">
-                                            <textarea type="text" class="form-control" name="ชื่อชุด" placeholder="คำอธิบาย"></textarea>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6 form-group has-feedback">
-                                            <div class="form-group">    
-                                                <div id="gender" class="btn-group" data-toggle="buttons">
-                                                    <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                        <input type="radio" name="gender" id="gender-m" value="M" required> &nbsp; เป็น Official เมนู &nbsp;
-                                                    </label>
-                                                    <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                        <input type="radio" name="gender" id="gender-f" value="F" required> &nbsp; ไม่เป็น Official เมนู &nbsp;
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div class="x_panel">
-                                                <div class="x_title">
-                                                    <h2>การปรับแต่งเมนู</h2>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="x_content">
-                                                    <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addCustMenu"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มปรับแต่ง</a></p>
-                                                    <table id="datatable-fixed-header" class="table table-striped table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>เลือก</th>
-                                                                <th>ชื่อการปรับแต่ง</th>
-                                                                <th>ระดับ</th>
-                                                            </tr>
-                                                        </thead>
-
-
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="a-center ">
-                                                                    <input type="checkbox" class="flat" name="table_records">
-                                                                </td>
-                                                                <td>ข้าว</td>
-                                                                <td>###</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="a-center ">
-                                                                    <input type="checkbox" class="flat" name="table_records">
-                                                                </td>
-                                                                <td>ความแซ่บ</td>
-                                                                <td>###</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div class="x_panel">
-                                                <div class="x_title">
-                                                    <h2>วัตถุดิบ</h2>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="x_content">
-                                                    <p><a href="javascript:void(0)" data-toggle="modal" data-target="#addMenuMat"  class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp; เพิ่มวัตถุดิบ</a></p>
-                                                    <table id="datatable" class="table table-striped table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>เลือก</th>
-                                                                <th>ชื่อวัตถุดิบ</th>
-                                                                <th>ปริมาณ</th>
-                                                                <th>หน่วย</th>
-                                                            </tr>
-                                                        </thead>
-
-
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="a-center ">
-                                                                    <input type="checkbox" class="flat" name="table_records">
-                                                                </td>
-                                                                <td>ข้าว</td>
-                                                                <td><input type="number" class="form-control" name="ชื่อชุด" placeholder="ปริมาณ"></td>
-                                                                <td>
-                                                                    <select name="#" class="form-control" id="#" required>
-                                                                        <option value="">---เลือกหน่วย---</option>
-                                                                        <c:forEach items="#" var="#">
-                                                                            <option value="${#}">${#}</option>
-                                                                        </c:forEach>
-                                                                    </select>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="a-center ">
-                                                                    <input type="checkbox" class="flat" name="table_records">
-                                                                </td>
-                                                                <td>ความแซ่บ</td>
-                                                                <td><input type="number" class="form-control" name="ชื่อชุด" placeholder="ปริมาณ"></td>
-                                                                <td>
-                                                                    <select name="#" class="form-control" id="#" required>
-                                                                        <option value="">---เลือกหน่วย---</option>
-                                                                        <c:forEach items="#" var="#">
-                                                                            <option value="${#}">${#}</option>
-                                                                        </c:forEach>
-                                                                    </select>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                        </div>
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Modal Content (ADD MENU)--> 
-
                 <!-- Modal Content (ADD MATERIAL)-->
                 <div class="modal fade" id="addMenuMat" role="dialog">
                     <div class="modal-dialog">
@@ -341,8 +191,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Modal Content (ADD MAT)-->         
-
+                <!-- /Modal Content (ADD MAT)-->
+                
                 <!-- Modal Content (ADD CUST)-->
                 <div class="modal fade" id="addCustMenu" role="dialog">
                     <div class="modal-dialog">
@@ -446,6 +296,7 @@
                     </div>
                 </div>
                 <!-- /Modal Content (Show Menu Set)-->
+                
             </div>
         </div>
         <!-- jQuery -->
@@ -496,14 +347,5 @@
                                                     readURL(this);
                                                 });
         </script>
-        <style>
-            .modal-body-forMenuSet {
-                position: relative;
-                overflow-y: auto;
-                width: 1000px;
-                right: 30%;
-                height: 700px
-            }
-        </style>
     </body>
 </html>

@@ -178,11 +178,11 @@
                     </div>
                     <!-- ส่วนเนื้อหาของ Modal -->
                     <div class="modal-body ">
-                        <form class="form-horizontal form-label-left input_mask" id="addmenuset" action="AddMenuSetServlet" method="post" enctype="multipart/form-data">
-                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                <center><img id="blah" src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t34.0-12/18360467_674544166065326_1398146494_n.png?oh=ccb78e42d450920d59b901c35e9c33ad&oe=5911167A" style="width: 250px;"  alt="your image"  class="img-thumbnail" />
-                                    <input type='file' id="imgInp" name="addImgPicPath" /></center>
-                            </div>
+                        <form class="form-horizontal form-label-left input_mask" id="addmenuset" action="AddMenuSetServlet" method="post">
+<!--                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                <img id="blah" src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t34.0-12/18360467_674544166065326_1398146494_n.png?oh=ccb78e42d450920d59b901c35e9c33ad&oe=5911167A" style="width: 250px;"  alt="your image"  class="img-thumbnail" />
+                                <input type='file' id="imgInp" name="addImgPicPath" />
+                            </div>-->
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                     <input type="text" class="form-control" name="menuSetNameTH" placeholder="ชื่อชุดเมนูภาษาไทย">
@@ -190,11 +190,11 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                     <input type="text" class="form-control" name="menuSetNameEN" placeholder="ชื่อชุดเมนูภาษาอังกฤษ">
                                 </div>
-                                
+
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <textarea placeholder="รายละเอียดของชุดเมนูนี้" class="form-control" name="menuDesc" rows="3" required></textarea>
                                 </div>
-                                
+
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="x_panel">
                                         <div class="x_title">
@@ -330,11 +330,11 @@
                     </div>
                     <!-- ส่วนเนื้อหาของ Modal -->
                     <div class="modal-body ">
-                        <form class="form-horizontal form-label-left input_mask" enctype="multipart/form-data" action="EditMenuSetServlet" method="POST">
-                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                <center><img id="editPic" src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t34.0-12/18360467_674544166065326_1398146494_n.png?oh=ccb78e42d450920d59b901c35e9c33ad&oe=5911167A" style="width: 250px;"  alt="your image"  class="img-thumbnail" />
-                                    <input type='file' id="editImg" name="editMenuSetImg" /></center>
-                            </div>
+                        <form class="form-horizontal form-label-left input_mask" action="EditMenuSetServlet" method="POST">
+                            <!--                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                                            <center><img id="editPic" src="https://scontent.fbkk14-1.fna.fbcdn.net/v/t34.0-12/18360467_674544166065326_1398146494_n.png?oh=ccb78e42d450920d59b901c35e9c33ad&oe=5911167A" style="width: 250px;"  alt="your image"  class="img-thumbnail" />
+                                                                <input type='file' id="editImg" name="editMenuSetImg" /></center>
+                                                        </div>-->
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                     <div class="form-group">    
@@ -437,37 +437,37 @@
         <script src="build/js/custom.min.js"></script>
         <script src="handmade/menuset.js"></script>
         <script>
-                                                                function readURL(input) {
-                                                                    if (input.files && input.files[0]) {
-                                                                        var reader = new FileReader();
+                                        function readURL(input) {
+                                            if (input.files && input.files[0]) {
+                                                var reader = new FileReader();
 
-                                                                        reader.onload = function (e) {
-                                                                            $('#blah').attr('src', e.target.result);
-                                                                        }
+                                                reader.onload = function (e) {
+                                                    $('#blah').attr('src', e.target.result);
+                                                }
 
-                                                                        reader.readAsDataURL(input.files[0]);
-                                                                    }
-                                                                }
-                                                                
-                                                                function readURL2(input) {
-                                                                    if (input.files && input.files[0]) {
-                                                                        var reader = new FileReader();
+                                                reader.readAsDataURL(input.files[0]);
+                                            }
+                                        }
 
-                                                                        reader.onload = function (e) {
-                                                                            $('#editPic').attr('src', e.target.result);
-                                                                        }
+                                        function readURL2(input) {
+                                            if (input.files && input.files[0]) {
+                                                var reader = new FileReader();
 
-                                                                        reader.readAsDataURL(input.files[0]);
-                                                                    }
-                                                                }
+                                                reader.onload = function (e) {
+                                                    $('#editPic').attr('src', e.target.result);
+                                                }
 
-                                                                $("#imgInp").change(function () {
-                                                                    readURL(this);
-                                                                });
-                                                                
-                                                                $("#editImg").change(function () {
-                                                                    readURL2(this);
-                                                                });
+                                                reader.readAsDataURL(input.files[0]);
+                                            }
+                                        }
+
+                                        $("#imgInp").change(function () {
+                                            readURL(this);
+                                        });
+
+                                        $("#editImg").change(function () {
+                                            readURL2(this);
+                                        });
         </script>
         <style>
             .modal-body-forMenuSet {

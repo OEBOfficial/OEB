@@ -136,7 +136,8 @@ function delPosition(positionname, positionno) {
                     data: "positionno=" + encodeURIComponent(positionno),
                     success: function (result) {
                         swal("เรียบร้อย", "ข้อมูลตำแหน่งพนักงานถูกลบแล้ว", "success");
-                        $("#datatable").DataTable().row("#tr" + positionno).remove().draw();
+                        $("#datatable-checkbox").DataTable().row("#tr" + positionno).remove().draw();
+//                        location.reload();
                     }
                 });
             });

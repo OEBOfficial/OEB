@@ -1,6 +1,5 @@
 package controller;
 
-import com.oreilly.servlet.MultipartRequest;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -18,26 +17,26 @@ public class AddMenuSetServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String target = "ToMenuSetServlet";
-        MultipartRequest mr = new MultipartRequest(request, "C:\\Users\\USER\\Documents\\NetBeansProjects\\OEB\\src\\main\\webapp\\images", "UTF-8");
+//        MultipartRequest request = new MultipartRequest(request, "C:\\Users\\USER\\Documents\\NetBeansProjects\\OEB\\src\\main\\webapp\\images", "UTF-8");
         HttpSession hs = request.getSession();
         RestaurantOwner ro = (RestaurantOwner) hs.getAttribute("restowner");
-        String menuSetNameTH = mr.getParameter("menuSetNameTH");
-        String menuSetNameEN = mr.getParameter("menuSetNameEN");
-        String menuDesc = mr.getParameter("menuDesc");
-        String menuPicPath = "images/" + mr.getFilesystemName("addImgPicPath");
-        if (mr.getFilesystemName("addImgPicPath") == null) {
-            menuPicPath = null;
-        }
-        String price = mr.getParameter("price");
-        String isOfficialMenuSet = mr.getParameter("isOfficialMenuSet");
-        String isAvailable = mr.getParameter("isAvailable");
-        String chooseMenu[] = mr.getParameterValues("table_records");
-        String amount[] = mr.getParameterValues("amount");
+        String menuSetNameTH = request.getParameter("menuSetNameTH");
+        String menuSetNameEN = request.getParameter("menuSetNameEN");
+        String menuDesc = request.getParameter("menuDesc");
+//        String menuPicPath = "images/" + request.getFilesystemName("addImgPicPath");
+//        if (request.getFilesystemName("addImgPicPath") == null) {
+//            menuPicPath = null;
+//        }
+        String price = request.getParameter("price");
+        String isOfficialMenuSet = request.getParameter("isOfficialMenuSet");
+        String isAvailable = request.getParameter("isAvailable");
+        String chooseMenu[] = request.getParameterValues("table_records");
+        String amount[] = request.getParameterValues("amount");
         MenuSet ms = new MenuSet();
         ms.setMenuSetNameTH(menuSetNameTH);
         ms.setMenuSetNameEN(menuSetNameEN);
         ms.setMenuSetDesc(menuDesc);
-        ms.setMenuSetPicPath(menuPicPath);
+//        ms.setMenuSetPicPath(menuPicPath);
         ms.setMenuSetPrice(Double.parseDouble(price));
         if (isOfficialMenuSet != null) {
             ms.setIsOfficialMenuSet(1);
