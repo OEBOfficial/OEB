@@ -59,6 +59,7 @@ controller\ManageEmpPosServlet.class
 model\EmploymentType.class
 model\MenuType.class
 controller\EditMenuTypeServlet.class
+controller\TestServlet.class
 model\ActorManagement.class
 model\MenuMaterial.class
 ajaxcontroller\DelMaterialAjaxServlet.class
